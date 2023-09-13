@@ -30,7 +30,7 @@ const LogoSection = ({ sx, to }) => {
 
 LogoSection.propTypes = {
   sx: PropTypes.object,
-  to: PropTypes.string
+  to: PropTypes.string,
 };
 
 export default LogoSection;
