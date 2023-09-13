@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // initial state
 const initialState = {
-  openItem: ['dashboard'],
-  defaultId: 'dashboard',
+  openItem: ['overview'],
+  defaultId: 'overview',
   openComponent: 'buttons',
   drawerOpen: false,
-  componentDrawerOpen: true
+  componentDrawerOpen: true,
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -30,8 +30,8 @@ const menu = createSlice({
 
     openComponentDrawer(state, action) {
       state.componentDrawerOpen = action.payload.componentDrawerOpen;
-    }
-  }
+    },
+  },
 });
 
 export default menu.reducer;
