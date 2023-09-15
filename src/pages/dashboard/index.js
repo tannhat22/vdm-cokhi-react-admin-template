@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import ROSLIB from 'roslib';
+import PropTypes from 'prop-types';
 
 // material-ui
 import {
   Avatar,
   AvatarGroup,
+  Autocomplete,
   Box,
   Button,
   Grid,
@@ -15,17 +19,18 @@ import {
   MenuItem,
   Stack,
   TextField,
-  Typography
+  Typography,
 } from '@mui/material';
 
 // project import
 import OrdersTable from './OrdersTable';
+import InformArea from './InformArea';
 import IncomeAreaChart from './IncomeAreaChart';
 // import MonthlyBarChart from './MonthlyBarChart';
 import ReportAreaChart from './ReportAreaChart';
 import SalesColumnChart from './SalesColumnChart';
 import MainCard from 'components/MainCard';
-import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+// import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 
 // assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
@@ -34,11 +39,13 @@ import avatar2 from 'assets/images/users/avatar-2.png';
 import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
 
+import RosPropsContext from 'context/RosPropsContext';
+
 // avatar style
 const avatarSX = {
   width: 36,
   height: 36,
-  fontSize: '1rem'
+  fontSize: '1rem',
 };
 
 // action style
@@ -48,39 +55,130 @@ const actionSX = {
   top: 'auto',
   right: 'auto',
   alignSelf: 'flex-start',
-  transform: 'none'
+  transform: 'none',
 };
 
 // sales report status
 const status = [
   {
     value: 'today',
-    label: 'Today'
+    label: 'Today',
   },
   {
     value: 'month',
-    label: 'This Month'
+    label: 'This Month',
   },
   {
     value: 'year',
-    label: 'This Year'
-  }
+    label: 'This Year',
+  },
 ];
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
+  const location = useLocation();
+  let id = 1;
+  if (location.state) {
+    id = location.state.id;
+  }
+
   const [value, setValue] = useState('today');
   const [slot, setSlot] = useState('week');
+  const [idMachine, setIdMachine] = useState(id);
+  const [machineNames, setMachineNames] = useState([]);
+  // const [data, setData] = useState({});
+  // console.log('re-render');
+  const ros = useContext(RosPropsContext);
+
+  useEffect(() => {
+    var getMachinesNameClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/get_machine_name',
+      serviceType: 'vdm_cokhi_machine_msgs/GetMachineName',
+    });
+
+    let requestMachinesName = new ROSLIB.ServiceRequest({
+      get_allname: true,
+    });
+
+    getMachinesNameClient.callService(requestMachinesName, function (result) {
+      let dataNames = [];
+      for (let i = 0; i < result.machines_quantity; i++) {
+        dataNames.push({
+          id: i + 1,
+          label: result.machines_name[i],
+        });
+      }
+      setMachineNames(dataNames);
+    });
+
+    // let subscription_callback = function (message) {
+    //   // console.log('Received message on ' + listener.name + ': ' + message);
+    //   handleDataWebsocket(message);
+    //   // listener.unsubscribe();
+    // };
+
+    // listener.subscribe(subscription_callback);
+
+    // function handleDataWebsocket(data) {
+    //   // console.log(data.state_machine.number_machine);
+    //   let dataNames = [];
+    //   for (let i = 0; i < data.state_machine.number_machine; i++) {
+    //     dataNames.push({
+    //       id: i + 1,
+    //       label: data.state_machine.machine_name[i],
+    //     });
+    //   }
+    //   setMachineNames(dataNames);
+    //   // setData({
+    //   //   machine_name: data.state_machine.machine_name[idMachine - 1],
+    //   //   time_noload: data.state_machine.time_noload[idMachine - 1],
+    //   //   time_load: data.state_machine.time_load[idMachine - 1],
+    //   //   signal_light: data.state_machine.signal_light[idMachine - 1],
+    //   // });
+    // }
+
+    // return () => {
+    //   listener.unsubscribe();
+    // };
+  }, []);
+
+  function handleValueChange(event, value, reason) {
+    if (reason === 'selectOption') {
+      const idMachineNew = machineNames.findIndex((machineName) => {
+        return value.label === machineName.label;
+      });
+      if (idMachineNew !== -1) {
+        setIdMachine(idMachineNew + 1);
+      } else {
+        console.log('Machine name not found');
+      }
+    }
+  }
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
-        <Typography variant="h5">Dashboard</Typography>
+        <Typography variant="h5" sx={{ paddingBottom: '14px' }}>
+          Dashboard
+        </Typography>
+        <Autocomplete
+          disablePortal
+          id="combo-box-machine"
+          options={machineNames}
+          isOptionEqualToValue={(option, value) => {
+            return option.label === value;
+          }}
+          value={machineNames.length ? machineNames[idMachine - 1].label : null}
+          sx={{ width: 300 }}
+          onChange={handleValueChange}
+          renderInput={(params) => <TextField {...params} label="Machine name" />}
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+      {/* <Grid item xs={12} sm={6} md={4} lg={3}>
+        <AnalyticEcommerce title="nhat dai ca" count="4,42,236" percentage={59.3} extra="35,000" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
@@ -89,9 +187,16 @@ const DashboardDefault = () => {
         <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
-      </Grid>
-
+        <AnalyticEcommerce
+          title="Total Sales"
+          count="$35,078"
+          percentage={27.4}
+          isLoss
+          color="warning"
+          extra="$20,395"
+        />
+      </Grid> */}
+      <InformArea />
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
       {/* row 2 */}
@@ -234,8 +339,8 @@ const DashboardDefault = () => {
               '& .MuiListItemButton-root': {
                 py: 1.5,
                 '& .MuiAvatar-root': avatarSX,
-                '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
-              }
+                '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' },
+              },
             }}
           >
             <ListItemButton divider>
@@ -243,13 +348,16 @@ const DashboardDefault = () => {
                 <Avatar
                   sx={{
                     color: 'success.main',
-                    bgcolor: 'success.lighter'
+                    bgcolor: 'success.lighter',
                   }}
                 >
                   <GiftOutlined />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={<Typography variant="subtitle1">Order #002434</Typography>} secondary="Today, 2:00 AM" />
+              <ListItemText
+                primary={<Typography variant="subtitle1">Order #002434</Typography>}
+                secondary="Today, 2:00 AM"
+              />
               <ListItemSecondaryAction>
                 <Stack alignItems="flex-end">
                   <Typography variant="subtitle1" noWrap>
@@ -266,13 +374,16 @@ const DashboardDefault = () => {
                 <Avatar
                   sx={{
                     color: 'primary.main',
-                    bgcolor: 'primary.lighter'
+                    bgcolor: 'primary.lighter',
                   }}
                 >
                   <MessageOutlined />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={<Typography variant="subtitle1">Order #984947</Typography>} secondary="5 August, 1:45 PM" />
+              <ListItemText
+                primary={<Typography variant="subtitle1">Order #984947</Typography>}
+                secondary="5 August, 1:45 PM"
+              />
               <ListItemSecondaryAction>
                 <Stack alignItems="flex-end">
                   <Typography variant="subtitle1" noWrap>
@@ -289,13 +400,16 @@ const DashboardDefault = () => {
                 <Avatar
                   sx={{
                     color: 'error.main',
-                    bgcolor: 'error.lighter'
+                    bgcolor: 'error.lighter',
                   }}
                 >
                   <SettingOutlined />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={<Typography variant="subtitle1">Order #988784</Typography>} secondary="7 hours ago" />
+              <ListItemText
+                primary={<Typography variant="subtitle1">Order #988784</Typography>}
+                secondary="7 hours ago"
+              />
               <ListItemSecondaryAction>
                 <Stack alignItems="flex-end">
                   <Typography variant="subtitle1" noWrap>
@@ -339,6 +453,10 @@ const DashboardDefault = () => {
       </Grid>
     </Grid>
   );
+};
+
+DashboardDefault.propTypes = {
+  id: PropTypes.number,
 };
 
 export default DashboardDefault;

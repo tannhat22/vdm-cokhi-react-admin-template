@@ -1,26 +1,67 @@
 import React from 'react';
-// import { useState, useEffect, useContext } from 'react';
-import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import ROSLIB from 'roslib';
 
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import TextField from '@mui/material/TextField';
-// import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import SignalLight from 'components/SignalLight/SignalLight';
 import RosPropsContext from 'context/RosPropsContext';
+import { activeItem } from 'store/reducers/menu';
+import menuItems from 'menu-items';
 
 function OverviewTable() {
-  // const [data, setData] = useState([]);
-  const data = [];
-  const ros = useContext(RosPropsContext);
+  const [data, setData] = React.useState([]);
+  const ros = React.useContext(RosPropsContext);
 
-  ros.on('error', function (error) {
-    console.log(error);
-  });
-  // console.log(ros.ros);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dashboardUrl = menuItems.items[0].children[1].url;
+  const dashboardId = menuItems.items[0].children[1].id;
+
+  React.useEffect(() => {
+    var listener = new ROSLIB.Topic({
+      ros: ros,
+      name: '/state_machine',
+      messageType: 'vdm_cokhi_machine_msgs/StateMachineStamped',
+    });
+
+    let subscription_callback = function (message) {
+      handleDataWebsocket(message);
+    };
+
+    listener.subscribe(subscription_callback);
+
+    function handleDataWebsocket(data) {
+      let dataShow = [];
+      for (let i = 0; i < data.state_machine.number_machine; i++) {
+        dataShow.push([
+          i + 1,
+          data.state_machine.machine_name[i],
+          data.state_machine.time_noload[i],
+          data.state_machine.time_load[i],
+          data.state_machine.signal_light[i],
+          false,
+        ]);
+      }
+      setData(dataShow);
+    }
+
+    return () => {
+      listener.unsubscribe();
+    };
+  }, []);
+
+  const redirectToDashboard = (id) => {
+    dispatch(activeItem({ openItem: [dashboardId] }));
+    navigate(dashboardUrl, {
+      state: {
+        id,
+      },
+    });
+  };
 
   const getMuiTheme = () =>
     createTheme({
@@ -95,8 +136,19 @@ function OverviewTable() {
         filter: false,
         sort: false,
         download: false,
-        customBodyRender: () => {
-          return <Button sx={{ textTransform: 'none' }}>View</Button>;
+        customBodyRender: (value, tableMeta) => {
+          // console.log(tableMeta.rowData[1]);
+          return (
+            <Button
+              machineid={tableMeta.rowData[0]}
+              sx={{ textTransform: 'none' }}
+              onClick={(event) => {
+                redirectToDashboard(Number(event.target.getAttribute('machineid')));
+              }}
+            >
+              View
+            </Button>
+          );
         },
       },
     },

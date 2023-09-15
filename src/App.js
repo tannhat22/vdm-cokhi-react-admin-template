@@ -8,7 +8,6 @@ import RosPropsContext from 'context/RosPropsContext';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 var ros = new ROSLIB.Ros({});
-ros.connect('ws://localhost:9090');
 
 function App() {
   return (

@@ -35,7 +35,7 @@ const MainRoutes = {
       element: <Dashboard />,
       // children: [
       //   {
-      //     path: 'default',
+      //     path: ':machinename',
       //     element: <Dashboard />,
       //   },
       // ],
