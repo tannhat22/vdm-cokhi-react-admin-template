@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import SignalLight from 'components/SignalLight/SignalLight';
+import SignalLight from 'components/SignalLight';
 import RosPropsContext from 'context/RosPropsContext';
 import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
@@ -24,8 +24,8 @@ function OverviewTable() {
   React.useEffect(() => {
     var listener = new ROSLIB.Topic({
       ros: ros,
-      name: '/state_machine',
-      messageType: 'vdm_cokhi_machine_msgs/StateMachineStamped',
+      name: '/state_machines',
+      messageType: 'vdm_cokhi_machine_msgs/StateMachinesStamped',
     });
 
     let subscription_callback = function (message) {
@@ -36,13 +36,13 @@ function OverviewTable() {
 
     function handleDataWebsocket(data) {
       let dataShow = [];
-      for (let i = 0; i < data.state_machine.number_machine; i++) {
+      for (let i = 0; i < data.state_machines.number_machine; i++) {
         dataShow.push([
           i + 1,
-          data.state_machine.machine_name[i],
-          data.state_machine.time_noload[i],
-          data.state_machine.time_load[i],
-          data.state_machine.signal_light[i],
+          data.state_machines.machines_name[i],
+          data.state_machines.noload_time[i],
+          data.state_machines.underload_time[i],
+          data.state_machines.signal_light[i],
           false,
         ]);
       }
