@@ -32,7 +32,7 @@ const areaChartOptions = {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const IncomeAreaChart = ({ id }) => {
+const OperationTimeChart = ({ id }) => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
@@ -56,7 +56,7 @@ const IncomeAreaChart = ({ id }) => {
   useEffect(() => {
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
-      name: '/get_machine_name',
+      name: '/get_machine_data',
       serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
     });
 
@@ -129,8 +129,8 @@ const IncomeAreaChart = ({ id }) => {
   return <ReactApexChart options={options} series={series} type="area" height={450} />;
 };
 
-IncomeAreaChart.propTypes = {
+OperationTimeChart.propTypes = {
   id: PropTypes.number,
 };
 
-export default IncomeAreaChart;
+export default OperationTimeChart;

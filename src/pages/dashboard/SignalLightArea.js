@@ -20,8 +20,8 @@ const SignalLightArea = ({ id }) => {
   useEffect(() => {
     var listener = new ROSLIB.Topic({
       ros: ros,
-      name: '/state_machine',
-      messageType: 'vdm_cokhi_machine_msgs/SignalLightsStamped',
+      name: '/state_machines',
+      messageType: 'vdm_cokhi_machine_msgs/StateMachinesStamped',
     });
 
     let subscription_callback = function (message) {
@@ -31,7 +31,7 @@ const SignalLightArea = ({ id }) => {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      const signalLight = data.signal_lights[id - 1];
+      const signalLight = data.state_machines.signal_light[id - 1];
       switch (signalLight) {
         case 1:
           setColor('green');
@@ -54,7 +54,7 @@ const SignalLightArea = ({ id }) => {
 
   return (
     <Box>
-      <div style={{ minHeight: '481px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '473px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div
           style={{
             minHeight: '240px',

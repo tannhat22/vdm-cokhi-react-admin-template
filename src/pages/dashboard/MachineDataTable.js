@@ -9,8 +9,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import RosPropsContext from 'context/RosPropsContext';
 
-function MachineDataTable({ id, machineName }) {
-  const [days, setDays] = React.useState(30);
+function MachineDataTable({ id, days, machineName }) {
+  console.log(days);
+  // const [days, setDays] = React.useState(30);
   const [data, setData] = React.useState([
     {
       date: '',
@@ -22,13 +23,13 @@ function MachineDataTable({ id, machineName }) {
 
   var getMachineDataClient = new ROSLIB.Service({
     ros: ros,
-    name: '/get_machine_name',
+    name: '/get_machine_data',
     serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
   });
 
   let requestMachineData = new ROSLIB.ServiceRequest({
     id_machine: id,
-    days: 7,
+    days,
   });
 
   getMachineDataClient.callService(requestMachineData, function (result) {
@@ -43,7 +44,6 @@ function MachineDataTable({ id, machineName }) {
         result.underload_time[i][1],
       ]);
     }
-    setDays(result.date);
     setData(dataShow);
   });
 
@@ -125,7 +125,7 @@ function MachineDataTable({ id, machineName }) {
   return (
     <Box>
       <ThemeProvider theme={getMuiTheme()}>
-        <MUIDataTable title={`Machine data (name: ${machineName})`} data={data} columns={columns} options={options} />
+        <MUIDataTable title={`Machine data (${machineName})`} data={data} columns={columns} options={options} />
       </ThemeProvider>
     </Box>
   );
@@ -133,6 +133,7 @@ function MachineDataTable({ id, machineName }) {
 
 MachineDataTable.propTypes = {
   id: PropTypes.number,
+  days: PropTypes.number,
   machineName: PropTypes.string,
 };
 

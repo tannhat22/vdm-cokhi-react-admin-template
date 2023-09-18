@@ -1,14 +1,26 @@
+import PropTypes from 'prop-types';
 import { useState, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ROSLIB from 'roslib';
-import PropTypes from 'prop-types';
 
 // material-ui
-import { Autocomplete, Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from '@mui/material';
 
 // project import
 import InformArea from './InformArea';
-import IncomeAreaChart from './IncomeAreaChart';
+import OperationTimeChart from './OperationTimeChart';
 import MainCard from 'components/MainCard';
 import MachineDataTable from './MachineDataTable';
 import SignalLightArea from './SignalLightArea';
@@ -24,7 +36,7 @@ const DashboardDefault = () => {
     id = location.state.id;
   }
 
-  const [slot, setSlot] = useState('7 days');
+  const [days, setDays] = useState(30);
   const [idMachine, setIdMachine] = useState(id);
   const [machineNames, setMachineNames] = useState([]);
 
@@ -66,6 +78,10 @@ const DashboardDefault = () => {
     }
   }
 
+  function handleChangeSelectDays(event) {
+    setDays(event.target.value);
+  }
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -101,9 +117,9 @@ const DashboardDefault = () => {
             <Stack direction="row" alignItems="center" spacing={0}>
               <Button
                 size="small"
-                onClick={() => setSlot('7 days')}
-                color={slot === '7 days' ? 'primary' : 'secondary'}
-                variant={slot === '7 days' ? 'outlined' : 'text'}
+                // onClick={() => setSlot('7 days')}
+                // color={slot === '7 days' ? 'primary' : 'secondary'}
+                // variant={slot === '7 days' ? 'outlined' : 'text'}
               >
                 7 days ago
               </Button>
@@ -112,7 +128,7 @@ const DashboardDefault = () => {
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <IncomeAreaChart />
+            <OperationTimeChart />
           </Box>
         </MainCard>
       </Grid>
@@ -121,9 +137,13 @@ const DashboardDefault = () => {
           <Grid item>
             <Typography variant="h5">Signal Light</Typography>
           </Grid>
-          <Grid item />
+          <Grid item>
+            <Stack direction="row" alignItems="center" spacing={0}>
+              <Button size="small">{machineNames.length ? machineNames[idMachine - 1].label : 'no info'}</Button>
+            </Stack>
+          </Grid>
         </Grid>
-        <MainCard sx={{ mt: 2 }} content={false}>
+        <MainCard sx={{ mt: 1.5 }} content={false}>
           <SignalLightArea id={idMachine} />
         </MainCard>
       </Grid>
@@ -134,12 +154,31 @@ const DashboardDefault = () => {
           <Grid item>
             <Typography variant="h5">Machine data</Typography>
           </Grid>
-          <Grid item />
+          <Grid item>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="days-select-label">Days</InputLabel>
+                <Select
+                  labelId="days-select-label"
+                  id="days-simple-select"
+                  value={days}
+                  label="Days"
+                  onChange={handleChangeSelectDays}
+                >
+                  <MenuItem value={7}>7 days</MenuItem>
+                  <MenuItem value={14}>14 days</MenuItem>
+                  <MenuItem value={30}>30 days</MenuItem>
+                  <MenuItem value={90}>All data</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
         </Grid>
         <MainCard sx={{ mt: 2 }} content={false}>
           <MachineDataTable
             id={idMachine}
             machineName={machineNames.length ? machineNames[idMachine - 1].label : 'no info'}
+            days={days}
           />
         </MainCard>
       </Grid>
