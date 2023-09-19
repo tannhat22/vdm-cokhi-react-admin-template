@@ -31,7 +31,7 @@ const SignalLightArea = ({ id }) => {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      const signalLight = data.state_machines.signal_light[id - 1];
+      const signalLight = data.state_machines[id - 1].signal_light;
       switch (signalLight) {
         case 1:
           setColor('green');

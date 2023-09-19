@@ -36,13 +36,15 @@ function OverviewTable() {
 
     function handleDataWebsocket(data) {
       let dataShow = [];
-      for (let i = 0; i < data.state_machines.number_machine; i++) {
+      for (let i = 0; i < data.machines_quantity; i++) {
         dataShow.push([
           i + 1,
-          data.state_machines.machines_name[i],
-          data.state_machines.noload_time[i],
-          data.state_machines.underload_time[i],
-          data.state_machines.signal_light[i],
+          data.state_machines[i].name,
+          data.state_machines[i].noload.hours,
+          data.state_machines[i].noload.minutes,
+          data.state_machines[i].underload.hours,
+          data.state_machines[i].underload.minutes,
+          data.state_machines[i].signal_light,
           false,
         ]);
       }
@@ -95,19 +97,35 @@ function OverviewTable() {
       },
     },
     {
-      name: 'noLoadTime',
-      label: 'No-load operating time',
+      name: 'noLoadHours',
+      label: 'No-load operating time (hours)',
       options: {
         filter: false,
         sort: true,
       },
     },
     {
-      name: 'loadTime',
-      label: 'Under load operating time',
+      name: 'noLoadMinutes',
+      label: 'No-load operating time (mins)',
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: 'underloadHours',
+      label: 'Under load operating time (hours)',
       options: {
         filter: false,
         sort: true,
+      },
+    },
+    {
+      name: 'underloadMinutes',
+      label: 'Under load operating time (mins)',
+      options: {
+        filter: false,
+        sort: false,
       },
     },
     {

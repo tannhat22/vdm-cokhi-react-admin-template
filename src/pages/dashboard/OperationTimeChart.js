@@ -66,15 +66,15 @@ const OperationTimeChart = ({ id }) => {
     });
 
     getMachineDataClient.callService(requestMachineData, function (result) {
-      setDays(result.date);
+      setDays(result.dates);
       setSeries([
         {
           name: 'No-load',
-          data: result.noload_time,
+          data: result.noload.hours + result.noload.minutes / 60,
         },
         {
           name: 'Under Load',
-          data: result.underload_time,
+          data: result.underload.hours + result.underload.minutes / 60,
         },
       ]);
     });

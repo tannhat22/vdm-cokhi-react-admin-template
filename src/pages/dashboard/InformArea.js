@@ -38,25 +38,25 @@ function InformArea({ id }) {
       };
 
       dataNew.noloadTime.hours =
-        data.state_machines.noload_time[id - 1][0] < 10
-          ? `0${data.state_machines.noload_time[id - 1][0]}`
-          : `${data.state_machines.noload_time[id - 1][0]}`;
+        data.state_machines[id - 1].noload.hours < 10
+          ? `0${data.state_machines[id - 1].noload.hours}`
+          : `${data.state_machines[id - 1].noload.hours}`;
       dataNew.noloadTime.minutes =
-        data.state_machines.noload_time[id - 1][1] < 10
-          ? `0${data.state_machines.noload_time[id - 1][1]}`
-          : `${data.state_machines.noload_time[id - 1][1]}`;
+        data.state_machines[id - 1].noload.minutes < 10
+          ? `0${data.state_machines[id - 1].noload.minutes}`
+          : `${data.state_machines[id - 1].noload.minutes}`;
       dataNew.underloadTime.hours =
-        data.state_machines.underload_time[id - 1][0] < 10
-          ? `0${data.state_machines.underload_time[id - 1][0]}`
-          : `${data.state_machines.underload_time[id - 1][0]}`;
+        data.state_machines[id - 1].underload.hours < 10
+          ? `0${data.state_machines[id - 1].underload.hours}`
+          : `${data.state_machines[id - 1].underload.hours}`;
       dataNew.underloadTime.minutes =
-        data.state_machines.underload_time[id - 1][1] < 10
-          ? `0${data.state_machines.underload_time[id - 1][1]}`
-          : `${data.state_machines.underload_time[id - 1][1]}`;
-      dataNew.gt.min = data.state_machines.gt[id - 1][0];
-      dataNew.gt.max = data.state_machines.gt[id - 1][1];
-      dataNew.gt.current = data.state_machines.gt[id - 1][2];
-      dataNew.timeReachSpeed = data.state_machines.time_reachspeed[id - 1];
+        data.state_machines[id - 1].underload.minutes < 10
+          ? `0${data.state_machines[id - 1].underload.minutes}`
+          : `${data.state_machines[id - 1].underload.minutes}`;
+      dataNew.gt.min = data.state_machines[id - 1].value_setting.min;
+      dataNew.gt.max = data.state_machines[id - 1].value_setting.max;
+      dataNew.gt.current = data.state_machines[id - 1].value_setting.current;
+      dataNew.timeReachSpeed = data.state_machines[id - 1].time_reachspeed;
 
       setDataMachine(dataNew);
     }

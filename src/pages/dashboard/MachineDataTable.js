@@ -38,10 +38,10 @@ function MachineDataTable({ id, days, machineName }) {
       dataShow.push([
         i + 1,
         result.dates[i],
-        result.noload_time[i][0],
-        result.noload_time[i][1],
-        result.underload_time[i][0],
-        result.underload_time[i][1],
+        result.noload[i].hours,
+        result.noload[i].minutes,
+        result.underload[i].hours,
+        result.underload[i].minutes,
       ]);
     }
     setData(dataShow);
