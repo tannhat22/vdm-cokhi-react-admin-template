@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RosPropsContext from 'context/RosPropsContext';
 
 function MachineDataTable({ id, days, machineName }) {
-  console.log(days);
+  // console.log(days);
   // const [days, setDays] = React.useState(30);
   const [data, setData] = React.useState([
     {

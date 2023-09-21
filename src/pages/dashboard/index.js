@@ -24,11 +24,11 @@ import OperationTimeChart from './OperationTimeChart';
 import MainCard from 'components/MainCard';
 import MachineDataTable from './MachineDataTable';
 import SignalLightArea from './SignalLightArea';
+import Login from './PassWordForm';
 
 import RosPropsContext from 'context/RosPropsContext';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
-
 const DashboardDefault = () => {
   const location = useLocation();
   let id = 1;
@@ -43,6 +43,12 @@ const DashboardDefault = () => {
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
+    // var resetMachineClient = new ROSLIB.Service({
+    //   ros: ros,
+    //   name: '/reset_machine',
+    //   serviceType: 'vdm_cokhi_machine_msgs/ResetMachine',
+    // });
+
     var getMachinesNameClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_all_machine_name',
@@ -90,7 +96,7 @@ const DashboardDefault = () => {
           Dashboard
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={6} lg={6}>
         <Autocomplete
           disablePortal
           id="combo-box-machine"
@@ -103,6 +109,9 @@ const DashboardDefault = () => {
           onChange={handleValueChange}
           renderInput={(params) => <TextField {...params} label="Machine name" />}
         />
+      </Grid>
+      <Grid item xs={12} md={6} lg={6}>
+        {machineNames.length ? <Login id={idMachine} machineName={machineNames[idMachine - 1].label} /> : null}
       </Grid>
       <InformArea />
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
