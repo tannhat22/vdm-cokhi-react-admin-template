@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import ROSLIB from 'roslib';
 
-import Button from '@mui/material/Button';
+import { IconButton, Tooltip } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+// import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 import SignalLight from 'components/SignalLight';
 import RosPropsContext from 'context/RosPropsContext';
@@ -13,7 +16,11 @@ import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
 
 function OverviewTable() {
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState([
+    [1, 'Machine 1', 239, 239, 1, false],
+    [2, 'Machine 2', 191, 191, 1, false],
+    [3, 'Machine 3', 211, 211, 1, false],
+  ]);
   const ros = React.useContext(RosPropsContext);
 
   const dispatch = useDispatch();
@@ -40,10 +47,8 @@ function OverviewTable() {
         dataShow.push([
           i + 1,
           data.state_machines[i].name,
-          data.state_machines[i].noload.hours,
-          data.state_machines[i].noload.minutes,
-          data.state_machines[i].underload.hours,
-          data.state_machines[i].underload.minutes,
+          data.state_machines[i].noload,
+          data.state_machines[i].underload,
           data.state_machines[i].signal_light,
           false,
         ]);
@@ -97,35 +102,33 @@ function OverviewTable() {
       },
     },
     {
-      name: 'noLoadHours',
-      label: 'No-load operating time (hours)',
+      name: 'noLoad',
+      label: 'No-load operating time',
       options: {
         filter: false,
         sort: true,
+        customBodyRender: (value) => {
+          let hours = Math.floor(value / 60);
+          let mins = value % 60;
+          if (hours < 10) hours = `0${hours}`;
+          if (mins < 10) mins = `0${mins}`;
+          return `${hours} h : ${mins} m  `;
+        },
       },
     },
     {
-      name: 'noLoadMinutes',
-      label: 'No-load operating time (mins)',
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
-      name: 'underloadHours',
-      label: 'Under load operating time (hours)',
+      name: 'underload',
+      label: 'Under load operating time',
       options: {
         filter: false,
         sort: true,
-      },
-    },
-    {
-      name: 'underloadMinutes',
-      label: 'Under load operating time (mins)',
-      options: {
-        filter: false,
-        sort: false,
+        customBodyRender: (value) => {
+          let hours = Math.floor(value / 60);
+          let mins = value % 60;
+          if (hours < 10) hours = `0${hours}`;
+          if (mins < 10) mins = `0${mins}`;
+          return `${hours} h : ${mins} m  `;
+        },
       },
     },
     {
@@ -135,6 +138,9 @@ function OverviewTable() {
         filter: false,
         sort: false,
         download: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
         customBodyRender: (value) =>
           value === 1 ? (
             <SignalLight color="green" />
@@ -154,18 +160,48 @@ function OverviewTable() {
         filter: false,
         sort: false,
         download: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
         customBodyRender: (value, tableMeta) => {
           // console.log(tableMeta.rowData[1]);
           return (
-            <Button
-              machineid={tableMeta.rowData[0]}
-              sx={{ textTransform: 'none' }}
-              onClick={(event) => {
-                redirectToDashboard(Number(event.target.getAttribute('machineid')));
-              }}
-            >
-              View
-            </Button>
+            <div>
+              <Tooltip title="View" arrow>
+                <IconButton
+                  aria-label="view"
+                  machineid={tableMeta.rowData[0]}
+                  // color="primary"
+                  sx={{ fontSize: '1.1rem', '&:hover': { color: '#1890ff' } }}
+                  onClick={(event) => {
+                    redirectToDashboard(Number(event.target.getAttribute('machineid')));
+                  }}
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </IconButton>
+              </Tooltip>
+              {/* <Tooltip title="Edit" arrow>
+                <IconButton
+                  aria-label="edit"
+                  machineid={tableMeta.rowData[0]}
+                  sx={{ fontSize: '1.1rem', '&:hover': { color: 'green' } }}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete" arrow>
+                <IconButton
+                  aria-label="delete"
+                  machineid={tableMeta.rowData[0]}
+                  sx={{ fontSize: '1.1rem', '&:hover': { color: 'red' } }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </IconButton>
+              </Tooltip> */}
+            </div>
           );
         },
       },

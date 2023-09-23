@@ -37,22 +37,20 @@ function InformArea({ id }) {
         timeReachspeed: 0,
       };
 
-      dataNew.noloadTime.hours =
-        data.state_machines[id - 1].noload.hours < 10
-          ? `0${data.state_machines[id - 1].noload.hours}`
-          : `${data.state_machines[id - 1].noload.hours}`;
-      dataNew.noloadTime.minutes =
-        data.state_machines[id - 1].noload.minutes < 10
-          ? `0${data.state_machines[id - 1].noload.minutes}`
-          : `${data.state_machines[id - 1].noload.minutes}`;
-      dataNew.underloadTime.hours =
-        data.state_machines[id - 1].underload.hours < 10
-          ? `0${data.state_machines[id - 1].underload.hours}`
-          : `${data.state_machines[id - 1].underload.hours}`;
-      dataNew.underloadTime.minutes =
-        data.state_machines[id - 1].underload.minutes < 10
-          ? `0${data.state_machines[id - 1].underload.minutes}`
-          : `${data.state_machines[id - 1].underload.minutes}`;
+      const noload = {
+        hours: Math.floor(data.state_machines[id - 1].noload / 60),
+        mins: data.state_machines[id - 1].noload % 60,
+      };
+
+      const underload = {
+        hours: Math.floor(data.state_machines[id - 1].underload / 60),
+        mins: data.state_machines[id - 1].underload % 60,
+      };
+
+      dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
+      dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
+      dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
+      dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
       dataNew.gt.min = data.state_machines[id - 1].value_setting.min;
       dataNew.gt.max = data.state_machines[id - 1].value_setting.max;
       dataNew.gt.current = data.state_machines[id - 1].value_setting.current;

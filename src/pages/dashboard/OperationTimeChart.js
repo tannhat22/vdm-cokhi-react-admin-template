@@ -70,11 +70,11 @@ const OperationTimeChart = ({ id }) => {
       setSeries([
         {
           name: 'No-load',
-          data: result.noload.hours + result.noload.minutes / 60,
+          data: result.noload,
         },
         {
           name: 'Under Load',
-          data: result.underload.hours + result.underload.minutes / 60,
+          data: result.underload,
         },
       ]);
     });

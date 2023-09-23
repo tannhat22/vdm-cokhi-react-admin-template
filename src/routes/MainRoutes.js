@@ -4,11 +4,14 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 
+// render - overview
+const OverviewPageDefault = Loadable(lazy(() => import('pages/overview')));
+
 // render - dashboard
 const Dashboard = Loadable(lazy(() => import('pages/dashboard')));
 
-// render - overview
-const OverviewPageDefault = Loadable(lazy(() => import('pages/overview')));
+// render - setting
+const Setting = Loadable(lazy(() => import('pages/setting')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -39,6 +42,10 @@ const MainRoutes = {
       //     element: <Dashboard />,
       //   },
       // ],
+    },
+    {
+      path: 'setting',
+      element: <Setting />,
     },
   ],
 };

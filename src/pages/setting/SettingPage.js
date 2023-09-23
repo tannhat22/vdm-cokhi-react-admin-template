@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React from 'react';
 import ROSLIB from 'roslib';
 
@@ -9,9 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import RosPropsContext from 'context/RosPropsContext';
 
-function MachineDataTable({ id, days, machineName }) {
-  // console.log(days);
-  // const [days, setDays] = React.useState(30);
+function MachineDataTable() {
   const [data, setData] = React.useState([
     // {
     //   id: 1,
@@ -22,10 +20,11 @@ function MachineDataTable({ id, days, machineName }) {
   ]);
   const ros = React.useContext(RosPropsContext);
 
-  var getMachineDataClient = new ROSLIB.Service({
+  // Get All machine name service
+  var getAllMachineNameClient = new ROSLIB.Service({
     ros: ros,
-    name: '/get_machine_data',
-    serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+    name: '/get_all_machine_name',
+    serviceType: 'vdm_cokhi_machine_msgs/GetAllMachineName',
   });
 
   let requestMachineData = new ROSLIB.ServiceRequest({
@@ -108,11 +107,5 @@ function MachineDataTable({ id, days, machineName }) {
     </Box>
   );
 }
-
-MachineDataTable.propTypes = {
-  id: PropTypes.number,
-  days: PropTypes.number,
-  machineName: PropTypes.string,
-};
 
 export default MachineDataTable;
