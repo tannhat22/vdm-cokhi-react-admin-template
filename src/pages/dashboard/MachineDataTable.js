@@ -22,24 +22,26 @@ function MachineDataTable({ id, days, machineName }) {
   ]);
   const ros = React.useContext(RosPropsContext);
 
-  var getMachineDataClient = new ROSLIB.Service({
-    ros: ros,
-    name: '/get_machine_data',
-    serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
-  });
+  React.useEffect(() => {
+    var getMachineDataClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/get_machine_data',
+      serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+    });
 
-  let requestMachineData = new ROSLIB.ServiceRequest({
-    id_machine: id,
-    days,
-  });
+    let requestMachineData = new ROSLIB.ServiceRequest({
+      id_machine: id,
+      days,
+    });
 
-  getMachineDataClient.callService(requestMachineData, function (result) {
-    let dataShow = [];
-    for (let i = 0; i < days; i++) {
-      dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i]]);
-    }
-    setData(dataShow);
-  });
+    getMachineDataClient.callService(requestMachineData, function (result) {
+      let dataShow = [];
+      for (let i = 0; i < days; i++) {
+        dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i]]);
+      }
+      setData(dataShow);
+    });
+  }, []);
 
   const getMuiTheme = () =>
     createTheme({
