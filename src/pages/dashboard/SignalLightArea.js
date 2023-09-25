@@ -31,7 +31,13 @@ const SignalLightArea = ({ id }) => {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      const signalLight = data.state_machines[id - 1].signal_light;
+      const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
+      if (sttMachine === -1) {
+        console.log('ID not found!');
+        return;
+      }
+
+      const signalLight = data.state_machines[sttMachine].signal_light;
       switch (signalLight) {
         case 1:
           setColor('green');

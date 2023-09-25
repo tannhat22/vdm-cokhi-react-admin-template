@@ -31,10 +31,11 @@ const style = {
   padding: 0,
 };
 
-const EditMachineForm = ({ id, machineName }) => {
+const EditMachineForm = ({ id, machineName, update }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
+  const [status, setStatus] = useState('');
   const [values, setValues] = useState({
     pass: '',
     newName: '',
@@ -66,6 +67,9 @@ const EditMachineForm = ({ id, machineName }) => {
 
       if (result.success) {
         setOpenEdit(false);
+        update();
+      } else {
+        setStatus(result.status);
       }
     });
   }
@@ -82,7 +86,7 @@ const EditMachineForm = ({ id, machineName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    UpdateServiceCall(values.pass, values.newName);
+    UpdateServiceCall(values.pass, values.newName.trim());
   };
 
   const handleChange = (e) => {
@@ -145,7 +149,7 @@ const EditMachineForm = ({ id, machineName }) => {
                     placeholder="Password"
                     variant="outlined"
                     required
-                    helperText={successServ ? '' : 'Incorrect password.'}
+                    helperText={status}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -188,6 +192,7 @@ const EditMachineForm = ({ id, machineName }) => {
 EditMachineForm.propTypes = {
   id: PropTypes.number,
   machineName: PropTypes.string,
+  update: PropTypes.func,
 };
 
 export default EditMachineForm;

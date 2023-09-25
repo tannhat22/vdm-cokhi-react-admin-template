@@ -28,10 +28,11 @@ const style = {
   padding: 0,
 };
 
-const Login = ({ id, machineName }) => {
+const ResetForm = ({ id, machineName }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
+  const [status, setStatus] = useState('');
   const [values, setValues] = useState({
     pass: '',
     showPass: false,
@@ -59,6 +60,8 @@ const Login = ({ id, machineName }) => {
 
       if (result.success) {
         setOpenLogin(false);
+      } else {
+        setStatus(result.status);
       }
     });
   }
@@ -130,7 +133,7 @@ const Login = ({ id, machineName }) => {
                     placeholder="Password"
                     variant="outlined"
                     required
-                    helperText={successServ ? '' : 'Incorrect password.'}
+                    helperText={status}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -169,9 +172,9 @@ const Login = ({ id, machineName }) => {
   );
 };
 
-Login.propTypes = {
+ResetForm.propTypes = {
   id: PropTypes.number,
   machineName: PropTypes.string,
 };
 
-export default Login;
+export default ResetForm;

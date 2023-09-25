@@ -35,11 +35,13 @@ function MachineDataTable({ id, days, machineName }) {
     });
 
     getMachineDataClient.callService(requestMachineData, function (result) {
-      let dataShow = [];
-      for (let i = 0; i < days; i++) {
-        dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i]]);
+      if (result.success) {
+        let dataShow = [];
+        for (let i = 0; i < days; i++) {
+          dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i]]);
+        }
+        setData(dataShow);
       }
-      setData(dataShow);
     });
   }, []);
 

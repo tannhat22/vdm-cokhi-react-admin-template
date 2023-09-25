@@ -24,31 +24,30 @@ import OperationTimeChart from './OperationTimeChart';
 import MainCard from 'components/MainCard';
 import MachineDataTable from './MachineDataTable';
 import SignalLightArea from './SignalLightArea';
-import Login from './PassWordForm';
+import ResetForm from './ResetForm';
 
 import RosPropsContext from 'context/RosPropsContext';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 const DashboardDefault = () => {
   const location = useLocation();
-  let id = 1;
+  let id = 0;
+  let stt = 0;
   if (location.state) {
     id = location.state.id;
+    stt = location.state.stt;
+    console.log(`id: ${id}`);
+    console.log(`stt: ${stt}`);
   }
 
   const [days, setDays] = useState(30);
   const [idMachine, setIdMachine] = useState(id);
+  const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
 
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
-    // var resetMachineClient = new ROSLIB.Service({
-    //   ros: ros,
-    //   name: '/reset_machine',
-    //   serviceType: 'vdm_cokhi_machine_msgs/ResetMachine',
-    // });
-
     var getMachinesNameClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_all_machine_name',
@@ -60,24 +59,28 @@ const DashboardDefault = () => {
     });
 
     getMachinesNameClient.callService(requestMachinesName, function (result) {
-      let dataNames = [];
-      for (let i = 0; i < result.machines_quantity; i++) {
-        dataNames.push({
-          id: i + 1,
-          label: result.machines_name[i],
-        });
+      if (result.success) {
+        let dataNames = [];
+        for (let i = 0; i < result.machines_quantity; i++) {
+          dataNames.push({
+            id: result.id_machines[i],
+            label: result.machines_name[i],
+          });
+        }
+        setMachineNames(dataNames);
       }
-      setMachineNames(dataNames);
     });
   }, []);
 
   function handleValueChange(event, value, reason) {
+    // console.log(value);
     if (reason === 'selectOption') {
-      const idMachineNew = machineNames.findIndex((machineName) => {
+      const sttMachineNew = machineNames.findIndex((machineName) => {
         return value.label === machineName.label;
       });
-      if (idMachineNew !== -1) {
-        setIdMachine(idMachineNew + 1);
+      if (sttMachineNew !== -1) {
+        setSttMachine(sttMachineNew);
+        setIdMachine(machineNames[sttMachineNew].id);
       } else {
         console.log('Machine name not found');
       }
@@ -104,14 +107,16 @@ const DashboardDefault = () => {
           isOptionEqualToValue={(option, value) => {
             return option.label === value;
           }}
-          value={machineNames.length ? machineNames[idMachine - 1].label : null}
+          value={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : null}
           sx={{ width: '100%' }}
           onChange={handleValueChange}
           renderInput={(params) => <TextField {...params} label="Machine name" />}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
-        {machineNames.length ? <Login id={idMachine} machineName={machineNames[idMachine - 1].label} /> : null}
+        {idMachine !== 0 && machineNames.length > 0 ? (
+          <ResetForm id={idMachine} machineName={machineNames[sttMachine].label} />
+        ) : null}
       </Grid>
       <InformArea />
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
@@ -124,20 +129,13 @@ const DashboardDefault = () => {
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button
-                size="small"
-                // onClick={() => setSlot('7 days')}
-                // color={slot === '7 days' ? 'primary' : 'secondary'}
-                // variant={slot === '7 days' ? 'outlined' : 'text'}
-              >
-                7 days ago
-              </Button>
+              <Button size="small">7 days ago</Button>
             </Stack>
           </Grid>
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart />
+            <OperationTimeChart id={idMachine} />
           </Box>
         </MainCard>
       </Grid>
@@ -148,7 +146,9 @@ const DashboardDefault = () => {
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">{machineNames.length ? machineNames[idMachine - 1].label : 'no info'}</Button>
+              <Button size="small">
+                {idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
+              </Button>
             </Stack>
           </Grid>
         </Grid>
@@ -186,7 +186,7 @@ const DashboardDefault = () => {
         <MainCard sx={{ mt: 2 }} content={false}>
           <MachineDataTable
             id={idMachine}
-            machineName={machineNames.length ? machineNames[idMachine - 1].label : 'no info'}
+            machineName={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
             days={days}
           />
         </MainCard>

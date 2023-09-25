@@ -32,10 +32,11 @@ const style = {
   padding: 0,
 };
 
-const DeleteMachineForm = ({ id, machineName }) => {
+const DeleteMachineForm = ({ id, machineName, update }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
+  const [status, setStatus] = useState('');
   const [values, setValues] = useState({
     pass: '',
     showPass: false,
@@ -65,6 +66,9 @@ const DeleteMachineForm = ({ id, machineName }) => {
 
       if (result.success) {
         setOpenDelete(false);
+        update();
+      } else {
+        setStatus(result.status);
       }
     });
   }
@@ -132,7 +136,7 @@ const DeleteMachineForm = ({ id, machineName }) => {
                     placeholder="Password"
                     variant="outlined"
                     required
-                    helperText={successServ ? '' : 'Incorrect password.'}
+                    helperText={status}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -174,6 +178,7 @@ const DeleteMachineForm = ({ id, machineName }) => {
 DeleteMachineForm.propTypes = {
   id: PropTypes.number,
   machineName: PropTypes.string,
+  update: PropTypes.func,
 };
 
 export default DeleteMachineForm;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import ROSLIB from 'roslib';
 import {
   Box,
@@ -30,10 +31,11 @@ const style = {
   padding: 0,
 };
 
-const AddMachineForm = () => {
+const AddMachineForm = ({ update }) => {
   const [openAdd, setOpenAdd] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
+  const [status, setStatus] = useState('');
   const [values, setValues] = useState({
     pass: '',
     name: '',
@@ -50,7 +52,7 @@ const AddMachineForm = () => {
     serviceType: 'vdm_cokhi_machine_msgs/CreateMachine',
   });
 
-  function UpdateServiceCall(password, name) {
+  function CreateServiceCall(password, name) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
       password,
@@ -64,6 +66,9 @@ const AddMachineForm = () => {
 
       if (result.success) {
         setOpenAdd(false);
+        update();
+      } else {
+        setStatus(result.status);
       }
     });
   }
@@ -80,7 +85,7 @@ const AddMachineForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    UpdateServiceCall(values.pass, values.newName);
+    CreateServiceCall(values.pass, values.name.trim());
   };
 
   const handleChange = (e) => {
@@ -151,7 +156,7 @@ const AddMachineForm = () => {
                     placeholder="Password"
                     variant="outlined"
                     required
-                    helperText={successServ ? '' : 'Incorrect password.'}
+                    helperText={status}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -188,6 +193,10 @@ const AddMachineForm = () => {
       </Modal>
     </Fragment>
   );
+};
+
+AddMachineForm.propTypes = {
+  update: PropTypes.func,
 };
 
 export default AddMachineForm;

@@ -37,24 +37,30 @@ function InformArea({ id }) {
         timeReachspeed: 0,
       };
 
+      const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
+      if (sttMachine === -1) {
+        console.log('ID not found!');
+        return;
+      }
+
       const noload = {
-        hours: Math.floor(data.state_machines[id - 1].noload / 60),
-        mins: data.state_machines[id - 1].noload % 60,
+        hours: Math.floor(data.state_machines[sttMachine].noload / 60),
+        mins: data.state_machines[sttMachine].noload % 60,
       };
 
       const underload = {
-        hours: Math.floor(data.state_machines[id - 1].underload / 60),
-        mins: data.state_machines[id - 1].underload % 60,
+        hours: Math.floor(data.state_machines[sttMachine].underload / 60),
+        mins: data.state_machines[sttMachine].underload % 60,
       };
 
       dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
       dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
       dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
       dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
-      dataNew.gt.min = data.state_machines[id - 1].value_setting.min;
-      dataNew.gt.max = data.state_machines[id - 1].value_setting.max;
-      dataNew.gt.current = data.state_machines[id - 1].value_setting.current;
-      dataNew.timeReachSpeed = data.state_machines[id - 1].time_reachspeed;
+      dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
+      dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
+      dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
+      dataNew.timeReachSpeed = data.state_machines[sttMachine].time_reachspeed;
 
       setDataMachine(dataNew);
     }

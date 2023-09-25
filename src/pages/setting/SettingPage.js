@@ -1,5 +1,5 @@
 // import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import ROSLIB from 'roslib';
 
 // import { IconButton, Tooltip } from '@mui/material';
@@ -13,17 +13,20 @@ import EditMachineForm from './EditMachineForm';
 import DeleteMachineForm from './DeleteMachineForm';
 
 function SettingPage() {
+  const [reRender, setReRender] = useState(false);
   const [data, setData] = React.useState([
-    {
-      id: 1,
-      name: 'Machine 1',
-      action: false,
-    },
-    {
-      id: 2,
-      name: 'Machine 2',
-      action: false,
-    },
+    // {
+    //   stt: 0,
+    //   id: 1,
+    //   name: 'Machine 1',
+    //   action: false,
+    // },
+    // {
+    //   stt: 1,
+    //   id: 2,
+    //   name: 'Machine 2',
+    //   action: false,
+    // },
   ]);
 
   // console.log('re-render');
@@ -45,11 +48,15 @@ function SettingPage() {
     getAllMachineNameClient.callService(requestAllMachineName, function (result) {
       let dataShow = [];
       for (let i = 0; i < result.machines_quantity; i++) {
-        dataShow.push([i + 1, result.machines_name[i], false]);
+        dataShow.push([i, result.id_machines[i], result.machines_name[i], false]);
       }
       setData(dataShow);
     });
-  }, []);
+  }, [reRender]);
+
+  function updateFromChild() {
+    setReRender(!reRender);
+  }
 
   const getMuiTheme = () =>
     createTheme({
@@ -66,11 +73,19 @@ function SettingPage() {
 
   const columns = [
     {
+      name: 'stt',
+      label: ' ',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
       name: 'id',
       label: 'ID',
       options: {
         filter: true,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -97,8 +112,12 @@ function SettingPage() {
         customBodyRender: (value, tableMeta) => {
           return (
             <div>
-              <EditMachineForm id={tableMeta.rowData[0]} machineName={tableMeta.rowData[1]} />
-              <DeleteMachineForm id={tableMeta.rowData[0]} machineName={tableMeta.rowData[1]} />
+              <EditMachineForm id={tableMeta.rowData[1]} machineName={tableMeta.rowData[2]} update={updateFromChild} />
+              <DeleteMachineForm
+                id={tableMeta.rowData[1]}
+                machineName={tableMeta.rowData[2]}
+                update={updateFromChild}
+              />
             </div>
           );
         },
@@ -118,7 +137,7 @@ function SettingPage() {
   return (
     <Box>
       <ThemeProvider theme={getMuiTheme()}>
-        <AddMachineForm />
+        <AddMachineForm update={updateFromChild} />
         <br />
         <MUIDataTable title={`Machines table`} data={data} columns={columns} options={options} />
       </ThemeProvider>

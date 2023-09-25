@@ -17,9 +17,9 @@ import menuItems from 'menu-items';
 
 function OverviewTable() {
   const [data, setData] = React.useState([
-    [1, 'Machine 1', 239, 239, 1, false],
-    [2, 'Machine 2', 191, 191, 1, false],
-    [3, 'Machine 3', 211, 211, 1, false],
+    // [0, 1, 'Machine 1', 239, 239, 1, false],
+    // [1, 2, 'Machine 2', 191, 191, 1, false],
+    // [2, 3, 'Machine 3', 211, 211, 1, false],
   ]);
   const ros = React.useContext(RosPropsContext);
 
@@ -45,7 +45,8 @@ function OverviewTable() {
       let dataShow = [];
       for (let i = 0; i < data.machines_quantity; i++) {
         dataShow.push([
-          i + 1,
+          i,
+          data.id_machines[i],
           data.state_machines[i].name,
           data.state_machines[i].noload,
           data.state_machines[i].underload,
@@ -61,11 +62,13 @@ function OverviewTable() {
     };
   }, []);
 
-  const redirectToDashboard = (id) => {
+  const redirectToDashboard = (id, stt) => {
+    console.log(id);
     dispatch(activeItem({ openItem: [dashboardId] }));
     navigate(dashboardUrl, {
       state: {
         id,
+        stt,
       },
     });
   };
@@ -84,6 +87,14 @@ function OverviewTable() {
     });
 
   const columns = [
+    {
+      name: 'stt',
+      label: ' ',
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
     {
       name: 'id',
       label: 'ID',
@@ -167,40 +178,25 @@ function OverviewTable() {
           style: { textAlign: 'center', justifyContent: 'center' },
         }),
         customBodyRender: (value, tableMeta) => {
-          // console.log(tableMeta.rowData[1]);
           return (
             <div>
               <Tooltip title="View" arrow>
                 <IconButton
                   aria-label="view"
-                  machineid={tableMeta.rowData[0]}
+                  machineid={tableMeta.rowData[1]}
+                  stt={tableMeta.rowData[0]}
                   // color="primary"
                   sx={{ fontSize: '1.1rem', '&:hover': { color: '#1890ff' } }}
                   onClick={(event) => {
-                    redirectToDashboard(Number(event.target.getAttribute('machineid')));
+                    redirectToDashboard(
+                      Number(event.currentTarget.getAttribute('machineid')),
+                      Number(event.currentTarget.getAttribute('stt')),
+                    );
                   }}
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </IconButton>
               </Tooltip>
-              {/* <Tooltip title="Edit" arrow>
-                <IconButton
-                  aria-label="edit"
-                  machineid={tableMeta.rowData[0]}
-                  sx={{ fontSize: '1.1rem', '&:hover': { color: 'green' } }}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Delete" arrow>
-                <IconButton
-                  aria-label="delete"
-                  machineid={tableMeta.rowData[0]}
-                  sx={{ fontSize: '1.1rem', '&:hover': { color: 'red' } }}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </IconButton>
-              </Tooltip> */}
             </div>
           );
         },
