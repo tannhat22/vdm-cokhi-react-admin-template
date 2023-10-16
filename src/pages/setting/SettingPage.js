@@ -90,7 +90,7 @@ function SettingPage() {
     },
     {
       name: 'name',
-      label: 'Machine name',
+      label: 'Tên máy',
       options: {
         filter: true,
         sort: true,
@@ -98,7 +98,7 @@ function SettingPage() {
     },
     {
       name: 'action',
-      label: 'Action',
+      label: 'Lựa chọn  ',
       options: {
         filter: false,
         sort: false,
@@ -139,7 +139,7 @@ function SettingPage() {
       <ThemeProvider theme={getMuiTheme()}>
         <AddMachineForm update={updateFromChild} />
         <br />
-        <MUIDataTable title={`Machines table`} data={data} columns={columns} options={options} />
+        <MUIDataTable title={`Bảng thông tin máy`} data={data} columns={columns} options={options} />
       </ThemeProvider>
     </Box>
   );

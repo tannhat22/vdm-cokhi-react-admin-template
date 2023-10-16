@@ -123,7 +123,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
               <Grid container direction="column" spacing={2}>
                 <Grid item>
                   <Typography>
-                    <span style={{ color: 'red' }}>Delete machine:</span> {`${machineName}`}
+                    <span style={{ color: 'red' }}>Xóa máy:</span> {`${machineName}`}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -132,8 +132,8 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Password"
-                    placeholder="Password"
+                    label="Mật khẩu"
+                    placeholder="Mật khẩu"
                     variant="outlined"
                     required
                     helperText={status}
@@ -157,7 +157,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
 
                 <Grid item>
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Delete
+                    Xác nhận xóa
                   </Button>
                 </Grid>
 

@@ -105,7 +105,7 @@ function OverviewTable() {
     },
     {
       name: 'name',
-      label: 'Machine name',
+      label: 'Tên máy',
       options: {
         filter: true,
         sort: true,
@@ -114,7 +114,7 @@ function OverviewTable() {
     },
     {
       name: 'noLoad',
-      label: 'No-load operating time',
+      label: 'Thời gian hoạt động không tải',
       options: {
         filter: false,
         sort: true,
@@ -129,7 +129,7 @@ function OverviewTable() {
     },
     {
       name: 'underload',
-      label: 'Under load operating time',
+      label: 'Thời gian hoạt động có tải',
       options: {
         filter: false,
         sort: true,
@@ -144,7 +144,7 @@ function OverviewTable() {
     },
     {
       name: 'signalLight',
-      label: 'Signal Light',
+      label: 'Đèn tín hiệu',
       options: {
         filter: false,
         sort: false,
@@ -166,7 +166,7 @@ function OverviewTable() {
     },
     {
       name: 'action',
-      label: 'Action',
+      label: 'Lựa chọn',
       options: {
         filter: false,
         sort: false,
@@ -216,7 +216,7 @@ function OverviewTable() {
 
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable title={'Machine State Overview'} data={data} columns={columns} options={options} />
+      <MUIDataTable title={'Bảng Trạng Thái Máy Tổng Thể'} data={data} columns={columns} options={options} />
     </ThemeProvider>
   );
 }

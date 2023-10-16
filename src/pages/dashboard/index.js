@@ -45,6 +45,9 @@ const DashboardDefault = () => {
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
 
+  console.log('re-render');
+  console.log(idMachine);
+
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
@@ -73,14 +76,15 @@ const DashboardDefault = () => {
   }, []);
 
   function handleValueChange(event, value, reason) {
-    // console.log(value);
     if (reason === 'selectOption') {
       const sttMachineNew = machineNames.findIndex((machineName) => {
         return value.label === machineName.label;
       });
+
       if (sttMachineNew !== -1) {
         setSttMachine(sttMachineNew);
         setIdMachine(machineNames[sttMachineNew].id);
+        console.log('Set new id');
       } else {
         console.log('Machine name not found');
       }
@@ -110,7 +114,7 @@ const DashboardDefault = () => {
           value={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : null}
           sx={{ width: '100%' }}
           onChange={handleValueChange}
-          renderInput={(params) => <TextField {...params} label="Machine name" />}
+          renderInput={(params) => <TextField {...params} label="Chọn tên máy" />}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
@@ -118,18 +122,18 @@ const DashboardDefault = () => {
           <ResetForm id={idMachine} machineName={machineNames[sttMachine].label} />
         ) : null}
       </Grid>
-      <InformArea />
+      <InformArea id={idMachine} />
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
       {/* row 2 */}
       <Grid item xs={12} md={8} lg={9}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Operating time statistics</Typography>
+            <Typography variant="h5">Biểu đồ thời giạn hoạt động</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">7 days ago</Button>
+              <Button size="small">7 ngày gần nhất</Button>
             </Stack>
           </Grid>
         </Grid>
@@ -142,7 +146,7 @@ const DashboardDefault = () => {
       <Grid item xs={12} md={4} lg={3}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Signal Light</Typography>
+            <Typography variant="h5">Đèn tín hiệu</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
@@ -161,12 +165,12 @@ const DashboardDefault = () => {
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Machine data</Typography>
+            <Typography variant="h5">Dữ liệu của máy</Typography>
           </Grid>
           <Grid item>
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
-                <InputLabel id="days-select-label">Days</InputLabel>
+                <InputLabel id="days-select-label">Ngày</InputLabel>
                 <Select
                   labelId="days-select-label"
                   id="days-simple-select"
@@ -174,10 +178,11 @@ const DashboardDefault = () => {
                   label="Days"
                   onChange={handleChangeSelectDays}
                 >
-                  <MenuItem value={7}>7 days</MenuItem>
-                  <MenuItem value={14}>14 days</MenuItem>
-                  <MenuItem value={30}>30 days</MenuItem>
-                  <MenuItem value={90}>All data</MenuItem>
+                  <MenuItem value={7}>7 ngày</MenuItem>
+                  <MenuItem value={14}>14 ngày</MenuItem>
+                  <MenuItem value={30}>30 ngày</MenuItem>
+                  <MenuItem value={90}>90 ngày</MenuItem>
+                  <MenuItem value={365}>Tất cả dữ liệu</MenuItem>
                 </Select>
               </FormControl>
             </Box>

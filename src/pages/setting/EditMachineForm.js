@@ -132,8 +132,8 @@ const EditMachineForm = ({ id, machineName, update }) => {
                     name="newName"
                     type="text"
                     fullWidth
-                    label="Machine name"
-                    placeholder="New machine name"
+                    label="Tên máy"
+                    placeholder="Tên máy mới"
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -145,8 +145,8 @@ const EditMachineForm = ({ id, machineName, update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Password"
-                    placeholder="Password"
+                    label="Mật khẩu"
+                    placeholder="Mật khẩu"
                     variant="outlined"
                     required
                     helperText={status}
@@ -171,7 +171,7 @@ const EditMachineForm = ({ id, machineName, update }) => {
                 <Grid item>
                   {/* <Button type="submit" fullWidth variant="contained"> */}
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Update machine
+                    Cập nhật máy
                   </Button>
                 </Grid>
 

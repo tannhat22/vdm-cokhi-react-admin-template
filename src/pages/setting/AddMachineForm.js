@@ -115,7 +115,7 @@ const AddMachineForm = ({ update }) => {
           sx={{ width: '20%', display: 'flex', alignItems: 'center' }}
           startIcon={<FontAwesomeIcon icon={faPlus} />}
         >
-          Add machine
+          Thêm máy mới
         </Button>
         {/* <IconButton aria-label="edit" sx={{ fontSize: '1.1rem', '&:hover': { color: 'green' } }} onClick={handleOpen}>
         <FontAwesomeIcon icon={faPlus} /> Add machine
@@ -132,15 +132,15 @@ const AddMachineForm = ({ update }) => {
             <form onSubmit={handleSubmit}>
               <Grid container direction="column" spacing={2}>
                 <Grid item>
-                  <Typography sx={{ color: 'green' }}>Add machine</Typography>
+                  <Typography sx={{ color: 'green' }}>Thêm máy mới</Typography>
                 </Grid>
                 <Grid item>
                   <TextField
                     name="name"
                     type="text"
                     fullWidth
-                    label="Machine name"
-                    placeholder="Machine name"
+                    label="Tên máy"
+                    placeholder="Tên máy"
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -152,8 +152,8 @@ const AddMachineForm = ({ update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Password"
-                    placeholder="Password"
+                    label="Mật Khẩu"
+                    placeholder="Mật Khẩu"
                     variant="outlined"
                     required
                     helperText={status}
@@ -177,7 +177,7 @@ const AddMachineForm = ({ update }) => {
 
                 <Grid item>
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Add machine
+                    Thêm máy
                   </Button>
                 </Grid>
 

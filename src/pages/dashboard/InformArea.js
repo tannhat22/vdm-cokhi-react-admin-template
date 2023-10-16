@@ -10,8 +10,8 @@ function InformArea({ id }) {
   const [dataMachine, setDataMachine] = useState({
     noloadTime: { hours: '00', minutes: '00' },
     underloadTime: { hours: '00', minutes: '00' },
-    gt: { min: 0, max: 0, current: 0 },
-    timeReachspeed: 0,
+    // gt: { min: 0, max: 0, current: 0 },
+    // timeReachspeed: 0,
   });
 
   const ros = useContext(RosPropsContext);
@@ -33,8 +33,8 @@ function InformArea({ id }) {
       let dataNew = {
         noloadTime: { hours: 0, minutes: 0 },
         underloadTime: { hours: 0, minutes: 0 },
-        gt: { min: 0, max: 0, current: 0 },
-        timeReachspeed: 0,
+        // gt: { min: 0, max: 0, current: 0 },
+        // timeReachspeed: 0,
       };
 
       const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
@@ -57,10 +57,10 @@ function InformArea({ id }) {
       dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
       dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
       dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
-      dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
-      dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
-      dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
-      dataNew.timeReachSpeed = data.state_machines[sttMachine].time_reachspeed;
+      // dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
+      // dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
+      // dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
+      // dataNew.timeReachSpeed = data.state_machines[sttMachine].time_reachspeed;
 
       setDataMachine(dataNew);
     }
@@ -68,36 +68,38 @@ function InformArea({ id }) {
     return () => {
       listener.unsubscribe();
     };
-  }, []);
+  }, [id]);
 
   return (
     <Fragment>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="No-load operating time"
+          title="Thời gian hoạt động không tải"
           desc={`${dataMachine.noloadTime.hours} h : ${dataMachine.noloadTime.minutes} m`}
-          time="Time: 25/9/2023 17:55"
+          time="         "
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Under load operating time"
+          title="Thời gian hoạt động có tải"
           desc={`${dataMachine.underloadTime.hours} h : ${dataMachine.underloadTime.minutes} m`}
-          time="Time: 25/9/2023 17:55"
+          time="         "
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="GT"
-          desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Current: ${dataMachine.gt.current}`}
-          time="Time: 25/9/2023 17:55"
+          title="Giá trị cài đặt"
+          // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
+          desc={'No information'}
+          time="         "
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Time to reach speed"
-          desc={`${dataMachine.timeReachspeed} ms`}
-          time="Time: 25-9-2023 17:55"
+          title="Thời gian đạt tốc độ"
+          // desc={`${dataMachine.timeReachspeed} ms`}
+          desc={'No information'}
+          time="         "
         />
       </Grid>
     </Fragment>

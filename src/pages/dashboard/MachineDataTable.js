@@ -43,7 +43,7 @@ function MachineDataTable({ id, days, machineName }) {
         setData(dataShow);
       }
     });
-  }, []);
+  }, [id]);
 
   const getMuiTheme = () =>
     createTheme({
@@ -107,7 +107,7 @@ function MachineDataTable({ id, days, machineName }) {
   return (
     <Box>
       <ThemeProvider theme={getMuiTheme()}>
-        <MUIDataTable title={`Machine data (${machineName})`} data={data} columns={columns} options={options} />
+        <MUIDataTable title={`Bảng dữ liệu máy (${machineName})`} data={data} columns={columns} options={options} />
       </ThemeProvider>
     </Box>
   );

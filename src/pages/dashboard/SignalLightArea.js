@@ -31,7 +31,9 @@ const SignalLightArea = ({ id }) => {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
+      const sttMachine = data.id_machines.findIndex((id_machine) => {
+        return id_machine === id;
+      });
       if (sttMachine === -1) {
         console.log('ID not found!');
         return;
@@ -56,7 +58,7 @@ const SignalLightArea = ({ id }) => {
     return () => {
       listener.unsubscribe();
     };
-  }, []);
+  }, [id]);
 
   return (
     <Box>
