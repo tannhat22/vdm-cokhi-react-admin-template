@@ -60,7 +60,7 @@ const AddMachineForm = ({ update }) => {
     });
 
     resetMachineClient.callService(requestReset, function (result) {
-      console.log(result);
+      // console.log(result);
       setIsLoad(false);
       setSuccessServ(result.success);
 
@@ -84,7 +84,7 @@ const AddMachineForm = ({ update }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
     CreateServiceCall(values.pass, values.name.trim());
   };
 

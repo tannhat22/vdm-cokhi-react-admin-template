@@ -13,13 +13,13 @@ import RosPropsContext from 'context/RosPropsContext';
 const areaChartOptions = {
   chart: {
     height: 450,
-    type: 'area',
+    type: 'bar',
     toolbar: {
       show: false,
     },
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
   },
   stroke: {
     curve: 'smooth',
@@ -39,15 +39,15 @@ const OperationTimeChart = ({ id }) => {
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
-  const [days, setDays] = useState([]);
+  const [days, setDays] = useState([]); //'10/12', '11/12', '12/12', '13/12', '14/12', '15/12', '16/12'
   const [series, setSeries] = useState([
     {
-      name: 'No-load',
-      data: [],
+      name: 'Không tải',
+      data: [], //10, 20, 30, 40, 50, 60, 70
     },
     {
-      name: 'Under Load',
-      data: [],
+      name: 'Có tải',
+      data: [], //50, 40, 20, 10, 20, 30, 40
     },
   ]);
 
@@ -67,25 +67,29 @@ const OperationTimeChart = ({ id }) => {
 
     getMachineDataClient.callService(requestMachineData, function (result) {
       if (result.success) {
-        setDays(result.dates);
+        let dates = [];
+        for (let i = 0; i < result.dates.length; i++) {
+          dates.push(result.dates[i].slice(result.dates[i].indexOf('-') + 1, result.dates[i].indexOf(' ')));
+        }
+        setDays(dates);
         setSeries([
           {
-            name: 'No-load',
+            name: 'Không tải',
             data: result.noload,
           },
           {
-            name: 'Under Load',
+            name: 'Có tải',
             data: result.underload,
           },
         ]);
       }
     });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, theme.palette.primary[700]],
+      colors: [theme.palette.primary.main, 'rgba(252,185,0,1)'],
       xaxis: {
         categories: days,
         labels: {
@@ -126,9 +130,9 @@ const OperationTimeChart = ({ id }) => {
         theme: 'light',
       },
     }));
-  }, [primary, secondary, line, theme]);
+  }, [primary, secondary, line, theme, days]);
 
-  return <ReactApexChart options={options} series={series} type="area" height={450} />;
+  return <ReactApexChart options={options} series={series} type="bar" height={450} />;
 };
 
 OperationTimeChart.propTypes = {

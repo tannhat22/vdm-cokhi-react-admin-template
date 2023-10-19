@@ -36,17 +36,14 @@ const DashboardDefault = () => {
   if (location.state) {
     id = location.state.id;
     stt = location.state.stt;
-    console.log(`id: ${id}`);
-    console.log(`stt: ${stt}`);
+    // console.log(`id: ${id}`);
+    // console.log(`stt: ${stt}`);
   }
 
   const [days, setDays] = useState(30);
   const [idMachine, setIdMachine] = useState(id);
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
-
-  console.log('re-render');
-  console.log(idMachine);
 
   const ros = useContext(RosPropsContext);
 
@@ -84,7 +81,6 @@ const DashboardDefault = () => {
       if (sttMachineNew !== -1) {
         setSttMachine(sttMachineNew);
         setIdMachine(machineNames[sttMachineNew].id);
-        console.log('Set new id');
       } else {
         console.log('Machine name not found');
       }

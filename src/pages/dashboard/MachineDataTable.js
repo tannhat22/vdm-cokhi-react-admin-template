@@ -69,7 +69,7 @@ function MachineDataTable({ id, days, machineName }) {
     },
     {
       name: 'date',
-      label: 'Date',
+      label: 'Ngày tháng',
       options: {
         filter: true,
         sort: true,
@@ -78,7 +78,7 @@ function MachineDataTable({ id, days, machineName }) {
     },
     {
       name: 'noLoad',
-      label: 'No-load operating time (minutes)',
+      label: 'Thời gian hoạt động không tải (phút)',
       options: {
         filter: false,
         sort: true,
@@ -86,7 +86,7 @@ function MachineDataTable({ id, days, machineName }) {
     },
     {
       name: 'underLoad',
-      label: 'Under load operating time (minutes)',
+      label: 'Thời gian hoạt động có tải (phút)',
       options: {
         filter: false,
         sort: true,

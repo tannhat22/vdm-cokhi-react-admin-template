@@ -60,7 +60,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
     });
 
     resetMachineClient.callService(requestReset, function (result) {
-      console.log(result);
+      // console.log(result);
       setIsLoad(false);
       setSuccessServ(result.success);
 
@@ -84,7 +84,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
     UpdateServiceCall(values.pass, values.newName);
   };
 

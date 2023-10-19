@@ -54,7 +54,6 @@ const ResetForm = ({ id, machineName }) => {
     });
 
     resetMachineClient.callService(requestReset, function (result) {
-      console.log(result);
       setIsLoad(false);
       setSuccessServ(result.success);
 
@@ -77,7 +76,7 @@ const ResetForm = ({ id, machineName }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
     ResetServiceCall(values.pass);
   };
 

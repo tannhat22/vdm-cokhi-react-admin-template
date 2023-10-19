@@ -63,7 +63,7 @@ function OverviewTable() {
   }, []);
 
   const redirectToDashboard = (id, stt) => {
-    console.log(id);
+    // console.log(id);
     dispatch(activeItem({ openItem: [dashboardId] }));
     navigate(dashboardUrl, {
       state: {
