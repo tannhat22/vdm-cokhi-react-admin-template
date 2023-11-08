@@ -1,4 +1,5 @@
 :root {
+  --size-signal-light-layout: 5%;
   --size-signal-light-lg: 60px;
 }
 
@@ -17,6 +18,16 @@
   justify-content: center;
   align-items: center;
   height: calc(var(--size-signal-light-lg) + 10px);
+  width: 100%;
+  margin: 10px 0;
+  float: left;
+}
+
+.led-box-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 30px; */
   width: 100%;
   margin: 10px 0;
   float: left;
@@ -234,6 +245,14 @@
   background-color: #24e0ff;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
+}
+
+.led-off-layout {
+  margin: 0;
+  /* width: var(--size-signal-light-layout);
+  height: var(--size-signal-light-layout); */
+  background-color: #8080806b;
+  border-radius: 50%;
 }
 
 .led-off-lg {

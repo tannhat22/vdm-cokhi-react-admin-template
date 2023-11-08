@@ -1,10 +1,11 @@
 // assets
-import { DashboardOutlined, HomeOutlined, SettingOutlined } from '@ant-design/icons';
+import { DashboardOutlined, HomeOutlined, LayoutOutlined, SettingOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
   DashboardOutlined,
   HomeOutlined,
+  LayoutOutlined,
   SettingOutlined,
 };
 
@@ -29,6 +30,14 @@ const dashboard = {
       type: 'item',
       url: '/dashboard',
       icon: icons.DashboardOutlined,
+      breadcrumbs: true,
+    },
+    {
+      id: 'layout',
+      title: 'Layout',
+      type: 'item',
+      url: '/layout',
+      icon: icons.LayoutOutlined,
       breadcrumbs: true,
     },
     {

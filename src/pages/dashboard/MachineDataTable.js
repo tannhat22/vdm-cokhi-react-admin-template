@@ -43,7 +43,7 @@ function MachineDataTable({ id, days, machineName }) {
         setData(dataShow);
       }
     });
-  }, [id]);
+  }, [id, days]);
 
   const getMuiTheme = () =>
     createTheme({

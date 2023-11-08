@@ -10,6 +10,9 @@ const OverviewPageDefault = Loadable(lazy(() => import('pages/overview')));
 // render - dashboard
 const Dashboard = Loadable(lazy(() => import('pages/dashboard')));
 
+// render - layout
+const Layout = Loadable(lazy(() => import('pages/layout')));
+
 // render - setting
 const Setting = Loadable(lazy(() => import('pages/setting')));
 
@@ -42,6 +45,10 @@ const MainRoutes = {
       //     element: <Dashboard />,
       //   },
       // ],
+    },
+    {
+      path: 'layout',
+      element: <Layout />,
     },
     {
       path: 'setting',
