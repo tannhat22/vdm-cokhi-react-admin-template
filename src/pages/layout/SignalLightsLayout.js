@@ -3,12 +3,14 @@ import { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import ROSLIB from 'roslib';
+// import { Button } from '@mui/material';
 
 import RosPropsContext from 'context/RosPropsContext';
 import SignalLight from 'components/SignalLight';
 
 function SignalLightsLayout({ width, height }) {
   const [colors, setColors] = useState([]);
+  // const [ids, setIds] = useState([]);
 
   const ros = useContext(RosPropsContext);
 
@@ -44,6 +46,7 @@ function SignalLightsLayout({ width, height }) {
       }
 
       setColors(colorsData);
+      // setIds(data.id_machines);
     }
     return () => {
       listener.unsubscribe();

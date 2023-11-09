@@ -129,7 +129,7 @@ const DashboardDefault = () => {
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">7 ngày gần nhất</Button>
+              <Button size="small">10 ngày gần nhất</Button>
             </Stack>
           </Grid>
         </Grid>

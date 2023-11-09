@@ -12,8 +12,10 @@ import RosPropsContext from 'context/RosPropsContext';
 // chart options
 const areaChartOptions = {
   chart: {
-    height: 450,
     type: 'bar',
+    height: 450,
+    stacked: true,
+    stackType: '100%',
     toolbar: {
       show: false,
     },
@@ -21,13 +23,13 @@ const areaChartOptions = {
   dataLabels: {
     enabled: true,
   },
-  stroke: {
-    curve: 'smooth',
-    width: 2,
-  },
-  grid: {
-    strokeDashArray: 0,
-  },
+  // stroke: {
+  //   curve: 'smooth',
+  //   width: 2,
+  // },
+  // grid: {
+  //   strokeDashArray: 0,
+  // },
 };
 
 // ==============================|| INCOME AREA CHART ||============================== //
@@ -39,15 +41,19 @@ const OperationTimeChart = ({ id }) => {
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
-  const [days, setDays] = useState([]); //'10/12', '11/12', '12/12', '13/12', '14/12', '15/12', '16/12'
+  const [days, setDays] = useState([]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
   const [series, setSeries] = useState([
     {
+      name: 'Tắt máy',
+      data: [], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+    },
+    {
       name: 'Không tải',
-      data: [], //10, 20, 30, 40, 50, 60, 70
+      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
     {
       name: 'Có tải',
-      data: [], //50, 40, 20, 10, 20, 30, 40
+      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
   ]);
 
@@ -62,7 +68,7 @@ const OperationTimeChart = ({ id }) => {
 
     let requestMachineData = new ROSLIB.ServiceRequest({
       id_machine: id,
-      days: 7,
+      days: 10,
     });
 
     getMachineDataClient.callService(requestMachineData, function (result) {
@@ -73,6 +79,10 @@ const OperationTimeChart = ({ id }) => {
         }
         setDays(dates);
         setSeries([
+          {
+            name: 'Tắt máy',
+            data: result.offtime,
+          },
           {
             name: 'Không tải',
             data: result.noload,
@@ -89,7 +99,7 @@ const OperationTimeChart = ({ id }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, 'rgba(252,185,0,1)'],
+      colors: [theme.palette.primary.main, 'rgb(0, 227, 150)', 'rgba(252,185,0,1)'],
       xaxis: {
         categories: days,
         labels: {
