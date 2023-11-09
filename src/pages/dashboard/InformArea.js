@@ -10,6 +10,7 @@ function InformArea({ id }) {
   const [dataMachine, setDataMachine] = useState({
     noloadTime: { hours: '00', minutes: '00' },
     underloadTime: { hours: '00', minutes: '00' },
+    offTime: { hours: '00', minutes: '00' },
     // gt: { min: 0, max: 0, current: 0 },
     // timeReachspeed: 0,
   });
@@ -33,6 +34,7 @@ function InformArea({ id }) {
       let dataNew = {
         noloadTime: { hours: 0, minutes: 0 },
         underloadTime: { hours: 0, minutes: 0 },
+        offTime: { hours: 0, minutes: 0 },
         // gt: { min: 0, max: 0, current: 0 },
         // timeReachspeed: 0,
       };
@@ -53,10 +55,17 @@ function InformArea({ id }) {
         mins: data.state_machines[sttMachine].underload % 60,
       };
 
+      const offtime = {
+        hours: Math.floor(data.state_machines[sttMachine].offtime / 60),
+        mins: data.state_machines[sttMachine].offtime % 60,
+      };
+
       dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
       dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
       dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
       dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
+      dataNew.offTime.hours = offtime.hours < 10 ? `0${offtime.hours}` : `${offtime.hours}`;
+      dataNew.offTime.minutes = offtime.mins < 10 ? `0${offtime.mins}` : `${offtime.mins}`;
       // dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
       // dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
       // dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
@@ -88,12 +97,20 @@ function InformArea({ id }) {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
+          title="Thời gian tắt máy"
+          // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
+          desc={`${dataMachine.offTime.hours} h : ${dataMachine.offTime.minutes} m`}
+          time="         "
+        />
+      </Grid>
+      {/* <Grid item xs={12} sm={6} md={4} lg={3}>
+        <AnalyticEcommerce
           title="Giá trị cài đặt"
           // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
           desc={'No information'}
           time="         "
         />
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
           title="Thời gian đạt tốc độ"

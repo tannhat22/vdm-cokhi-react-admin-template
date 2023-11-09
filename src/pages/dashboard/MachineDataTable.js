@@ -10,14 +10,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RosPropsContext from 'context/RosPropsContext';
 
 function MachineDataTable({ id, days, machineName }) {
-  // console.log(days);
-  // const [days, setDays] = React.useState(30);
   const [data, setData] = React.useState([
     // {
     //   id: 1,
     //   date: '',
     //   noLoad: 15,
     //   underLoad: 15,
+    //   offTime: 15,
     // },
   ]);
   const ros = React.useContext(RosPropsContext);
@@ -38,7 +37,7 @@ function MachineDataTable({ id, days, machineName }) {
       if (result.success) {
         let dataShow = [];
         for (let i = 0; i < days; i++) {
-          dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i]]);
+          dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i], result.offtime[i]]);
         }
         setData(dataShow);
       }
@@ -92,10 +91,20 @@ function MachineDataTable({ id, days, machineName }) {
         sort: true,
       },
     },
+    {
+      name: 'offTime',
+      label: 'Thời gian tắt máy (phút)',
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
   ];
 
   const options = {
     filter: true,
+    rowsPerPage: 30,
+    rowsPerPageOptions: [10, 30, 50, 100],
     filterType: 'dropdown',
     responsive: 'standard',
     selectableRows: 'none',

@@ -50,6 +50,7 @@ function OverviewTable() {
           data.state_machines[i].name,
           data.state_machines[i].noload,
           data.state_machines[i].underload,
+          data.state_machines[i].offtime,
           data.state_machines[i].signal_light,
           false,
         ]);
@@ -128,8 +129,23 @@ function OverviewTable() {
       },
     },
     {
-      name: 'underload',
+      name: 'underLoad',
       label: 'Thời gian hoạt động có tải',
+      options: {
+        filter: false,
+        sort: true,
+        customBodyRender: (value) => {
+          let hours = Math.floor(value / 60);
+          let mins = value % 60;
+          if (hours < 10) hours = `0${hours}`;
+          if (mins < 10) mins = `0${mins}`;
+          return `${hours} h : ${mins} m  `;
+        },
+      },
+    },
+    {
+      name: 'offTime',
+      label: 'Thời gian tắt máy',
       options: {
         filter: false,
         sort: true,
@@ -206,6 +222,8 @@ function OverviewTable() {
 
   const options = {
     filter: true,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 100],
     filterType: 'dropdown',
     responsive: 'standard',
     selectableRows: 'none',

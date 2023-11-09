@@ -1,19 +1,25 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import layoutImg from 'assets/images/layout/layout-ck-vdm-2023.jpg';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faEye } from '@fortawesome/free-solid-svg-icons';
 // import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
-import SignalLight from 'components/SignalLight';
+import SignalLightsLayout from './SignalLightsLayout';
 
 function LayoutPage() {
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
   const imgRef = React.useRef();
+
+  useSelector((state) => {
+    console.log('drawChange');
+    console.log(state);
+  });
 
   const handleResize = () => {
     console.log('resize');
@@ -24,15 +30,11 @@ function LayoutPage() {
   };
 
   const handleLoad = () => {
-    console.log('load');
     if (imgRef.current) {
       setTimeout(() => {
-        console.log('nhat');
         setWidth(imgRef.current.width);
         setHeight(imgRef.current.height);
       }, 200);
-      // setWidth(imgRef.current.width);
-      // setHeight(imgRef.current.height);
     }
   };
 
@@ -44,45 +46,32 @@ function LayoutPage() {
     // Bắt sự kiện resize để theo dõi sự thay đổi kích thước cửa sổ
     window.addEventListener('resize', handleResize);
 
-    // const myTimeout = setTimeout(() => {
-    //   console.log(imgRefCurrent.width);
-    //   console.log(imgRefCurrent.height);
-    //   setWidth(imgRefCurrent.width);
-    //   setHeight(imgRefCurrent.height);
-    // }, 300);
-
     return () => {
       // Gỡ bỏ bất kỳ sự kiện lắng nghe nào khi component unmount
       imgRefCurrent.removeEventListener('load', handleLoad);
       window.removeEventListener('resize', handleResize);
-      // clearTimeout(myTimeout);
     };
   }, []);
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        // width: '100%',
-      }}
-    >
-      <img
-        ref={imgRef}
-        src={layoutImg}
-        alt="So do layout phong co khi"
-        style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
-      />
-      <div style={{ position: 'absolute', left: `${(width * 24) / 100}px`, top: `${(height * 3.2) / 100}px` }}>
-        <SignalLight color="off" size={`${(width * 2) / 100}`} custom="layout" />
+    <Box>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography variant="h1" color="primary" sx={{ marginBottom: '16px' }}>
+          Sơ đồ layout phòng cơ khí VDM
+        </Typography>
       </div>
-      <div style={{ position: 'absolute', left: `${(width * 29.76) / 100}px`, top: `${(height * 3.2) / 100}px` }}>
-        <SignalLight color="off" size={`${(width * 2) / 100}`} custom="layout" />
+      <div style={{ position: 'relative' }}>
+        <img
+          ref={imgRef}
+          src={layoutImg}
+          alt="So do layout phong co khi"
+          style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
+        />
+
+        <SignalLightsLayout width={width} height={height} />
       </div>
-      <div style={{ position: 'absolute', left: `${(width * 35.55) / 100}px`, top: `${(height * 3.2) / 100}px` }}>
-        <SignalLight color="off" size={`${(width * 2) / 100}`} custom="layout" />
-      </div>
-      <p>Chiều rộng: {width}</p>
-      <p>Chiều cao: {height}</p>
+      <p>Width: {width}</p>
+      <p>Heigt: {height}</p>
     </Box>
   );
 }

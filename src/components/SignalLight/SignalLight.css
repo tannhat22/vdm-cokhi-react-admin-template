@@ -61,6 +61,18 @@
   animation: blinkRed 0.5s infinite;
 }
 
+.led-red-layout {
+  margin: 0;
+  background-color: #f00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+  -webkit-animation: blinkRed 0.5s infinite;
+  -moz-animation: blinkRed 0.5s infinite;
+  -ms-animation: blinkRed 0.5s infinite;
+  -o-animation: blinkRed 0.5s infinite;
+  animation: blinkRed 0.5s infinite;
+}
+
 @-webkit-keyframes blinkRed {
   from {
     background-color: #f00;
@@ -150,6 +162,18 @@
   animation: blinkYellow 1s infinite;
 }
 
+.led-yellow-layout {
+  margin: 0;
+  background-color: #ff0;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
+  -webkit-animation: blinkYellow 1s infinite;
+  -moz-animation: blinkYellow 1s infinite;
+  -ms-animation: blinkYellow 1s infinite;
+  -o-animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite;
+}
+
 @-webkit-keyframes blinkYellow {
   from {
     background-color: #ff0;
@@ -229,6 +253,13 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
 }
 
+.led-green-layout {
+  margin: 0;
+  background-color: #abff00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+}
+
 .led-blue {
   margin: 0 auto;
   width: 28px;
@@ -247,18 +278,18 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
 }
 
-.led-off-layout {
-  margin: 0;
-  /* width: var(--size-signal-light-layout);
-  height: var(--size-signal-light-layout); */
-  background-color: #8080806b;
-  border-radius: 50%;
-}
-
 .led-off-lg {
   margin: 0 auto;
   width: var(--size-signal-light-lg);
   height: var(--size-signal-light-lg);
   background-color: gray;
+  border-radius: 50%;
+}
+
+.led-off-layout {
+  margin: 0;
+  /* width: var(--size-signal-light-layout);
+  height: var(--size-signal-light-layout); */
+  background-color: #8080806b;
   border-radius: 50%;
 }
