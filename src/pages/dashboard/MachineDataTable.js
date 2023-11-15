@@ -103,8 +103,8 @@ function MachineDataTable({ id, days, machineName }) {
 
   const options = {
     filter: true,
-    rowsPerPage: 30,
-    rowsPerPageOptions: [10, 30, 50, 100],
+    // rowsPerPage: 30,
+    // rowsPerPageOptions: [10, 30, 50, 100],
     filterType: 'dropdown',
     responsive: 'standard',
     selectableRows: 'none',

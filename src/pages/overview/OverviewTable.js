@@ -222,8 +222,8 @@ function OverviewTable() {
 
   const options = {
     filter: true,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 20, 100],
+    // rowsPerPage: 10,
+    // rowsPerPageOptions: [10, 20, 100],
     filterType: 'dropdown',
     responsive: 'standard',
     selectableRows: 'none',
