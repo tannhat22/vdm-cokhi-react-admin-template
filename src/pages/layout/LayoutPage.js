@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import layoutImg from 'assets/images/layout/layout-ck-vdm-2023.jpg';
+import layoutImg from 'assets/images/layout/layout-ck-vdm-new.jpg';
 import { Box, Typography } from '@mui/material';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

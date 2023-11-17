@@ -5,12 +5,29 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ROSLIB from 'roslib';
-import { ButtonBase } from '@mui/material';
+import { ButtonBase, Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 import RosPropsContext from 'context/RosPropsContext';
 import SignalLight from 'components/SignalLight';
 import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
+
+import gs1 from 'assets/images/machines/MC3.jpg';
+
+const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#f5f5f9',
+    // color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 800,
+    maxHeight: 500,
+    // fontSize: theme.typography.pxToRem(12),
+    // border: '1px solid #dadde9',
+    padding: 0,
+    margin: 0,
+  },
+}));
 
 function SignalLightsLayout({ width, height }) {
   const [colors, setColors] = useState([]);
@@ -85,9 +102,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 35.55) / 100}px`, top: `${(height * 3.4) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 34.75) / 100}px`, top: `${(height * 4.3) / 100}px` }}
       >
-        <SignalLight color={colors[0] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[0] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GS02 */}
@@ -100,9 +117,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 24) / 100}px`, top: `${(height * 3.4) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 23.82) / 100}px`, top: `${(height * 4.3) / 100}px` }}
       >
-        <SignalLight color={colors[1] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[1] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GS03 */}
@@ -115,9 +132,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 47.09) / 100}px`, top: `${(height * 3.4) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 45.67) / 100}px`, top: `${(height * 4.3) / 100}px` }}
       >
-        <SignalLight color={colors[2] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[2] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GS04 */}
@@ -130,9 +147,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 29.76) / 100}px`, top: `${(height * 3.4) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 29.3) / 100}px`, top: `${(height * 4.3) / 100}px` }}
       >
-        <SignalLight color={colors[3] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[3] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GS05 */}
@@ -145,9 +162,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 30.45) / 100}px`, top: `${(height * 22.2) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 29.9) / 100}px`, top: `${(height * 23.3) / 100}px` }}
       >
-        <SignalLight color={colors[4] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[4] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* Empty */}
@@ -162,9 +179,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 24.9) / 100}px`, top: `${(height * 21.5) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 24) / 100}px`, top: `${(height * 22.4) / 100}px` }}
       >
-        <SignalLight color={colors[6] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[6] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GS08 */}
@@ -177,9 +194,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 41.33) / 100}px`, top: `${(height * 3.4) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 40.23) / 100}px`, top: `${(height * 4.3) / 100}px` }}
       >
-        <SignalLight color={colors[7] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[7] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GR2 */}
@@ -192,9 +209,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 36.64) / 100}px`, top: `${(height * 31.2) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 35.86) / 100}px`, top: `${(height * 31.8) / 100}px` }}
       >
-        <SignalLight color={colors[8] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[8] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GR4 */}
@@ -207,9 +224,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 41.95) / 100}px`, top: `${(height * 31.2) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 41.23) / 100}px`, top: `${(height * 31.8) / 100}px` }}
       >
-        <SignalLight color={colors[9] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[9] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GC1 */}
@@ -222,9 +239,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 26.55) / 100}px`, top: `${(height * 32.15) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 25.57) / 100}px`, top: `${(height * 32.6) / 100}px` }}
       >
-        <SignalLight color={colors[10] || 'off'} size={`${(width * 1.8) / 100}`} custom="layout" />
+        <SignalLight color={colors[10] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* GC2 */}
@@ -237,9 +254,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 31.25) / 100}px`, top: `${(height * 32.15) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 30.29) / 100}px`, top: `${(height * 32.6) / 100}px` }}
       >
-        <SignalLight color={colors[11] || 'off'} size={`${(width * 1.8) / 100}`} custom="layout" />
+        <SignalLight color={colors[11] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* LN1 */}
@@ -252,9 +269,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 60.12) / 100}px`, top: `${(height * 33.5) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 59.38) / 100}px`, top: `${(height * 32.58) / 100}px` }}
       >
-        <SignalLight color={colors[12] || 'off'} size={`${(width * 1.8) / 100}`} custom="layout" />
+        <SignalLight color={colors[12] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* LN2 */}
@@ -267,9 +284,9 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 52.43) / 100}px`, top: `${(height * 33.5) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 51.68) / 100}px`, top: `${(height * 32.58) / 100}px` }}
       >
-        <SignalLight color={colors[13] || 'off'} size={`${(width * 1.8) / 100}`} custom="layout" />
+        <SignalLight color={colors[13] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* MC01 */}
@@ -282,25 +299,48 @@ function SignalLightsLayout({ width, height }) {
             Number(event.currentTarget.getAttribute('stt')),
           );
         }}
-        style={{ position: 'absolute', left: `${(width * 60.77) / 100}px`, top: `${(height * 5) / 100}px` }}
+        style={{ position: 'absolute', left: `${(width * 60.12) / 100}px`, top: `${(height * 6.5) / 100}px` }}
       >
-        <SignalLight color={colors[14] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
+        <SignalLight color={colors[14] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
       </ButtonBase>
 
       {/* MC02 */}
-      <ButtonBase
-        machineid={ids[15] || null}
-        stt={15}
-        onClick={(event) => {
-          redirectToDashboard(
-            Number(event.currentTarget.getAttribute('machineid')),
-            Number(event.currentTarget.getAttribute('stt')),
-          );
-        }}
-        style={{ position: 'absolute', left: `${(width * 54.1) / 100}px`, top: `${(height * 5) / 100}px` }}
+
+      <HtmlTooltip
+        title={
+          <Card sx={{ maxWidth: 800, display: 'flex', border: '1px solid #dadde9' }}>
+            <CardMedia
+              component="img"
+              sx={{ maxHeight: 500, maxWidth: 500, objectFit: 'cover' }}
+              image={gs1}
+              title="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Lizard
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
+                continents except Antarctica
+              </Typography>
+            </CardContent>
+          </Card>
+        }
       >
-        <SignalLight color={colors[15] || 'off'} size={`${(width * 2) / 100}`} custom="layout" />
-      </ButtonBase>
+        <ButtonBase
+          machineid={ids[15] || null}
+          stt={15}
+          onClick={(event) => {
+            redirectToDashboard(
+              Number(event.currentTarget.getAttribute('machineid')),
+              Number(event.currentTarget.getAttribute('stt')),
+            );
+          }}
+          style={{ position: 'absolute', left: `${(width * 53.53) / 100}px`, top: `${(height * 6.5) / 100}px` }}
+        >
+          <SignalLight color={colors[15] || 'off'} size={`${(width * 2.5) / 100}`} custom="layout" />
+        </ButtonBase>
+      </HtmlTooltip>
     </div>
   );
 }
