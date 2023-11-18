@@ -1,13 +1,25 @@
 :root {
   --size-signal-light-layout: 5%;
   --size-signal-light-lg: 60px;
+  --size-signal-light-md: 40px;
+  --size-signal-light: 28px;
 }
 
 .led-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
+  height: calc(var(--size-signal-light) + 2px);
+  width: 100%;
+  margin: 10px 0;
+  float: left;
+}
+
+.led-box-md {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(var(--size-signal-light-md) + 8px);
   width: 100%;
   margin: 10px 0;
   float: left;
@@ -35,8 +47,22 @@
 
 .led-red {
   margin: 0 auto;
-  width: 28px;
-  height: 28px;
+  width: var(--size-signal-light);
+  height: var(--size-signal-light);
+  background-color: #f00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+  -webkit-animation: blinkRed 0.5s infinite;
+  -moz-animation: blinkRed 0.5s infinite;
+  -ms-animation: blinkRed 0.5s infinite;
+  -o-animation: blinkRed 0.5s infinite;
+  animation: blinkRed 0.5s infinite;
+}
+
+.led-red-md {
+  margin: 0 auto;
+  width: var(--size-signal-light-md);
+  height: var(--size-signal-light-md);
   background-color: #f00;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
@@ -136,16 +162,30 @@
 
 .led-yellow {
   margin: 0 auto;
-  width: 28px;
-  height: 28px;
+  width: var(--size-signal-light);
+  height: var(--size-signal-light);
   background-color: #ff0;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
-  -webkit-animation: blinkYellow 1s infinite;
+  /* -webkit-animation: blinkYellow 1s infinite;
   -moz-animation: blinkYellow 1s infinite;
   -ms-animation: blinkYellow 1s infinite;
   -o-animation: blinkYellow 1s infinite;
-  animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite; */
+}
+
+.led-yellow-md {
+  margin: 0 auto;
+  width: var(--size-signal-light-md);
+  height: var(--size-signal-light-md);
+  background-color: #ff0;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
+  /* -webkit-animation: blinkYellow 1s infinite;
+  -moz-animation: blinkYellow 1s infinite;
+  -ms-animation: blinkYellow 1s infinite;
+  -o-animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite; */
 }
 
 .led-yellow-lg {
@@ -155,11 +195,11 @@
   background-color: #ff0;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
-  -webkit-animation: blinkYellow 1s infinite;
+  /* -webkit-animation: blinkYellow 1s infinite;
   -moz-animation: blinkYellow 1s infinite;
   -ms-animation: blinkYellow 1s infinite;
   -o-animation: blinkYellow 1s infinite;
-  animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite; */
 }
 
 .led-yellow-layout {
@@ -167,11 +207,11 @@
   background-color: #ff0;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ff0 0 2px 12px;
-  -webkit-animation: blinkYellow 1s infinite;
+  /* -webkit-animation: blinkYellow 1s infinite;
   -moz-animation: blinkYellow 1s infinite;
   -ms-animation: blinkYellow 1s infinite;
   -o-animation: blinkYellow 1s infinite;
-  animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite; */
 }
 
 @-webkit-keyframes blinkYellow {
@@ -237,11 +277,30 @@
 
 .led-green {
   margin: 0 auto;
-  width: 28px;
-  height: 28px;
+  width: var(--size-signal-light);
+  height: var(--size-signal-light);
   background-color: #abff00;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  -webkit-animation: blinkGreen 1s infinite;
+  -moz-animation: blinkGreen 1s infinite;
+  -ms-animation: blinkGreen 1s infinite;
+  -o-animation: blinkGreen 1s infinite;
+  animation: blinkGreen 1s infinite;
+}
+
+.led-green-md {
+  margin: 0 auto;
+  width: var(--size-signal-light-md);
+  height: var(--size-signal-light-md);
+  background-color: #abff00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  -webkit-animation: blinkGreen 1s infinite;
+  -moz-animation: blinkGreen 1s infinite;
+  -ms-animation: blinkGreen 1s infinite;
+  -o-animation: blinkGreen 1s infinite;
+  animation: blinkGreen 1s infinite;
 }
 
 .led-green-lg {
@@ -251,6 +310,11 @@
   background-color: #abff00;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  -webkit-animation: blinkGreen 1s infinite;
+  -moz-animation: blinkGreen 1s infinite;
+  -ms-animation: blinkGreen 1s infinite;
+  -o-animation: blinkGreen 1s infinite;
+  animation: blinkGreen 1s infinite;
 }
 
 .led-green-layout {
@@ -258,12 +322,87 @@
   background-color: #abff00;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  -webkit-animation: blinkGreen 1s infinite;
+  -moz-animation: blinkGreen 1s infinite;
+  -ms-animation: blinkGreen 1s infinite;
+  -o-animation: blinkGreen 1s infinite;
+  animation: blinkGreen 1s infinite;
+}
+
+@-webkit-keyframes blinkGreen {
+  from {
+    background-color: #abff00;
+  }
+  50% {
+    background-color: #405f01;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  }
+  to {
+    background-color: #abff00;
+  }
+}
+@-moz-keyframes blinkGreen {
+  from {
+    background-color: #abff00;
+  }
+  50% {
+    background-color: #405f01;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  }
+  to {
+    background-color: #abff00;
+  }
+}
+@-ms-keyframes blinkGreen {
+  from {
+    background-color: #abff00;
+  }
+  50% {
+    background-color: #405f01;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  }
+  to {
+    background-color: #abff00;
+  }
+}
+@-o-keyframes blinkGreen {
+  from {
+    background-color: #abff00;
+  }
+  50% {
+    background-color: #405f01;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  }
+  to {
+    background-color: #abff00;
+  }
+}
+@keyframes blinkGreen {
+  from {
+    background-color: #abff00;
+  }
+  50% {
+    background-color: #405f01;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+  }
+  to {
+    background-color: #abff00;
+  }
 }
 
 .led-blue {
   margin: 0 auto;
-  width: 28px;
-  height: 28px;
+  width: var(--size-signal-light);
+  height: var(--size-signal-light);
+  background-color: #24e0ff;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
+}
+
+.led-blue-md {
+  margin: 0 auto;
+  width: var(--size-signal-light-md);
+  height: var(--size-signal-light-md);
   background-color: #24e0ff;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
@@ -278,18 +417,32 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3f8cff 0 2px 14px;
 }
 
+.led-off {
+  margin: 0 auto;
+  width: var(--size-signal-light);
+  height: var(--size-signal-light);
+  background-color: #8080806b;
+  border-radius: 50%;
+}
+
+.led-off-md {
+  margin: 0 auto;
+  width: var(--size-signal-light-md);
+  height: var(--size-signal-light-md);
+  background-color: #8080806b;
+  border-radius: 50%;
+}
+
 .led-off-lg {
   margin: 0 auto;
   width: var(--size-signal-light-lg);
   height: var(--size-signal-light-lg);
-  background-color: gray;
+  background-color: #8080806b;
   border-radius: 50%;
 }
 
 .led-off-layout {
   margin: 0;
-  /* width: var(--size-signal-light-layout);
-  height: var(--size-signal-light-layout); */
   background-color: #8080806b;
   border-radius: 50%;
 }

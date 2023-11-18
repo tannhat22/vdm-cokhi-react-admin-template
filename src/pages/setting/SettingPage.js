@@ -48,7 +48,7 @@ function SettingPage() {
     getAllMachineNameClient.callService(requestAllMachineName, function (result) {
       let dataShow = [];
       for (let i = 0; i < result.machines_quantity; i++) {
-        dataShow.push([i, result.id_machines[i], result.machines_name[i], false]);
+        dataShow.push([i, result.id_machines[i], result.machines_name[i], result.machines_type[i], false]);
       }
       setData(dataShow);
     });
@@ -97,6 +97,14 @@ function SettingPage() {
       },
     },
     {
+      name: 'type',
+      label: 'Loại máy',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
       name: 'action',
       label: 'Lựa chọn  ',
       options: {
@@ -112,10 +120,16 @@ function SettingPage() {
         customBodyRender: (value, tableMeta) => {
           return (
             <div>
-              <EditMachineForm id={tableMeta.rowData[1]} machineName={tableMeta.rowData[2]} update={updateFromChild} />
+              <EditMachineForm
+                id={tableMeta.rowData[1]}
+                machineName={tableMeta.rowData[2]}
+                machineType={tableMeta.rowData[3]}
+                update={updateFromChild}
+              />
               <DeleteMachineForm
                 id={tableMeta.rowData[1]}
                 machineName={tableMeta.rowData[2]}
+                machineType={tableMeta.rowData[3]}
                 update={updateFromChild}
               />
             </div>
