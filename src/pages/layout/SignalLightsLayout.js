@@ -9,12 +9,15 @@ import CardMachine from './CardMachine';
 
 import gs1Img from 'assets/images/machines/GS1-GS8.jpg';
 import gs7Img from 'assets/images/machines/GS7.jpg';
-import gr2Img from 'assets/images/machines/GR2.jpg';
+import gr2Img from 'assets/images/machines/GR02.jpg';
 import gr4Img from 'assets/images/machines/GR4.jpg';
 import gc1Img from 'assets/images/machines/GC1-2.jpg';
-import ln1Img from 'assets/images/machines/LN1.jpg';
-import ln2Img from 'assets/images/machines/LN2.jpg';
-import mc1Img from 'assets/images/machines/MC1-MC2.jpg';
+import ln1Img from 'assets/images/machines/LN01.jpg';
+import ln2Img from 'assets/images/machines/LN02.jpg';
+import mc1Img from 'assets/images/machines/MC01.jpg';
+import mc2Img from 'assets/images/machines/MC02.jpg';
+import mc3Img from 'assets/images/machines/MC03.jpg';
+import ma1Img from 'assets/images/machines/MA01.jpg';
 
 function SignalLightsLayout({ width, height }) {
   const [machinesId, setMachinesId] = useState([]);
@@ -190,7 +193,27 @@ function SignalLightsLayout({ width, height }) {
         posLeft={width * 53.53}
         posTop={height * 6.5}
         size={width * 2.5}
-        img={mc1Img}
+        img={mc2Img}
+      />
+
+      {/* MC03 */}
+      <CardMachine
+        stt={16}
+        machineId={machinesId[16]}
+        posLeft={width * 69.65}
+        posTop={height * 7.9}
+        size={width * 2.5}
+        img={mc3Img}
+      />
+
+      {/* MA01 */}
+      <CardMachine
+        stt={17}
+        machineId={machinesId[17]}
+        posLeft={width * 69.28}
+        posTop={height * 43.1}
+        size={width * 2.5}
+        img={ma1Img}
       />
     </div>
   );

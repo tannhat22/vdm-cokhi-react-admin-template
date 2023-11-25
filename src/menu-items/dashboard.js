@@ -38,7 +38,7 @@ const dashboard = {
       type: 'item',
       url: '/layout',
       icon: icons.LayoutOutlined,
-      breadcrumbs: true,
+      breadcrumbs: false,
     },
     {
       id: 'setting',

@@ -39,10 +39,11 @@ const AddMachineForm = ({ update }) => {
   const [values, setValues] = useState({
     pass: '',
     name: '',
+    type: '',
     showPass: false,
   });
 
-  // console.log('re-render');
+  // console.log(values);
 
   const ros = useContext(RosPropsContext);
 
@@ -52,11 +53,12 @@ const AddMachineForm = ({ update }) => {
     serviceType: 'vdm_cokhi_machine_msgs/CreateMachine',
   });
 
-  function CreateServiceCall(password, name) {
+  function CreateServiceCall(password, name, type) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
       password,
       name,
+      type,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
@@ -85,7 +87,7 @@ const AddMachineForm = ({ update }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(values);
-    CreateServiceCall(values.pass, values.name.trim());
+    CreateServiceCall(values.pass, values.name.trim(), values.type.trim());
   };
 
   const handleChange = (e) => {
@@ -117,9 +119,6 @@ const AddMachineForm = ({ update }) => {
         >
           Thêm máy mới
         </Button>
-        {/* <IconButton aria-label="edit" sx={{ fontSize: '1.1rem', '&:hover': { color: 'green' } }} onClick={handleOpen}>
-        <FontAwesomeIcon icon={faPlus} /> Add machine
-        </IconButton> */}
       </Tooltip>
       <Modal
         open={openAdd}
@@ -141,6 +140,18 @@ const AddMachineForm = ({ update }) => {
                     fullWidth
                     label="Tên máy"
                     placeholder="Tên máy"
+                    variant="outlined"
+                    required
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    name="type"
+                    type="text"
+                    fullWidth
+                    label="Loại máy"
+                    placeholder="Loại máy"
                     variant="outlined"
                     required
                     onChange={handleChange}

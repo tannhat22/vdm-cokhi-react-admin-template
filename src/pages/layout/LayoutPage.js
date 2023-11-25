@@ -3,12 +3,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import layoutImg from 'assets/images/layout/layout-ck-vdm-new.jpg';
 import { Box, Typography } from '@mui/material';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEye } from '@fortawesome/free-solid-svg-icons';
-// import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 import SignalLightsLayout from './SignalLightsLayout';
+import SignalLight from 'components/SignalLight';
 
 function LayoutPage() {
   const [width, setWidth] = React.useState(0);
@@ -59,7 +56,7 @@ function LayoutPage() {
     <Box>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h2" color="primary" sx={{ marginBottom: '16px' }}>
-          Sơ đồ layout phòng cơ khí VDM
+          SƠ ĐỒ LAYOUT PHÒNG CƠ KHÍ VDM
         </Typography>
       </div>
       <div style={{ position: 'relative' }}>
@@ -72,8 +69,53 @@ function LayoutPage() {
 
         <SignalLightsLayout width={width} height={height} />
       </div>
-      {/* <p>Width: {width}</p>
-      <p>Heigt: {height}</p> */}
+      <div style={{ display: 'flex' }}>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
+        >
+          <div style={{ marginRight: '10px' }}>
+            <SignalLight color="off" />
+          </div>
+          : Tắt Máy
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
+        >
+          <div style={{ marginRight: '10px' }}>
+            <SignalLight color="yellow" />
+          </div>
+          : Máy Chạy Không Tải
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
+        >
+          <div style={{ marginRight: '10px' }}>
+            <SignalLight color="green" />
+          </div>
+          : Máy Chạy Có Tải
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
+        >
+          <div style={{ marginRight: '10px' }}>
+            <SignalLight color="red" />
+          </div>
+          : Máy Lỗi
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
+        >
+          <div style={{ marginRight: '10px' }}>
+            <SignalLight custom="standing" color="purple" size="28" />
+          </div>
+          : Vị Trí Đứng
+        </Typography>
+      </div>
     </Box>
   );
 }

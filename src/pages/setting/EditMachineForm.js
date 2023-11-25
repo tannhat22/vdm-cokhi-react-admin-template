@@ -39,6 +39,7 @@ const EditMachineForm = ({ id, machineName, update }) => {
   const [values, setValues] = useState({
     pass: '',
     newName: '',
+    newType: '',
     showPass: false,
   });
 
@@ -52,12 +53,13 @@ const EditMachineForm = ({ id, machineName, update }) => {
     serviceType: 'vdm_cokhi_machine_msgs/UpdateMachine',
   });
 
-  function UpdateServiceCall(password, new_name) {
+  function UpdateServiceCall(password, new_name, new_type) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
       password,
       id_machine: id,
       new_name,
+      new_type,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
@@ -86,7 +88,7 @@ const EditMachineForm = ({ id, machineName, update }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(values);
-    UpdateServiceCall(values.pass, values.newName.trim());
+    UpdateServiceCall(values.pass, values.newName.trim(), values.newType.trim());
   };
 
   const handleChange = (e) => {
@@ -134,6 +136,18 @@ const EditMachineForm = ({ id, machineName, update }) => {
                     fullWidth
                     label="Tên máy"
                     placeholder="Tên máy mới"
+                    variant="outlined"
+                    required
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    name="newType"
+                    type="text"
+                    fullWidth
+                    label="Loại máy"
+                    placeholder="Loại máy mới"
                     variant="outlined"
                     required
                     onChange={handleChange}

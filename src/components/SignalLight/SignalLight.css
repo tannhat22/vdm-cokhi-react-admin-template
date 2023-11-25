@@ -15,6 +15,16 @@
   float: left;
 }
 
+.led-box-standing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 30px; */
+  width: 100%;
+  margin: 10px 0;
+  float: left;
+}
+
 .led-box-md {
   display: flex;
   justify-content: center;
@@ -444,5 +454,11 @@
 .led-off-layout {
   margin: 0;
   background-color: #8080806b;
+  border-radius: 50%;
+}
+
+.led-purple-standing {
+  margin: 0;
+  background-color: rgb(255, 0, 254);
   border-radius: 50%;
 }

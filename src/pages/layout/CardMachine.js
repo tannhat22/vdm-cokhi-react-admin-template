@@ -103,15 +103,16 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
 
   return (
     <HtmlTooltip
+      // sx={{ maxWidth: 900 }}
       title={
-        <Card sx={{ maxWidth: 900, display: 'flex', border: '1px solid #dadde9', position: 'relative' }}>
+        <Card sx={{ minWidth: 960, display: 'flex', border: '1px solid #dadde9', position: 'relative' }}>
           <CardMedia
             component="img"
-            sx={{ maxHeight: 500, maxWidth: 500, objectFit: 'cover' }}
+            sx={{ maxHeight: 580, maxWidth: 580, objectFit: 'cover' }}
             image={img}
             title={machineData[1] || 'no info'}
           />
-          <CardContent sx={{ minWidth: 300 }}>
+          <CardContent sx={{ minWidth: 360 }}>
             <Typography gutterBottom variant="h3" component="div" color="primary">
               Tên máy: <span style={{ color: '#1C2025' }}>{machineData[1] || 'no info'}</span>
             </Typography>
@@ -122,44 +123,56 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
               Trạng thái hoạt động:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[6] === 'green'
-                  ? 'chạy có tải'
+                  ? 'Chạy Có Tải'
                   : machineData[6] === 'yellow'
-                  ? 'chạy không tải'
+                  ? 'Chạy Không Tải'
                   : machineData[6] === 'red'
-                  ? 'đang quá tải'
-                  : 'tắt máy'}
+                  ? 'Đang Quá Tải'
+                  : 'Tắt Máy'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               Thời gian chạy không tải:{' '}
-              <span style={{ color: '#212121' }}>{machineData[3] ? `${machineData[3]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {machineData[3] || machineData[3] === 0 ? `${machineData[3]} phút` : 'no info'}
+              </span>
             </Typography>
-            <Typography variant="subtitle1" color="#424242" sx={{ marginBottom: '10px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               Thời gian chạy có tải:{' '}
-              <span style={{ color: '#212121' }}>{machineData[4] ? `${machineData[4]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {machineData[4] || machineData[4] === 0 ? `${machineData[4]} phút` : 'no info'}
+              </span>
             </Typography>
-            <Typography variant="subtitle1" color="#424242" sx={{ marginBottom: '50px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
               Thời gian tắt máy:{' '}
-              <span style={{ color: '#212121' }}>{machineData[5] ? `${machineData[5]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {machineData[5] || machineData[5] === 0 ? `${machineData[5]} phút` : 'no info'}
+              </span>
             </Typography>
 
             <Typography gutterBottom variant="h3" component="div" color="primary">
-              Loại máy: <span style={{ color: '#1C2025' }}>{typeData[0] || 'no info'}</span>
+              Công đoạn: <span style={{ color: '#1C2025' }}>{typeData[0] || 'no info'}</span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               Số lượng máy: <span style={{ color: '#212121' }}>{typeData[1] || 'no info'}</span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               Tổng thời gian chạy không tải:{' '}
-              <span style={{ color: '#212121' }}>{typeData[2] ? `${typeData[2]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {typeData[2] || typeData[2] === 0 ? `${typeData[2]} phút` : 'no info'}
+              </span>
             </Typography>
-            <Typography variant="subtitle1" color="#424242" sx={{ marginBottom: '10px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               Tổng thời gian chạy có tải:{' '}
-              <span style={{ color: '#212121' }}>{typeData[3] ? `${typeData[3]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {typeData[3] || typeData[3] === 0 ? `${typeData[3]} phút` : 'no info'}
+              </span>
             </Typography>
-            <Typography variant="subtitle1" color="#424242" sx={{ marginBottom: '50px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
               Tổng thời gian tắt máy:{' '}
-              <span style={{ color: '#212121' }}>{typeData[4] ? `${typeData[4]} phút` : 'no info'}</span>
+              <span style={{ color: '#212121' }}>
+                {typeData[4] || typeData[4] === 0 ? `${typeData[4]} phút` : 'no info'}
+              </span>
             </Typography>
           </CardContent>
         </Card>

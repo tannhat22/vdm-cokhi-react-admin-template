@@ -19,12 +19,14 @@ function SettingPage() {
     //   stt: 0,
     //   id: 1,
     //   name: 'Machine 1',
+    //   type: 'GS',
     //   action: false,
     // },
     // {
     //   stt: 1,
     //   id: 2,
     //   name: 'Machine 2',
+    //   type: 'GS',
     //   action: false,
     // },
   ]);
