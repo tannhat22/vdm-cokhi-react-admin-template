@@ -45,8 +45,8 @@ const MainDrawer = ({ open, handleDrawerToggle, window }) => {
               width: drawerWidth,
               borderRight: `1px solid ${theme.palette.divider}`,
               backgroundImage: 'none',
-              boxShadow: 'inherit'
-            }
+              boxShadow: 'inherit',
+            },
           }}
         >
           {open && drawerHeader}
@@ -60,7 +60,7 @@ const MainDrawer = ({ open, handleDrawerToggle, window }) => {
 MainDrawer.propTypes = {
   open: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
-  window: PropTypes.object
+  window: PropTypes.object,
 };
 
 export default MainDrawer;

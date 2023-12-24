@@ -32,7 +32,7 @@ const NavItem = ({ item, level }) => {
   }
 
   const itemHandler = (id) => {
-    dispatch(activeItem({ openItem: [id] }));
+    dispatch(activeItem({ openItem: [id] }), openDrawer({ drawerOpen: false }));
   };
 
   const Icon = item.icon;

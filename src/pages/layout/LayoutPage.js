@@ -72,6 +72,7 @@ function LayoutPage() {
       <div style={{ display: 'flex' }}>
         <Typography
           variant="body1"
+          component="div"
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
         >
           <div style={{ marginRight: '10px' }}>
@@ -81,6 +82,7 @@ function LayoutPage() {
         </Typography>
         <Typography
           variant="body1"
+          component="div"
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
         >
           <div style={{ marginRight: '10px' }}>
@@ -90,6 +92,7 @@ function LayoutPage() {
         </Typography>
         <Typography
           variant="body1"
+          component="div"
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
         >
           <div style={{ marginRight: '10px' }}>
@@ -99,6 +102,7 @@ function LayoutPage() {
         </Typography>
         <Typography
           variant="body1"
+          component="div"
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
         >
           <div style={{ marginRight: '10px' }}>
@@ -108,6 +112,7 @@ function LayoutPage() {
         </Typography>
         <Typography
           variant="body1"
+          component="div"
           sx={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginRight: '24px' }}
         >
           <div style={{ marginRight: '10px' }}>

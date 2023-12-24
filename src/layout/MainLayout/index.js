@@ -3,8 +3,9 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import { Box, Toolbar, useMediaQuery } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
+// import { Box, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, Toolbar } from '@mui/material';
 
 // project import
 import Drawer from './Drawer';
@@ -18,8 +19,8 @@ import { openDrawer } from 'store/reducers/menu';
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
-  const theme = useTheme();
-  const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
+  // const theme = useTheme();
+  // const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const dispatch = useDispatch();
 
   const { drawerOpen } = useSelector((state) => state.menu);
@@ -32,12 +33,12 @@ const MainLayout = () => {
   };
 
   // set media wise responsive drawer
-  useEffect(() => {
-    setOpen(!matchDownLG);
-    dispatch(openDrawer({ drawerOpen: !matchDownLG }));
+  // useEffect(() => {
+  //   setOpen(!matchDownLG);
+  //   dispatch(openDrawer({ drawerOpen: !matchDownLG }));
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchDownLG]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [matchDownLG]);
 
   useEffect(() => {
     if (open !== drawerOpen) setOpen(drawerOpen);

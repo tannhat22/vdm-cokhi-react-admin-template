@@ -226,6 +226,8 @@ function OverviewTable() {
     // rowsPerPageOptions: [10, 20, 100],
     filterType: 'dropdown',
     responsive: 'standard',
+    fixedHeader: true,
+    tableBodyHeight: '760px',
     selectableRows: 'none',
     downloadOptions: {
       filename: 'datamachine.csv',

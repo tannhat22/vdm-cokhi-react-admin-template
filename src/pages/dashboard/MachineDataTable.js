@@ -107,6 +107,8 @@ function MachineDataTable({ id, days, machineName }) {
     // rowsPerPageOptions: [10, 30, 50, 100],
     filterType: 'dropdown',
     responsive: 'standard',
+    fixedHeader: true,
+    tableBodyHeight: '860px',
     selectableRows: 'none',
     downloadOptions: {
       filename: `datamachine-${machineName}.csv`,

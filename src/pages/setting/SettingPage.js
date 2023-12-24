@@ -145,6 +145,8 @@ function SettingPage() {
     filter: true,
     filterType: 'dropdown',
     responsive: 'standard',
+    fixedHeader: true,
+    tableBodyHeight: '700px',
     selectableRows: 'none',
     download: false,
     print: false,
