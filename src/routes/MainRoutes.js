@@ -24,7 +24,11 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <OverviewPageDefault />,
+      element: <Layout />,
+    },
+    {
+      path: 'layout',
+      element: <Layout />,
     },
     {
       path: 'overview',
@@ -39,16 +43,6 @@ const MainRoutes = {
     {
       path: 'dashboard',
       element: <Dashboard />,
-      // children: [
-      //   {
-      //     path: ':machinename',
-      //     element: <Dashboard />,
-      //   },
-      // ],
-    },
-    {
-      path: 'layout',
-      element: <Layout />,
     },
     {
       path: 'setting',

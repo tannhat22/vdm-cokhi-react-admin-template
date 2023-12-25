@@ -35,8 +35,8 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dashboardUrl = menuItems.items[0].children[1].url;
-  const dashboardId = menuItems.items[0].children[1].id;
+  const dashboardUrl = menuItems.items[0].children[2].url;
+  const dashboardId = menuItems.items[0].children[2].id;
 
   useEffect(() => {
     var listener = new ROSLIB.Topic({

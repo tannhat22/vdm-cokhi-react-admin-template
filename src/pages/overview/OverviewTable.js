@@ -25,8 +25,8 @@ function OverviewTable() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dashboardUrl = menuItems.items[0].children[1].url;
-  const dashboardId = menuItems.items[0].children[1].id;
+  const dashboardUrl = menuItems.items[0].children[2].url;
+  const dashboardId = menuItems.items[0].children[2].id;
 
   React.useEffect(() => {
     var listener = new ROSLIB.Topic({

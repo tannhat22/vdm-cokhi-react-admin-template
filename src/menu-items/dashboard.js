@@ -17,6 +17,14 @@ const dashboard = {
   type: 'group',
   children: [
     {
+      id: 'layout',
+      title: 'Layout',
+      type: 'item',
+      url: '/layout',
+      icon: icons.LayoutOutlined,
+      breadcrumbs: false,
+    },
+    {
       id: 'overview',
       title: 'Overview',
       type: 'item',
@@ -31,14 +39,6 @@ const dashboard = {
       url: '/dashboard',
       icon: icons.DashboardOutlined,
       breadcrumbs: true,
-    },
-    {
-      id: 'layout',
-      title: 'Layout',
-      type: 'item',
-      url: '/layout',
-      icon: icons.LayoutOutlined,
-      breadcrumbs: false,
     },
     {
       id: 'setting',
