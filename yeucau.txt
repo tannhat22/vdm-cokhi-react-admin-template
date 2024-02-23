@@ -1,0 +1,5 @@
+Chạy trên máy tính
+Đổi song ngữ
+Đổi thứ tự hiện thị ngày tháng
+Chọn ngày tháng cần tải
+Thêm máy PLC mitsu
