@@ -17,6 +17,7 @@ import {
   FormControl,
   Select,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // project import
 import InformArea from './InformArea';
@@ -91,6 +92,10 @@ const DashboardDefault = () => {
     setDays(event.target.value);
   }
 
+  function handleDateChange(date) {
+    console.log(date);
+  }
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -163,7 +168,9 @@ const DashboardDefault = () => {
           <Grid item>
             <Typography variant="h5">Dữ liệu của máy</Typography>
           </Grid>
-          <Grid item>
+          <Grid item display="flex">
+            <DatePicker renderInput={(props) => <TextField {...props} />} label="Từ ngày" onChange={handleDateChange} />
+            <DatePicker label="Đến ngày" onChange={handleDateChange} />
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <InputLabel id="days-select-label">Ngày</InputLabel>

@@ -37,7 +37,8 @@ function MachineDataTable({ id, days, machineName }) {
       if (result.success) {
         let dataShow = [];
         for (let i = 0; i < days; i++) {
-          dataShow.push([i + 1, result.dates[i], result.noload[i], result.underload[i], result.offtime[i]]);
+          let j = days - (i + 1);
+          dataShow.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
         }
         setData(dataShow);
       }
