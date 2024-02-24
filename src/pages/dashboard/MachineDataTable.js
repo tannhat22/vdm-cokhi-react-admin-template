@@ -9,7 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import RosPropsContext from 'context/RosPropsContext';
 
-function MachineDataTable({ id, days, machineName }) {
+function MachineDataTable({ id, machineName, beginDate, endDate }) {
   const [data, setData] = React.useState([
     // {
     //   id: 1,
@@ -30,20 +30,25 @@ function MachineDataTable({ id, days, machineName }) {
 
     let requestMachineData = new ROSLIB.ServiceRequest({
       id_machine: id,
-      days,
+      days: 365,
     });
 
     getMachineDataClient.callService(requestMachineData, function (result) {
       if (result.success) {
         let dataShow = [];
-        for (let i = 0; i < days; i++) {
-          let j = days - (i + 1);
-          dataShow.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
+        const count = result.dates.length - 1;
+        let k = 1;
+        for (let i = count; i >= 0; i--) {
+          const date = new Date(result.dates[i]);
+          if (date <= endDate && data >= beginDate) {
+            dataShow.push([k, result.dates[i], result.noload[i], result.underload[i], result.offtime[i]]);
+            k++;
+          }
         }
         setData(dataShow);
       }
     });
-  }, [id, days]);
+  }, [id, beginDate, endDate]);
 
   const getMuiTheme = () =>
     createTheme({
@@ -127,8 +132,10 @@ function MachineDataTable({ id, days, machineName }) {
 
 MachineDataTable.propTypes = {
   id: PropTypes.number,
-  days: PropTypes.number,
+  // days: PropTypes.number,
   machineName: PropTypes.string,
+  beginDate: PropTypes.instanceOf(Date).isRequired,
+  endDate: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default MachineDataTable;

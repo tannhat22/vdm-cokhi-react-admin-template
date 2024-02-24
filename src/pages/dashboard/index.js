@@ -12,10 +12,10 @@ import {
   Stack,
   TextField,
   Typography,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
+  // InputLabel,
+  // MenuItem,
+  // FormControl,
+  // Select,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -41,11 +41,14 @@ const DashboardDefault = () => {
     // console.log(`stt: ${stt}`);
   }
 
-  const [days, setDays] = useState(30);
+  // const [days, setDays] = useState(365);
   const [idMachine, setIdMachine] = useState(id);
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
-
+  const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+  const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
+  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2024-02-24'));
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
@@ -73,6 +76,35 @@ const DashboardDefault = () => {
     });
   }, []);
 
+  useEffect(() => {
+    var getMachineDataClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/get_machine_data',
+      serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+    });
+
+    let requestMachineData = new ROSLIB.ServiceRequest({
+      id_machine: idMachine,
+      days: 365,
+    });
+
+    getMachineDataClient.callService(requestMachineData, function (result) {
+      if (result.success) {
+        // let dataMachine = [];
+        const datesLength = result.dates.length;
+        // for (let i = 0; i < datesLength; i++) {
+        //   let j = days - (i + 1);
+        //   dataMachine.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
+        // }
+        setSelectedBeginDate(result.dates[0]);
+        setSelectedEndDate(result.dates[datesLength - 1]);
+        setSpecifiedMinDate(result.dates[0]);
+        setSpecifiedMaxDate(result.dates[datesLength - 1]);
+        // setDataMachine(dataMachine);
+      }
+    });
+  }, [idMachine]);
+
   function handleValueChange(event, value, reason) {
     if (reason === 'selectOption') {
       const sttMachineNew = machineNames.findIndex((machineName) => {
@@ -88,13 +120,13 @@ const DashboardDefault = () => {
     }
   }
 
-  function handleChangeSelectDays(event) {
-    setDays(event.target.value);
-  }
+  // function handleChangeSelectDays(event) {
+  //   setDays(event.target.value);
+  // }
 
-  function handleDateChange(date) {
-    console.log(date);
-  }
+  // function handleDateChange(date) {
+  //   console.log(date);
+  // }
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -169,9 +201,27 @@ const DashboardDefault = () => {
             <Typography variant="h5">Dữ liệu của máy</Typography>
           </Grid>
           <Grid item display="flex">
-            <DatePicker renderInput={(props) => <TextField {...props} />} label="Từ ngày" onChange={handleDateChange} />
-            <DatePicker label="Đến ngày" onChange={handleDateChange} />
-            <Box sx={{ minWidth: 120 }}>
+            <Box sx={{ marginRight: '16px' }}>
+              <DatePicker
+                label="Từ ngày"
+                value={selectedBeginDate}
+                onChange={(date) => {
+                  setSelectedBeginDate(date);
+                }}
+                minDate={specifiedMinDate}
+                maxDate={specifiedMaxDate}
+              />
+            </Box>
+            <DatePicker
+              label="Đến ngày"
+              value={selectedEndDate}
+              onChange={(date) => {
+                setSelectedEndDate(date);
+              }}
+              minDate={specifiedMinDate}
+              maxDate={specifiedMaxDate}
+            />
+            {/* <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <InputLabel id="days-select-label">Ngày</InputLabel>
                 <Select
@@ -188,14 +238,16 @@ const DashboardDefault = () => {
                   <MenuItem value={365}>Tất cả dữ liệu</MenuItem>
                 </Select>
               </FormControl>
-            </Box>
+            </Box> */}
           </Grid>
         </Grid>
         <MainCard sx={{ mt: 2 }} content={false}>
           <MachineDataTable
             id={idMachine}
             machineName={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
-            days={days}
+            // days={days}
+            beginDate={selectedBeginDate}
+            endDate={selectedEndDate}
           />
         </MainCard>
       </Grid>
