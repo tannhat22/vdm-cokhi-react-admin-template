@@ -48,7 +48,7 @@ const DashboardDefault = () => {
   const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
-  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2024-02-24'));
+  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2100-01-01'));
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {

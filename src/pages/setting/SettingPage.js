@@ -50,7 +50,15 @@ function SettingPage() {
     getAllMachineNameClient.callService(requestAllMachineName, function (result) {
       let dataShow = [];
       for (let i = 0; i < result.machines_quantity; i++) {
-        dataShow.push([i, result.id_machines[i], result.machines_name[i], result.machines_type[i], false]);
+        dataShow.push([
+          i,
+          result.id_machines[i],
+          result.machines_name[i],
+          result.machines_type[i],
+          result.plc_model[i],
+          result.plc_address[i],
+          false,
+        ]);
       }
       setData(dataShow);
     });
@@ -101,6 +109,22 @@ function SettingPage() {
     {
       name: 'type',
       label: 'Loại máy',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'plc',
+      label: 'PLC model',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'address',
+      label: 'Địa chỉ PLC',
       options: {
         filter: true,
         sort: true,

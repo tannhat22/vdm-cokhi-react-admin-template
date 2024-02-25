@@ -6,10 +6,14 @@ import {
   IconButton,
   Grid,
   Paper,
+  FormControl,
+  Select,
   TextField,
   Tooltip,
   InputAdornment,
+  InputLabel,
   Modal,
+  MenuItem,
   Typography,
   LinearProgress,
 } from '@mui/material';
@@ -40,10 +44,12 @@ const AddMachineForm = ({ update }) => {
     pass: '',
     name: '',
     type: '',
+    plc: '',
+    address: 0,
     showPass: false,
   });
 
-  // console.log(values);
+  console.log(values);
 
   const ros = useContext(RosPropsContext);
 
@@ -53,12 +59,14 @@ const AddMachineForm = ({ update }) => {
     serviceType: 'vdm_cokhi_machine_msgs/CreateMachine',
   });
 
-  function CreateServiceCall(password, name, type) {
+  function CreateServiceCall(password, name, type, plc, address) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
       password,
       name,
       type,
+      plc_model: plc,
+      plc_address: address,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
@@ -87,7 +95,7 @@ const AddMachineForm = ({ update }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(values);
-    CreateServiceCall(values.pass, values.name.trim(), values.type.trim());
+    CreateServiceCall(values.pass, values.name.trim(), values.type.trim(), values.plc, parseInt(values.address));
   };
 
   const handleChange = (e) => {
@@ -152,6 +160,32 @@ const AddMachineForm = ({ update }) => {
                     fullWidth
                     label="Loại máy"
                     placeholder="Loại máy"
+                    variant="outlined"
+                    required
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item sx={{ display: 'flex' }}>
+                  <FormControl sx={{ width: '50%', marginRight: '10px' }} required>
+                    <InputLabel id="plc-select-label">PLC model</InputLabel>
+                    <Select
+                      name="plc"
+                      labelId="plc-select-label"
+                      id="plc-select"
+                      value={values.plc}
+                      label="PLC model"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="FX3U">FX3U</MenuItem>
+                      <MenuItem value="KV-5500">KV-5500</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    name="address"
+                    type="number"
+                    fullWidth
+                    label="Địa chỉ PLC"
+                    placeholder="Địa chỉ PLC"
                     variant="outlined"
                     required
                     onChange={handleChange}

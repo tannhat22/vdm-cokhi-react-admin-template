@@ -6,9 +6,13 @@ import {
   IconButton,
   Grid,
   Paper,
+  FormControl,
+  Select,
   TextField,
   Tooltip,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   Modal,
   Typography,
   LinearProgress,
@@ -40,10 +44,12 @@ const EditMachineForm = ({ id, machineName, update }) => {
     pass: '',
     newName: '',
     newType: '',
+    newPLC: '',
+    newAddress: 0,
     showPass: false,
   });
 
-  //   console.log('re-render');
+  // console.log(values);
 
   const ros = useContext(RosPropsContext);
 
@@ -53,13 +59,15 @@ const EditMachineForm = ({ id, machineName, update }) => {
     serviceType: 'vdm_cokhi_machine_msgs/UpdateMachine',
   });
 
-  function UpdateServiceCall(password, new_name, new_type) {
+  function UpdateServiceCall(password, new_name, new_type, newPLC, newAddress) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
       password,
       id_machine: id,
       new_name,
       new_type,
+      new_plc_model: newPLC,
+      new_plc_address: newAddress,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
@@ -88,7 +96,13 @@ const EditMachineForm = ({ id, machineName, update }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(values);
-    UpdateServiceCall(values.pass, values.newName.trim(), values.newType.trim());
+    UpdateServiceCall(
+      values.pass,
+      values.newName.trim(),
+      values.newType.trim(),
+      values.newPLC,
+      parseInt(values.newAddress),
+    );
   };
 
   const handleChange = (e) => {
@@ -148,6 +162,32 @@ const EditMachineForm = ({ id, machineName, update }) => {
                     fullWidth
                     label="Loại máy"
                     placeholder="Loại máy mới"
+                    variant="outlined"
+                    required
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item sx={{ display: 'flex' }}>
+                  <FormControl sx={{ width: '50%', marginRight: '10px' }} required>
+                    <InputLabel id="plc-select-2-label">PLC model</InputLabel>
+                    <Select
+                      name="newPLC"
+                      labelId="plc-select-2-label"
+                      id="plc-select-2"
+                      value={values.newPLC}
+                      label="PLC model"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="FX3U">FX3U</MenuItem>
+                      <MenuItem value="KV-5500">KV-5500</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    name="newAddress"
+                    type="number"
+                    fullWidth
+                    label="Địa chỉ PLC"
+                    placeholder="Địa chỉ PLC mới"
                     variant="outlined"
                     required
                     onChange={handleChange}

@@ -18,6 +18,17 @@ import mc1Img from 'assets/images/machines/MC01.jpg';
 import mc2Img from 'assets/images/machines/MC02.jpg';
 import mc3Img from 'assets/images/machines/MC03.jpg';
 import ma1Img from 'assets/images/machines/MA01.jpg';
+import ma2Img from 'assets/images/machines/MA02.jpg';
+import ma3Img from 'assets/images/machines/MA03.jpg';
+import ma4Img from 'assets/images/machines/MA04.jpg';
+import bj1Img from 'assets/images/machines/BJ01.jpg';
+import bj3Img from 'assets/images/machines/BJ03.jpg';
+import bj4Img from 'assets/images/machines/BJ04.jpg';
+import bj6Img from 'assets/images/machines/BJ06.jpg';
+import bj7Img from 'assets/images/machines/BJ07.jpg';
+import la3Img from 'assets/images/machines/LA03.jpg';
+import la4Img from 'assets/images/machines/LA04.jpg';
+import la5Img from 'assets/images/machines/LA05.jpg';
 
 function SignalLightsLayout({ width, height }) {
   const [machinesId, setMachinesId] = useState([]);
@@ -214,6 +225,116 @@ function SignalLightsLayout({ width, height }) {
         posTop={height * 43.1}
         size={width * 2.5}
         img={ma1Img}
+      />
+
+      {/* MA02 */}
+      <CardMachine
+        stt={18}
+        machineId={machinesId[18]}
+        posLeft={width * 58.5}
+        posTop={height * 43.1}
+        size={width * 2.5}
+        img={ma2Img}
+      />
+
+      {/* MA03 */}
+      <CardMachine
+        stt={19}
+        machineId={machinesId[19]}
+        posLeft={width * 52.95}
+        posTop={height * 43.1}
+        size={width * 2.5}
+        img={ma3Img}
+      />
+
+      {/* MA04 */}
+      <CardMachine
+        stt={20}
+        machineId={machinesId[20]}
+        posLeft={width * 64.14}
+        posTop={height * 43.1}
+        size={width * 2.5}
+        img={ma4Img}
+      />
+
+      {/* BJ01 */}
+      <CardMachine
+        stt={21}
+        machineId={machinesId[21]}
+        posLeft={width * 66.69}
+        posTop={height * 74.2}
+        size={width * 2.5}
+        img={bj1Img}
+      />
+
+      {/* BJ03 */}
+      <CardMachine
+        stt={22}
+        machineId={machinesId[22]}
+        posLeft={width * 70.6}
+        posTop={height * 74.2}
+        size={width * 2.5}
+        img={bj3Img}
+      />
+
+      {/* BJ04 */}
+      <CardMachine
+        stt={23}
+        machineId={machinesId[23]}
+        posLeft={width * 74.75}
+        posTop={height * 74.2}
+        size={width * 2.5}
+        img={bj4Img}
+      />
+
+      {/* BJ06 */}
+      <CardMachine
+        stt={24}
+        machineId={machinesId[24]}
+        posLeft={width * 56.17}
+        posTop={height * 74.2}
+        size={width * 2.5}
+        img={bj6Img}
+      />
+
+      {/* BJ07 */}
+      <CardMachine
+        stt={25}
+        machineId={machinesId[25]}
+        posLeft={width * 60.6}
+        posTop={height * 74.2}
+        size={width * 2.5}
+        img={bj7Img}
+      />
+
+      {/* LA03 */}
+      <CardMachine
+        stt={26}
+        machineId={machinesId[26]}
+        posLeft={width * 59}
+        posTop={height * 84.3}
+        size={width * 2.5}
+        img={la3Img}
+      />
+
+      {/* LA04 */}
+      <CardMachine
+        stt={27}
+        machineId={machinesId[27]}
+        posLeft={width * 65}
+        posTop={height * 84.3}
+        size={width * 2.5}
+        img={la4Img}
+      />
+
+      {/* LA05 */}
+      <CardMachine
+        stt={28}
+        machineId={machinesId[28]}
+        posLeft={width * 53}
+        posTop={height * 84.3}
+        size={width * 2.5}
+        img={la5Img}
       />
     </div>
   );

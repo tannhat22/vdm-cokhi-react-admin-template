@@ -49,8 +49,8 @@ const ResetForm = ({ id, machineName }) => {
   function ResetServiceCall(password) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
-      id_machine: id,
       password,
+      id_machine: id,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
