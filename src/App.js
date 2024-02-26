@@ -1,7 +1,11 @@
+// il8n
+import 'locales/i18n';
+
 // project import
 import ROSLIB from 'roslib';
 import Routes from 'routes';
 import ThemeCustomization from 'themes';
+import ThemeLocalization from 'locales';
 import ScrollTop from 'components/ScrollTop';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
@@ -18,9 +22,11 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <RosPropsContext.Provider value={ros}>
         <ThemeCustomization>
-          <ScrollTop>
-            <Routes />
-          </ScrollTop>
+          <ThemeLocalization>
+            <ScrollTop>
+              <Routes />
+            </ScrollTop>
+          </ThemeLocalization>
         </ThemeCustomization>
       </RosPropsContext.Provider>
     </LocalizationProvider>

@@ -12,6 +12,7 @@ import Snackbar from '@mui/material/Snackbar';
 // import Profile from './Profile';
 // import Notification from './Notification';
 // import MobileSection from './MobileSection';
+import Localization from './Localization';
 import RosPropsContext from 'context/RosPropsContext';
 
 // ==============================|| HEADER - CONTENT ||============================== //
@@ -114,6 +115,7 @@ const HeaderContent = () => {
       {/* <Notification /> */}
       {/* {!matchesXs && <Profile />}
       {matchesXs && <MobileSection />} */}
+      <Localization />
     </>
   );
 };
