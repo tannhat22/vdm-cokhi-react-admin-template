@@ -9,11 +9,13 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } 
 
 // project import
 import { activeItem } from 'store/reducers/menu';
+import { useLocales } from 'locales';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
 const NavItem = ({ item, level }) => {
   const theme = useTheme();
+  const { translate } = useLocales();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
@@ -23,7 +25,6 @@ const NavItem = ({ item, level }) => {
   if (item.target) {
     itemTarget = '_blank';
   }
-
   let listItemProps = {
     component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />),
   };
@@ -118,7 +119,7 @@ const NavItem = ({ item, level }) => {
         <ListItemText
           primary={
             <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
-              {item.title}
+              {translate(item.title)}
             </Typography>
           }
         />

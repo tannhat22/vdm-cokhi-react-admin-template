@@ -25,6 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 const style = {
   position: 'absolute',
@@ -35,21 +36,23 @@ const style = {
   padding: 0,
 };
 
-const EditMachineForm = ({ id, machineName, update }) => {
+const EditMachineForm = ({ id, machineName, machineType, plc, address, update }) => {
+  const { translate } = useLocales();
+
   const [openEdit, setOpenEdit] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
   const [status, setStatus] = useState('');
   const [values, setValues] = useState({
     pass: '',
-    newName: '',
-    newType: '',
-    newPLC: '',
-    newAddress: 0,
+    newName: machineName,
+    newType: machineType,
+    newPLC: plc,
+    newAddress: address,
     showPass: false,
   });
 
-  // console.log(values);
+  console.log(values);
 
   const ros = useContext(RosPropsContext);
 
@@ -146,10 +149,11 @@ const EditMachineForm = ({ id, machineName, update }) => {
                 <Grid item>
                   <TextField
                     name="newName"
+                    value={values.newName}
                     type="text"
                     fullWidth
-                    label="Tên máy"
-                    placeholder="Tên máy mới"
+                    label={translate('Machine name')}
+                    placeholder={translate('New Machine name')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -158,10 +162,11 @@ const EditMachineForm = ({ id, machineName, update }) => {
                 <Grid item>
                   <TextField
                     name="newType"
+                    value={values.newType}
                     type="text"
                     fullWidth
-                    label="Loại máy"
-                    placeholder="Loại máy mới"
+                    label={translate('Machine type')}
+                    placeholder={translate('New Machine type')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -184,10 +189,11 @@ const EditMachineForm = ({ id, machineName, update }) => {
                   </FormControl>
                   <TextField
                     name="newAddress"
+                    value={values.newAddress}
                     type="number"
                     fullWidth
-                    label="Địa chỉ PLC"
-                    placeholder="Địa chỉ PLC mới"
+                    label={translate('PLC Address')}
+                    placeholder={translate('New PLC Address')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -199,8 +205,8 @@ const EditMachineForm = ({ id, machineName, update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Mật khẩu"
-                    placeholder="Mật khẩu"
+                    label={translate('Password')}
+                    placeholder={translate('Password')}
                     variant="outlined"
                     required
                     helperText={status}
@@ -225,7 +231,7 @@ const EditMachineForm = ({ id, machineName, update }) => {
                 <Grid item>
                   {/* <Button type="submit" fullWidth variant="contained"> */}
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Cập nhật máy
+                    {translate('Update machine')}
                   </Button>
                 </Grid>
 
@@ -246,6 +252,9 @@ const EditMachineForm = ({ id, machineName, update }) => {
 EditMachineForm.propTypes = {
   id: PropTypes.number,
   machineName: PropTypes.string,
+  machineType: PropTypes.string,
+  plc: PropTypes.string,
+  address: PropTypes.number,
   update: PropTypes.func,
 };
 

@@ -14,8 +14,10 @@ import SignalLight from 'components/SignalLight';
 import RosPropsContext from 'context/RosPropsContext';
 import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
+import { useLocales } from 'locales';
 
 function OverviewTable() {
+  const { translate } = useLocales();
   const [data, setData] = React.useState([
     // [0, 1, 'Machine 1', 239, 239, 1, false],
     // [1, 2, 'Machine 2', 191, 191, 1, false],
@@ -106,7 +108,7 @@ function OverviewTable() {
     },
     {
       name: 'name',
-      label: 'Tên máy',
+      label: translate('Machine name'),
       options: {
         filter: true,
         sort: true,
@@ -115,7 +117,7 @@ function OverviewTable() {
     },
     {
       name: 'noLoad',
-      label: 'Thời gian hoạt động không tải',
+      label: translate('No-load operating time'),
       options: {
         filter: false,
         sort: true,
@@ -130,7 +132,7 @@ function OverviewTable() {
     },
     {
       name: 'underLoad',
-      label: 'Thời gian hoạt động có tải',
+      label: translate('Underload operating time'),
       options: {
         filter: false,
         sort: true,
@@ -145,7 +147,7 @@ function OverviewTable() {
     },
     {
       name: 'offTime',
-      label: 'Thời gian tắt máy',
+      label: translate('Shutdown time'),
       options: {
         filter: false,
         sort: true,
@@ -160,7 +162,7 @@ function OverviewTable() {
     },
     {
       name: 'signalLight',
-      label: 'Đèn tín hiệu',
+      label: translate('Signal light'),
       options: {
         filter: false,
         sort: false,
@@ -182,7 +184,7 @@ function OverviewTable() {
     },
     {
       name: 'action',
-      label: 'Lựa chọn',
+      label: translate('Action'),
       options: {
         filter: false,
         sort: false,
@@ -236,7 +238,7 @@ function OverviewTable() {
 
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable title={'Bảng Trạng Thái Máy Tổng Thể'} data={data} columns={columns} options={options} />
+      <MUIDataTable title={translate('Overall Machine Status Table')} data={data} columns={columns} options={options} />
     </ThemeProvider>
   );
 }

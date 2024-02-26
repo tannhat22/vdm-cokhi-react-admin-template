@@ -28,10 +28,13 @@ import SignalLightArea from './SignalLightArea';
 import ResetForm from './ResetForm';
 
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 const DashboardDefault = () => {
   const location = useLocation();
+  const { translate } = useLocales();
+
   let id = 0;
   let stt = 0;
   if (location.state) {
@@ -152,7 +155,7 @@ const DashboardDefault = () => {
           value={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : null}
           sx={{ width: '100%' }}
           onChange={handleValueChange}
-          renderInput={(params) => <TextField {...params} label="Chọn tên máy" />}
+          renderInput={(params) => <TextField {...params} label={translate('Select machine name')} />}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
@@ -172,11 +175,11 @@ const DashboardDefault = () => {
       <Grid item xs={12} md={8} lg={9}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Biểu đồ thời giạn hoạt động</Typography>
+            <Typography variant="h5">{translate('Timeline chart of activities')}</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">10 ngày gần nhất</Button>
+              <Button size="small">{translate('the last 10 days')}</Button>
             </Stack>
           </Grid>
         </Grid>
@@ -189,7 +192,7 @@ const DashboardDefault = () => {
       <Grid item xs={12} md={4} lg={3}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Đèn tín hiệu</Typography>
+            <Typography variant="h5">{translate('Signal light')}</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
@@ -208,12 +211,12 @@ const DashboardDefault = () => {
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Dữ liệu của máy</Typography>
+            <Typography variant="h5">{translate('Machine data')}</Typography>
           </Grid>
           <Grid item display="flex">
             <Box sx={{ marginRight: '16px' }}>
               <DatePicker
-                label="Từ ngày"
+                label={translate('Begin date')}
                 value={selectedBeginDate}
                 onChange={(date) => {
                   setSelectedBeginDate(date);
@@ -223,7 +226,7 @@ const DashboardDefault = () => {
               />
             </Box>
             <DatePicker
-              label="Đến ngày"
+              label={translate('End date')}
               value={selectedEndDate}
               onChange={(date) => {
                 setSelectedEndDate(date);

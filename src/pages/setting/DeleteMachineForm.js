@@ -22,6 +22,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import RosPropsContext from 'context/RosPropsContext';
 import { Fragment } from 'react';
+import { useLocales } from 'locales';
 
 const style = {
   position: 'absolute',
@@ -33,6 +34,8 @@ const style = {
 };
 
 const DeleteMachineForm = ({ id, machineName, update }) => {
+  const { translate } = useLocales();
+
   const [openDelete, setOpenDelete] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
@@ -123,7 +126,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
               <Grid container direction="column" spacing={2}>
                 <Grid item>
                   <Typography>
-                    <span style={{ color: 'red' }}>Xóa máy:</span> {`${machineName}`}
+                    <span style={{ color: 'red' }}>{translate('Delete machine')}:</span> {`${machineName}`}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -132,8 +135,8 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Mật khẩu"
-                    placeholder="Mật khẩu"
+                    label={translate('Password')}
+                    placeholder={translate('Password')}
                     variant="outlined"
                     required
                     helperText={status}
@@ -157,7 +160,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
 
                 <Grid item>
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Xác nhận xóa
+                    {translate('Delete confirmation')}
                   </Button>
                 </Grid>
 

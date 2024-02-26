@@ -14,10 +14,12 @@ import Snackbar from '@mui/material/Snackbar';
 // import MobileSection from './MobileSection';
 import Localization from './Localization';
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = () => {
+  const { translate } = useLocales();
   // const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const [connected, setConnected] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -82,7 +84,7 @@ const HeaderContent = () => {
           )}
         </Snackbar>
         <Typography sx={{ fontWeight: 500 }} color="primary">
-          VDM Phòng Cơ Khí
+          {translate('VDM Mechanical Department')}
         </Typography>
         {connected ? (
           <Typography sx={{ fontSize: '0.7rem' }} color="success.main">

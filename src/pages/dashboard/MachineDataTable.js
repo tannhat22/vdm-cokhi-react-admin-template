@@ -8,8 +8,10 @@ import { Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 function MachineDataTable({ id, machineName, beginDate, endDate }) {
+  const { translate } = useLocales();
   const [data, setData] = React.useState([
     // {
     //   id: 1,
@@ -79,7 +81,7 @@ function MachineDataTable({ id, machineName, beginDate, endDate }) {
     },
     {
       name: 'date',
-      label: 'Ngày tháng',
+      label: `${translate('Dates')}`,
       options: {
         filter: true,
         sort: true,
@@ -88,7 +90,7 @@ function MachineDataTable({ id, machineName, beginDate, endDate }) {
     },
     {
       name: 'noLoad',
-      label: 'Thời gian hoạt động không tải (phút)',
+      label: `${translate('No-load operating time (min)')}`,
       options: {
         filter: false,
         sort: true,
@@ -96,7 +98,7 @@ function MachineDataTable({ id, machineName, beginDate, endDate }) {
     },
     {
       name: 'underLoad',
-      label: 'Thời gian hoạt động có tải (phút)',
+      label: `${translate('Underload operating time (min)')}`,
       options: {
         filter: false,
         sort: true,
@@ -104,7 +106,7 @@ function MachineDataTable({ id, machineName, beginDate, endDate }) {
     },
     {
       name: 'offTime',
-      label: 'Thời gian tắt máy (phút)',
+      label: `${translate('Shutdown time (min)')}`,
       options: {
         filter: false,
         sort: true,
@@ -129,7 +131,12 @@ function MachineDataTable({ id, machineName, beginDate, endDate }) {
   return (
     <Box>
       <ThemeProvider theme={getMuiTheme()}>
-        <MUIDataTable title={`Bảng dữ liệu máy (${machineName})`} data={data} columns={columns} options={options} />
+        <MUIDataTable
+          title={`${translate('Machine data table')} (${machineName})`}
+          data={data}
+          columns={columns}
+          options={options}
+        />
       </ThemeProvider>
     </Box>
   );

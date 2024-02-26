@@ -13,6 +13,7 @@ import RosPropsContext from 'context/RosPropsContext';
 import SignalLight from 'components/SignalLight';
 import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
+import { useLocales } from 'locales';
 
 const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -28,6 +29,8 @@ const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} clas
 }));
 
 function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
+  const { translate } = useLocales();
+
   const [machineData, setMachineData] = useState([]);
   const [typeData, setTypeData] = useState([]);
 
@@ -114,64 +117,64 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
           />
           <CardContent sx={{ minWidth: 360 }}>
             <Typography gutterBottom variant="h3" component="div" color="primary">
-              Tên máy: <span style={{ color: '#1C2025' }}>{machineData[1] || 'no info'}</span>
+              {translate('Machine name')}: <span style={{ color: '#1C2025' }}>{machineData[1] || 'no info'}</span>
             </Typography>
             <div style={{ position: 'absolute', top: '6px', right: '18px' }}>
               <SignalLight color={machineData[6] || 'off'} />
             </div>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Trạng thái hoạt động:{' '}
+              {translate('Operating status')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[6] === 'green'
-                  ? 'Chạy Có Tải'
+                  ? translate('Underload')
                   : machineData[6] === 'yellow'
-                  ? 'Chạy Không Tải'
+                  ? translate('No-load')
                   : machineData[6] === 'red'
-                  ? 'Đang Quá Tải'
-                  : 'Tắt Máy'}
+                  ? translate('Overloading')
+                  : translate('Shutdown')}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Thời gian chạy không tải:{' '}
+              {translate('No-load operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[3] || machineData[3] === 0 ? `${machineData[3]} phút` : 'no info'}
+                {machineData[3] || machineData[3] === 0 ? `${machineData[3]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Thời gian chạy có tải:{' '}
+              {translate('Underload operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[4] || machineData[4] === 0 ? `${machineData[4]} phút` : 'no info'}
+                {machineData[4] || machineData[4] === 0 ? `${machineData[4]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
-              Thời gian tắt máy:{' '}
+              {translate('Shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[5] || machineData[5] === 0 ? `${machineData[5]} phút` : 'no info'}
+                {machineData[5] || machineData[5] === 0 ? `${machineData[5]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
 
             <Typography gutterBottom variant="h3" component="div" color="primary">
-              Công đoạn: <span style={{ color: '#1C2025' }}>{typeData[0] || 'no info'}</span>
+              {translate('Process')}: <span style={{ color: '#1C2025' }}>{typeData[0] || 'no info'}</span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Số lượng máy: <span style={{ color: '#212121' }}>{typeData[1] || 'no info'}</span>
+              {translate('Number of machines')}: <span style={{ color: '#212121' }}>{typeData[1] || 'no info'}</span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Tổng thời gian chạy không tải:{' '}
+              {translate('Total no-load operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[2] || typeData[2] === 0 ? `${typeData[2]} phút` : 'no info'}
+                {typeData[2] || typeData[2] === 0 ? `${typeData[2]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-              Tổng thời gian chạy có tải:{' '}
+              {translate('Total underload operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[3] || typeData[3] === 0 ? `${typeData[3]} phút` : 'no info'}
+                {typeData[3] || typeData[3] === 0 ? `${typeData[3]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
-              Tổng thời gian tắt máy:{' '}
+              {translate('Total shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[4] || typeData[4] === 0 ? `${typeData[4]} phút` : 'no info'}
+                {typeData[4] || typeData[4] === 0 ? `${typeData[4]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
           </CardContent>

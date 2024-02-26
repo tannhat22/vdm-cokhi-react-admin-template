@@ -6,8 +6,11 @@ import { Box, Typography } from '@mui/material';
 
 import SignalLightsLayout from './SignalLightsLayout';
 import SignalLight from 'components/SignalLight';
+import { useLocales } from 'locales';
 
 function LayoutPage() {
+  const { translate } = useLocales();
+
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
@@ -56,7 +59,7 @@ function LayoutPage() {
     <Box>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h2" color="primary" sx={{ marginBottom: '16px' }}>
-          SƠ ĐỒ LAYOUT PHÒNG CƠ KHÍ VDM
+          {translate('VDM MECHANICAL DEPARTMENT LAYOUT DIAGRAM')}
         </Typography>
       </div>
       <div style={{ position: 'relative' }}>
@@ -78,7 +81,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="off" />
           </div>
-          : Tắt Máy
+          : {translate('Shutdown')}
         </Typography>
         <Typography
           variant="body1"
@@ -88,7 +91,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="yellow" />
           </div>
-          : Máy Chạy Không Tải
+          : {translate('No-load')}
         </Typography>
         <Typography
           variant="body1"
@@ -98,7 +101,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="green" />
           </div>
-          : Máy Chạy Có Tải
+          : {translate('Underload')}
         </Typography>
         <Typography
           variant="body1"
@@ -108,7 +111,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="red" />
           </div>
-          : Máy Lỗi
+          : {translate('Overload')}
         </Typography>
         <Typography
           variant="body1"
@@ -118,7 +121,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight custom="standing" color="purple" size="28" />
           </div>
-          : Vị Trí Đứng
+          : {translate('Current Position')}
         </Typography>
       </div>
     </Box>

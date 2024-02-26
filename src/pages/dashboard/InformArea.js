@@ -5,8 +5,10 @@ import { Grid } from '@mui/material';
 
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 function InformArea({ id }) {
+  const { translate } = useLocales();
   const [dataMachine, setDataMachine] = useState({
     noloadTime: { hours: '00', minutes: '00' },
     underloadTime: { hours: '00', minutes: '00' },
@@ -83,21 +85,21 @@ function InformArea({ id }) {
     <Fragment>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Thời gian hoạt động không tải"
+          title={translate('No-load operating time')}
           desc={`${dataMachine.noloadTime.hours} h : ${dataMachine.noloadTime.minutes} m`}
           time="         "
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Thời gian hoạt động có tải"
+          title={translate('Underload operating time')}
           desc={`${dataMachine.underloadTime.hours} h : ${dataMachine.underloadTime.minutes} m`}
           time="         "
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Thời gian tắt máy"
+          title={translate('Shutdown time')}
           // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
           desc={`${dataMachine.offTime.hours} h : ${dataMachine.offTime.minutes} m`}
           time="         "
@@ -113,7 +115,7 @@ function InformArea({ id }) {
       </Grid> */}
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Thời gian đạt tốc độ"
+          title={translate('Time to reach speed')}
           // desc={`${dataMachine.timeReachspeed} ms`}
           desc={'No information'}
           time="         "

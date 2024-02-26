@@ -11,8 +11,11 @@ import RosPropsContext from 'context/RosPropsContext';
 import AddMachineForm from './AddMachineForm';
 import EditMachineForm from './EditMachineForm';
 import DeleteMachineForm from './DeleteMachineForm';
+import { useLocales } from 'locales';
 
 function SettingPage() {
+  const { translate } = useLocales();
+
   const [reRender, setReRender] = useState(false);
   const [data, setData] = React.useState([
     // {
@@ -20,6 +23,8 @@ function SettingPage() {
     //   id: 1,
     //   name: 'Machine 1',
     //   type: 'GS',
+    //   plc: 'KV-5500',
+    //   address: 3,
     //   action: false,
     // },
     // {
@@ -100,7 +105,7 @@ function SettingPage() {
     },
     {
       name: 'name',
-      label: 'Tên máy',
+      label: translate('Machine name'),
       options: {
         filter: true,
         sort: true,
@@ -108,7 +113,7 @@ function SettingPage() {
     },
     {
       name: 'type',
-      label: 'Loại máy',
+      label: translate('Machine type'),
       options: {
         filter: true,
         sort: true,
@@ -116,7 +121,7 @@ function SettingPage() {
     },
     {
       name: 'plc',
-      label: 'PLC model',
+      label: 'PLC Model',
       options: {
         filter: true,
         sort: true,
@@ -124,7 +129,7 @@ function SettingPage() {
     },
     {
       name: 'address',
-      label: 'Địa chỉ PLC',
+      label: translate('PLC Address'),
       options: {
         filter: true,
         sort: true,
@@ -132,7 +137,7 @@ function SettingPage() {
     },
     {
       name: 'action',
-      label: 'Lựa chọn  ',
+      label: translate('Action'),
       options: {
         filter: false,
         sort: false,
@@ -150,6 +155,8 @@ function SettingPage() {
                 id={tableMeta.rowData[1]}
                 machineName={tableMeta.rowData[2]}
                 machineType={tableMeta.rowData[3]}
+                plc={tableMeta.rowData[4]}
+                address={tableMeta.rowData[5]}
                 update={updateFromChild}
               />
               <DeleteMachineForm
@@ -181,7 +188,7 @@ function SettingPage() {
       <ThemeProvider theme={getMuiTheme()}>
         <AddMachineForm update={updateFromChild} />
         <br />
-        <MUIDataTable title={`Bảng thông tin máy`} data={data} columns={columns} options={options} />
+        <MUIDataTable title={translate('Machine Setup Table')} data={data} columns={columns} options={options} />
       </ThemeProvider>
     </Box>
   );

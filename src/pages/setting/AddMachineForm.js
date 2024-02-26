@@ -25,6 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import RosPropsContext from 'context/RosPropsContext';
+import { useLocales } from 'locales';
 
 const style = {
   position: 'absolute',
@@ -36,6 +37,8 @@ const style = {
 };
 
 const AddMachineForm = ({ update }) => {
+  const { translate } = useLocales();
+
   const [openAdd, setOpenAdd] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
@@ -125,7 +128,7 @@ const AddMachineForm = ({ update }) => {
           sx={{ width: '20%', display: 'flex', alignItems: 'center' }}
           startIcon={<FontAwesomeIcon icon={faPlus} />}
         >
-          Thêm máy mới
+          {translate('Add new machine')}
         </Button>
       </Tooltip>
       <Modal
@@ -139,15 +142,15 @@ const AddMachineForm = ({ update }) => {
             <form onSubmit={handleSubmit}>
               <Grid container direction="column" spacing={2}>
                 <Grid item>
-                  <Typography sx={{ color: 'green' }}>Thêm máy mới</Typography>
+                  <Typography sx={{ color: 'green' }}>{translate('Add new machine')}</Typography>
                 </Grid>
                 <Grid item>
                   <TextField
                     name="name"
                     type="text"
                     fullWidth
-                    label="Tên máy"
-                    placeholder="Tên máy"
+                    label={translate('Machine name')}
+                    placeholder={translate('Machine name')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -158,8 +161,8 @@ const AddMachineForm = ({ update }) => {
                     name="type"
                     type="text"
                     fullWidth
-                    label="Loại máy"
-                    placeholder="Loại máy"
+                    label={translate('Machine type')}
+                    placeholder={translate('Machine type')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -167,13 +170,13 @@ const AddMachineForm = ({ update }) => {
                 </Grid>
                 <Grid item sx={{ display: 'flex' }}>
                   <FormControl sx={{ width: '50%', marginRight: '10px' }} required>
-                    <InputLabel id="plc-select-label">PLC model</InputLabel>
+                    <InputLabel id="plc-select-label">PLC Model</InputLabel>
                     <Select
                       name="plc"
                       labelId="plc-select-label"
                       id="plc-select"
                       value={values.plc}
-                      label="PLC model"
+                      label="PLC Model"
                       onChange={handleChange}
                     >
                       <MenuItem value="FX3U">FX3U</MenuItem>
@@ -184,8 +187,8 @@ const AddMachineForm = ({ update }) => {
                     name="address"
                     type="number"
                     fullWidth
-                    label="Địa chỉ PLC"
-                    placeholder="Địa chỉ PLC"
+                    label={translate('PLC Address')}
+                    placeholder={translate('PLC Address')}
                     variant="outlined"
                     required
                     onChange={handleChange}
@@ -197,8 +200,8 @@ const AddMachineForm = ({ update }) => {
                     name="pass"
                     type={values.showPass ? 'text' : 'password'}
                     fullWidth
-                    label="Mật Khẩu"
-                    placeholder="Mật Khẩu"
+                    label={translate('Password')}
+                    placeholder={translate('Password')}
                     variant="outlined"
                     required
                     helperText={status}
@@ -222,7 +225,7 @@ const AddMachineForm = ({ update }) => {
 
                 <Grid item>
                   <Button disabled={isLoad} type="submit" fullWidth variant="contained">
-                    Thêm máy
+                    {translate('Add machine')}
                   </Button>
                 </Grid>
 
