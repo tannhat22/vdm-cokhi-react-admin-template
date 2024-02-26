@@ -69,10 +69,14 @@ const DashboardDefault = () => {
           dataNames.push({
             id: result.id_machines[i],
             label: result.machines_name[i],
+            plc: result.plc_model[i],
+            address: result.plc_address[i],
           });
         }
         setMachineNames(dataNames);
       }
+      // console.log(result.success);
+      // console.log('da phan hoi');
     });
   }, []);
 
@@ -87,22 +91,23 @@ const DashboardDefault = () => {
       id_machine: idMachine,
       days: 365,
     });
-
-    getMachineDataClient.callService(requestMachineData, function (result) {
-      if (result.success) {
-        // let dataMachine = [];
-        const datesLength = result.dates.length;
-        // for (let i = 0; i < datesLength; i++) {
-        //   let j = days - (i + 1);
-        //   dataMachine.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
-        // }
-        setSelectedBeginDate(result.dates[0]);
-        setSelectedEndDate(result.dates[datesLength - 1]);
-        setSpecifiedMinDate(result.dates[0]);
-        setSpecifiedMaxDate(result.dates[datesLength - 1]);
-        // setDataMachine(dataMachine);
-      }
-    });
+    if (idMachine !== 0) {
+      getMachineDataClient.callService(requestMachineData, function (result) {
+        if (result.success) {
+          // let dataMachine = [];
+          const datesLength = result.dates.length;
+          // for (let i = 0; i < datesLength; i++) {
+          //   let j = days - (i + 1);
+          //   dataMachine.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
+          // }
+          setSelectedBeginDate(new Date(result.dates[0]));
+          setSelectedEndDate(new Date(result.dates[datesLength - 1]));
+          setSpecifiedMinDate(result.dates[0]);
+          setSpecifiedMaxDate(result.dates[datesLength - 1]);
+          // setDataMachine(dataMachine);
+        }
+      });
+    }
   }, [idMachine]);
 
   function handleValueChange(event, value, reason) {
@@ -152,7 +157,12 @@ const DashboardDefault = () => {
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
         {idMachine !== 0 && machineNames.length > 0 ? (
-          <ResetForm id={idMachine} machineName={machineNames[sttMachine].label} />
+          <ResetForm
+            id={idMachine}
+            machineName={machineNames[sttMachine].label}
+            plcModel={machineNames[sttMachine].plc}
+            plcAddress={machineNames[sttMachine].address}
+          />
         ) : null}
       </Grid>
       <InformArea id={idMachine} />

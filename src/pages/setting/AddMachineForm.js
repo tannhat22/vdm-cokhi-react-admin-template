@@ -49,7 +49,7 @@ const AddMachineForm = ({ update }) => {
     showPass: false,
   });
 
-  console.log(values);
+  // console.log(values);
 
   const ros = useContext(RosPropsContext);
 

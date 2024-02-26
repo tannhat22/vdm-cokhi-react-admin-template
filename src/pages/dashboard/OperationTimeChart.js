@@ -70,30 +70,31 @@ const OperationTimeChart = ({ id }) => {
       id_machine: id,
       days: 10,
     });
-
-    getMachineDataClient.callService(requestMachineData, function (result) {
-      if (result.success) {
-        let dates = [];
-        for (let i = 0; i < result.dates.length; i++) {
-          dates.push(result.dates[i].slice(result.dates[i].indexOf('-') + 1, result.dates[i].indexOf(' ')));
+    if (id !== 0) {
+      getMachineDataClient.callService(requestMachineData, function (result) {
+        if (result.success) {
+          let dates = [];
+          for (let i = 0; i < result.dates.length; i++) {
+            dates.push(result.dates[i].slice(result.dates[i].indexOf('-') + 1, result.dates[i].indexOf(' ')));
+          }
+          setDays(dates);
+          setSeries([
+            {
+              name: 'Tắt máy',
+              data: result.offtime,
+            },
+            {
+              name: 'Không tải',
+              data: result.noload,
+            },
+            {
+              name: 'Có tải',
+              data: result.underload,
+            },
+          ]);
         }
-        setDays(dates);
-        setSeries([
-          {
-            name: 'Tắt máy',
-            data: result.offtime,
-          },
-          {
-            name: 'Không tải',
-            data: result.noload,
-          },
-          {
-            name: 'Có tải',
-            data: result.underload,
-          },
-        ]);
-      }
-    });
+      });
+    }
   }, [id]);
 
   useEffect(() => {

@@ -25,7 +25,7 @@ const HeaderContent = () => {
   const ros = React.useContext(RosPropsContext);
 
   React.useEffect(() => {
-    ros.connect('ws://localhost:9090');
+    ros.connect('ws://192.168.1.69:9090');
 
     ros.on('connection', function () {
       setConnected(true);

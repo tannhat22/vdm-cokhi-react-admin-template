@@ -10,7 +10,7 @@ import RosPropsContext from 'context/RosPropsContext';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 var ros = new ROSLIB.Ros({
-  url: 'ws://192.168.1.2:9090',
+  // url: 'ws://localhost:9090',
 });
 
 function App() {

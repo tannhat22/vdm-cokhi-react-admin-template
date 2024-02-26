@@ -28,7 +28,7 @@ const style = {
   padding: 0,
 };
 
-const ResetForm = ({ id, machineName }) => {
+const ResetForm = ({ id, machineName, plcModel, plcAddress }) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
   const [successServ, setSuccessServ] = useState(true);
@@ -42,15 +42,17 @@ const ResetForm = ({ id, machineName }) => {
 
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
-    name: '/reset_machine',
-    serviceType: 'vdm_cokhi_machine_msgs/ResetMachine',
+    name: plcModel === 'KV-5500' ? '/reset_machine_plc_kv' : '/reset_machine_plc_fx',
+    serviceType: 'vdm_cokhi_machine_msgs/ResetMachinePLC',
   });
 
   function ResetServiceCall(password) {
     setIsLoad(true);
     let requestReset = new ROSLIB.ServiceRequest({
-      password,
       id_machine: id,
+      name: machineName,
+      plc_address: plcAddress,
+      password,
     });
 
     resetMachineClient.callService(requestReset, function (result) {
@@ -174,6 +176,8 @@ const ResetForm = ({ id, machineName }) => {
 ResetForm.propTypes = {
   id: PropTypes.number,
   machineName: PropTypes.string,
+  plcModel: PropTypes.string,
+  plcAddress: PropTypes.number,
 };
 
 export default ResetForm;
