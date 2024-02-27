@@ -59,7 +59,7 @@ function LayoutPage() {
     <Box>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h2" color="primary" sx={{ marginBottom: '16px' }}>
-          {translate('VDM MECHANICAL DEPARTMENT LAYOUT DIAGRAM')}
+          {translate('LAYOUT DIAGRAM OF VDM MACHINING TOOLS MANUFACTURING SECTION')}
         </Typography>
       </div>
       <div style={{ position: 'relative' }}>
@@ -81,7 +81,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="off" />
           </div>
-          : {translate('Shutdown')}
+          : {translate('Turn off machine')}
         </Typography>
         <Typography
           variant="body1"
@@ -91,7 +91,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="yellow" />
           </div>
-          : {translate('No-load')}
+          : {translate('Running without load')}
         </Typography>
         <Typography
           variant="body1"
@@ -101,7 +101,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight color="green" />
           </div>
-          : {translate('Underload')}
+          : {translate('Running with load')}
         </Typography>
         <Typography
           variant="body1"
@@ -121,7 +121,7 @@ function LayoutPage() {
           <div style={{ marginRight: '10px' }}>
             <SignalLight custom="standing" color="purple" size="28" />
           </div>
-          : {translate('Current Position')}
+          : {translate('Stand position')}
         </Typography>
       </div>
     </Box>

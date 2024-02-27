@@ -1,5 +1,0 @@
-Chạy trên máy tính  --- ok
-Đổi song ngữ
-Đổi thứ tự hiện thị ngày tháng --- ok
-Chọn ngày tháng cần tải --- ok
-Thêm máy PLC mitsu --- ok

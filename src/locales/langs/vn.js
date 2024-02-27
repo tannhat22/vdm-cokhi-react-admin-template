@@ -1,20 +1,20 @@
 const vn = {
   Layout: 'Sơ đồ máy',
-  'VDM MECHANICAL DEPARTMENT LAYOUT DIAGRAM': 'SƠ ĐỒ LAYOUT PHÒNG CƠ KHÍ VDM',
+  'LAYOUT DIAGRAM OF VDM MACHINING TOOLS MANUFACTURING SECTION': 'SƠ ĐỒ LAYOUT PHÒNG CƠ KHÍ CHẾ TẠO VDM',
   'Machine name': 'Tên máy',
   'Operating status': 'Trạng thái hoạt động',
-  Underload: 'Chạy Có Tải',
-  'No-load': 'Chạy Không Tải',
+  'Running with load': 'Chạy Có Tải',
+  'Running without load': 'Chạy Không Tải',
   Overloading: 'Đang Quá Tải',
-  Shutdown: 'Tắt máy',
+  'Turn off machine': 'Tắt máy',
   Process: 'Công đoạn',
   'Number of machines': 'Số lượng máy',
   'Total no-load operating time': 'Tổng thời gian chạy không tải',
   'Total underload operating time': 'Tổng thời gian chạy có tải',
   'Total shutdown time': 'Tổng thời gian tắt máy',
   min: 'phút',
-  Overload: 'Quá tải',
-  'Current Position': 'Vị Trí Đứng',
+  Overload: 'Quá Tải',
+  'Stand position': 'Vị Trí Đứng',
 
   Overview: 'Tổng quan',
   Action: 'Lựa chọn',
@@ -52,7 +52,7 @@ const vn = {
   'Time to reach speed': 'Thời gian đạt tốc độ',
   Dates: 'Ngày tháng',
 
-  'VDM Mechanical Department': 'VDM Phòng Cơ Khí',
+  'VDM Machining Tools Manufacturing Section': 'Phòng Cơ Khí Chế Tạo VDM',
 };
 
 export default vn;

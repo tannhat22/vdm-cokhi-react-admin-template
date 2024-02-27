@@ -84,7 +84,7 @@ const HeaderContent = () => {
           )}
         </Snackbar>
         <Typography sx={{ fontWeight: 500 }} color="primary">
-          {translate('VDM Mechanical Department')}
+          {translate('VDM Machining Tools Manufacturing Section')}
         </Typography>
         {connected ? (
           <Typography sx={{ fontSize: '0.7rem' }} color="success.main">
