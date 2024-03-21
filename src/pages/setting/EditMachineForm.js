@@ -52,9 +52,11 @@ const EditMachineForm = ({ id, machineName, machineType, plc, address, update })
     showPass: false,
   });
 
-  console.log(values);
+  // console.log(values);
 
   const ros = useContext(RosPropsContext);
+
+  const PLCs_env = JSON.parse(process.env.REACT_APP_PLC_MODEL);
 
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
@@ -183,8 +185,11 @@ const EditMachineForm = ({ id, machineName, machineType, plc, address, update })
                       label="PLC model"
                       onChange={handleChange}
                     >
-                      <MenuItem value="FX3U">FX3U</MenuItem>
-                      <MenuItem value="KV-5500">KV-5500</MenuItem>
+                      {PLCs_env.map((plc, i) => (
+                        <MenuItem key={i} value={plc}>
+                          {plc}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                   <TextField

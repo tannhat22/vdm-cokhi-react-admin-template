@@ -29,6 +29,16 @@ import bj7Img from 'assets/images/machines/BJ07.jpg';
 import la3Img from 'assets/images/machines/LA03.jpg';
 import la4Img from 'assets/images/machines/LA04.jpg';
 import la5Img from 'assets/images/machines/LA05.jpg';
+import ew1Img from 'assets/images/machines/EW01.jpg';
+import ew2Img from 'assets/images/machines/EW02.jpg';
+import ew3Img from 'assets/images/machines/EW03.jpg';
+import ew4Img from 'assets/images/machines/EW04.jpg';
+import en1Img from 'assets/images/machines/EN01.jpg';
+import en2Img from 'assets/images/machines/EN02.jpg';
+import en3Img from 'assets/images/machines/EN03.jpg';
+import ed2Img from 'assets/images/machines/ED02.jpg';
+import gp2Img from 'assets/images/machines/GP02-03.jpg';
+import gj2Img from 'assets/images/machines/GJ02-03.jpg';
 
 function SignalLightsLayout({ width, height }) {
   const [machinesId, setMachinesId] = useState([]);
@@ -335,6 +345,126 @@ function SignalLightsLayout({ width, height }) {
         posTop={height * 84.3}
         size={width * 2.5}
         img={la5Img}
+      />
+
+      {/* EW01 */}
+      <CardMachine
+        stt={28}
+        machineId={machinesId[28]}
+        posLeft={width * 2.5}
+        posTop={height * 86.3}
+        size={width * 2.5}
+        img={ew1Img}
+      />
+
+      {/* EW02 */}
+      <CardMachine
+        stt={29}
+        machineId={machinesId[29]}
+        posLeft={width * 2.5}
+        posTop={height * 72.8}
+        size={width * 2.5}
+        img={ew2Img}
+      />
+
+      {/* EW03 */}
+      <CardMachine
+        stt={30}
+        machineId={machinesId[30]}
+        posLeft={width * 17.2}
+        posTop={height * 80.8}
+        size={width * 2.5}
+        img={ew3Img}
+      />
+
+      {/* EW04 */}
+      <CardMachine
+        stt={31}
+        machineId={machinesId[31]}
+        posLeft={width * 16.4}
+        posTop={height * 47.8}
+        size={width * 2.5}
+        img={ew4Img}
+      />
+
+      {/* EN01 */}
+      <CardMachine
+        stt={32}
+        machineId={machinesId[32]}
+        posLeft={width * 2.5}
+        posTop={height * 61.6}
+        size={width * 2.5}
+        img={en1Img}
+      />
+
+      {/* EN02 */}
+      <CardMachine
+        stt={33}
+        machineId={machinesId[33]}
+        posLeft={width * 2.5}
+        posTop={height * 50.4}
+        size={width * 2.5}
+        img={en2Img}
+      />
+
+      {/* EN03 */}
+      <CardMachine
+        stt={34}
+        machineId={machinesId[34]}
+        posLeft={width * 2.5}
+        posTop={height * 38.4}
+        size={width * 2.5}
+        img={en3Img}
+      />
+
+      {/* ED02 */}
+      <CardMachine
+        stt={35}
+        machineId={machinesId[35]}
+        posLeft={width * 15.98}
+        posTop={height * 36.2}
+        size={width * 2.5}
+        img={ed2Img}
+      />
+
+      {/* GP02 */}
+      <CardMachine
+        stt={36}
+        machineId={machinesId[36]}
+        posLeft={width * 16.72}
+        posTop={height * 19.1}
+        size={width * 2.5}
+        img={gp2Img}
+      />
+
+      {/* GP03 */}
+      <CardMachine
+        stt={37}
+        machineId={machinesId[37]}
+        posLeft={width * 16.72}
+        posTop={height * 4.9}
+        size={width * 2.5}
+        img={gp2Img}
+      />
+
+      {/* GJ02 */}
+      <CardMachine
+        stt={38}
+        machineId={machinesId[38]}
+        posLeft={width * 2.5}
+        posTop={height * 10.9}
+        size={width * 2.5}
+        img={gj2Img}
+      />
+
+      {/* GJ03 */}
+      <CardMachine
+        stt={39}
+        machineId={machinesId[39]}
+        posLeft={width * 2.5}
+        posTop={height * 23.4}
+        size={width * 2.5}
+        img={gj2Img}
       />
     </div>
   );

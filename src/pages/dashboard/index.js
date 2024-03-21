@@ -72,6 +72,7 @@ const DashboardDefault = () => {
           dataNames.push({
             id: result.id_machines[i],
             label: result.machines_name[i],
+            type: result.machines_type[i],
             plc: result.plc_model[i],
             address: result.plc_address[i],
           });
@@ -98,15 +99,15 @@ const DashboardDefault = () => {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
           // let dataMachine = [];
-          const datesLength = result.dates.length;
+          const datesLength = result.machine_data.dates.length;
           // for (let i = 0; i < datesLength; i++) {
           //   let j = days - (i + 1);
-          //   dataMachine.push([i + 1, result.dates[j], result.noload[j], result.underload[j], result.offtime[j]]);
+          //   dataMachine.push([i + 1, result.machine_data.dates[j], result.machine_data.noload[j], result.machine_data.underload[j], result.machine_data.offtime[j]]);
           // }
-          setSelectedBeginDate(new Date(result.dates[0]));
-          setSelectedEndDate(new Date(result.dates[datesLength - 1]));
-          setSpecifiedMinDate(result.dates[0]);
-          setSpecifiedMaxDate(result.dates[datesLength - 1]);
+          setSelectedBeginDate(new Date(result.machine_data.dates[0]));
+          setSelectedEndDate(new Date(result.machine_data.dates[datesLength - 1]));
+          setSpecifiedMinDate(result.machine_data.dates[0]);
+          setSpecifiedMaxDate(result.machine_data.dates[datesLength - 1]);
           // setDataMachine(dataMachine);
         }
       });
@@ -259,6 +260,7 @@ const DashboardDefault = () => {
             id={idMachine}
             machineName={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
             // days={days}
+            machineType={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : 'no info'}
             beginDate={selectedBeginDate}
             endDate={selectedEndDate}
           />

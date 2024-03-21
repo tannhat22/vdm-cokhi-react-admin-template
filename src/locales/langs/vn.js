@@ -50,6 +50,7 @@ const vn = {
   'Shutdown time': 'Thời gian tắt máy',
   'Shutdown time (min)': 'Thời gian tắt máy (phút)',
   'Time to reach speed': 'Thời gian đạt tốc độ',
+  'Download STAGE': 'Tải về công đoạn',
   Dates: 'Ngày tháng',
 
   'VDM Machining Tools Manufacturing Section': 'Phòng Cơ Khí Chế Tạo VDM',

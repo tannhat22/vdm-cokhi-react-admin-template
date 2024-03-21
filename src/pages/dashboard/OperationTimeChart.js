@@ -74,22 +74,27 @@ const OperationTimeChart = ({ id }) => {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
           let dates = [];
-          for (let i = 0; i < result.dates.length; i++) {
-            dates.push(result.dates[i].slice(result.dates[i].indexOf('-') + 1, result.dates[i].indexOf(' ')));
+          for (let i = 0; i < result.machine_data.dates.length; i++) {
+            dates.push(
+              result.machine_data.dates[i].slice(
+                result.machine_data.dates[i].indexOf('-') + 1,
+                result.machine_data.dates[i].indexOf(' '),
+              ),
+            );
           }
           setDays(dates);
           setSeries([
             {
               name: 'Tắt máy',
-              data: result.offtime,
+              data: result.machine_data.offtime,
             },
             {
               name: 'Không tải',
-              data: result.noload,
+              data: result.machine_data.noload,
             },
             {
               name: 'Có tải',
-              data: result.underload,
+              data: result.machine_data.underload,
             },
           ]);
         }
@@ -100,7 +105,8 @@ const OperationTimeChart = ({ id }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, 'rgb(0, 227, 150)', 'rgba(252,185,0,1)'],
+      // colors: [theme.palette.primary.main, 'rgb(0, 227, 150)', 'rgba(252,185,0,1)'],
+      colors: ['rgb(199, 199, 200)', 'rgba(252,185,0,1)', 'rgb(0, 227, 150)'],
       xaxis: {
         categories: days,
         labels: {

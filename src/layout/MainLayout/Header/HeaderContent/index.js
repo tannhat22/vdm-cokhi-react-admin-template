@@ -26,9 +26,23 @@ const HeaderContent = () => {
   const [toastMes, setToastMes] = React.useState(false);
 
   const ros = React.useContext(RosPropsContext);
+  const urlBase = window.location.origin.substring(7, window.location.origin.length - 5);
 
+  // console.log(urlBase);
+
+  let rosSocketUrl = process.env.REACT_APP_ROSBRIDGE_WLAN;
+  const ROSBRIDGE_LAN = process.env.REACT_APP_ROSBRIDGE_LAN.substring(
+    0,
+    process.env.REACT_APP_ROSBRIDGE_LAN.length - 5,
+  );
+  // console.log(ROSBRIDGE_LAN);
+
+  if (urlBase === ROSBRIDGE_LAN) {
+    rosSocketUrl = process.env.REACT_APP_ROSBRIDGE_LAN;
+  }
   React.useEffect(() => {
-    ros.connect('ws://192.168.1.69:9090');
+    // console.log(rosSocketUrl);
+    ros.connect(`ws://${rosSocketUrl}`);
 
     ros.on('connection', function () {
       setConnected(true);
