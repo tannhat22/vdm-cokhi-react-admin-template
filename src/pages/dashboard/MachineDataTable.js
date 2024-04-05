@@ -6,10 +6,12 @@ import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 
 import MUIDataTable from 'mui-datatables';
-import { Box } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DownloadIcon from '@mui/icons-material/Download';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
@@ -18,13 +20,15 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
   const { translate } = useLocales();
   const [isLoad, setIsLoad] = React.useState(false);
   const [data, setData] = React.useState([
-    // {
-    //   id: 1,
-    //   date: '',
-    //   noLoad: 15,
-    //   underLoad: 15,
-    //   offTime: 15,
-    // },
+    {
+      id: 1,
+      date: '',
+      shift: 'CN',
+      noLoad: 15,
+      underLoad: 15,
+      offTime: 15,
+      action: false,
+    },
   ]);
   const ros = React.useContext(RosPropsContext);
   // console.log(beginDate);
@@ -53,6 +57,7 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
           const fields = [
             'ID',
             `${translate('Dates')}`,
+            `${translate('Shifts')}`,
             `${translate('No-load operating time (min)')}`,
             `${translate('Underload operating time (min)')}`,
             `${translate('Shutdown time (min)')}`,
@@ -64,8 +69,15 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
             let machineData = [];
             for (let i = count; i >= 0; i--) {
               const date = new Date(machine.dates[i]);
-              if (date <= endDate && date >= beginDate) {
-                machineData.push([k, machine.dates[i], machine.noload[i], machine.underload[i], machine.offtime[i]]);
+              if (beginDate <= date <= endDate) {
+                machineData.push([
+                  k,
+                  machine.dates[i],
+                  machine.shift[i],
+                  machine.noload[i],
+                  machine.underload[i],
+                  machine.offtime[i],
+                ]);
                 k++;
               }
             }
@@ -110,10 +122,11 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
           let k = 1;
           for (let i = count; i >= 0; i--) {
             const date = new Date(result.machine_data.dates[i]);
-            if (date <= endDate && date >= beginDate) {
+            if (beginDate <= date <= endDate) {
               dataShow.push([
                 k,
                 result.machine_data.dates[i],
+                result.machine_data.shift[i],
                 result.machine_data.noload[i],
                 result.machine_data.underload[i],
                 result.machine_data.offtime[i],
@@ -159,6 +172,15 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
       },
     },
     {
+      name: 'shift',
+      label: `${translate('Shifts')}`,
+      options: {
+        filter: true,
+        sort: true,
+        // sortThirdClickReset: true,
+      },
+    },
+    {
       name: 'noLoad',
       label: `${translate('No-load operating time (min)')}`,
       options: {
@@ -180,6 +202,44 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
       options: {
         filter: false,
         sort: true,
+      },
+    },
+    {
+      name: 'action',
+      label: translate('Action'),
+      options: {
+        filter: false,
+        sort: false,
+        download: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        customBodyRender: (value, tableMeta) => {
+          return (
+            <div>
+              <Tooltip title="View logs" arrow>
+                <IconButton
+                  aria-label="view"
+                  machineid={tableMeta.rowData[1]}
+                  stt={tableMeta.rowData[0]}
+                  // color="primary"
+                  sx={{ fontSize: '1.1rem', '&:hover': { color: '#1890ff' } }}
+                  onClick={(event) => {
+                    redirectToDashboard(
+                      Number(event.currentTarget.getAttribute('machineid')),
+                      Number(event.currentTarget.getAttribute('stt')),
+                    );
+                  }}
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </IconButton>
+              </Tooltip>
+            </div>
+          );
+        },
       },
     },
   ];

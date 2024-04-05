@@ -85,6 +85,14 @@ function InformArea({ id }) {
     <Fragment>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
+          title={translate('SHIFT')}
+          // desc={`${dataMachine.timeReachspeed} ms`}
+          desc={'No information'}
+          time="         "
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
+        <AnalyticEcommerce
           title={translate('No-load operating time')}
           desc={`${dataMachine.noloadTime.hours} h : ${dataMachine.noloadTime.minutes} m`}
           time="         "
@@ -113,14 +121,6 @@ function InformArea({ id }) {
           time="         "
         />
       </Grid> */}
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title={translate('Time to reach speed')}
-          // desc={`${dataMachine.timeReachspeed} ms`}
-          desc={'No information'}
-          time="         "
-        />
-      </Grid>
     </Fragment>
   );
 }
