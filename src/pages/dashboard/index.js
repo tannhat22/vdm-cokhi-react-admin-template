@@ -16,6 +16,8 @@ import {
   // MenuItem,
   // FormControl,
   // Select,
+  FormControlLabel,
+  FormGroup,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -26,6 +28,7 @@ import MainCard from 'components/MainCard';
 import MachineDataTable from './MachineDataTable';
 import SignalLightArea from './SignalLightArea';
 import ResetForm from './ResetForm';
+import { MaterialUISwitch } from 'components/CustomizedSwitches';
 
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
@@ -48,6 +51,7 @@ const DashboardDefault = () => {
   const [idMachine, setIdMachine] = useState(id);
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
+  const [shiftChart, setShiftChart] = useState('CN');
   const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
@@ -137,6 +141,10 @@ const DashboardDefault = () => {
   //   console.log(date);
   // }
 
+  const handleShiftChange = (event) => {
+    event.target.checked ? setShiftChart('CD') : setShiftChart('CN');
+  };
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -181,12 +189,15 @@ const DashboardDefault = () => {
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
               <Button size="small">{translate('the last 10 days')}</Button>
+              <FormGroup>
+                <FormControlLabel control={<MaterialUISwitch defaultChecked={false} onChange={handleShiftChange} />} />
+              </FormGroup>
             </Stack>
           </Grid>
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart id={idMachine} />
+            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={14} />
           </Box>
         </MainCard>
       </Grid>

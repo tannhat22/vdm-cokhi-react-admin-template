@@ -34,30 +34,44 @@ const areaChartOptions = {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const OperationTimeChart = ({ id }) => {
+const OperationTimeChart = ({ id, shift, daysNum }) => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
-  const [days, setDays] = useState([]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
+  const [days, setDays] = useState([
+    '10/12',
+    '11/12',
+    '12/12',
+    '13/12',
+    '14/12',
+    '15/12',
+    '16/12',
+    '17/12',
+    '18/12',
+    '19/12',
+    '20/12',
+  ]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
   const [series, setSeries] = useState([
     {
       name: 'Tắt máy',
-      data: [], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
     },
     {
       name: 'Không tải',
-      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
+      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
     {
       name: 'Có tải',
-      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
+      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
   ]);
 
   const ros = useContext(RosPropsContext);
+
+  console.log('SHIFT CHART: ', shift);
 
   useEffect(() => {
     var getMachineDataClient = new ROSLIB.Service({
@@ -68,39 +82,48 @@ const OperationTimeChart = ({ id }) => {
 
     let requestMachineData = new ROSLIB.ServiceRequest({
       id_machine: id,
-      days: 10,
+      days: daysNum,
     });
     if (id !== 0) {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
-          let dates = [];
+          // let dates = [];
+          let dataShow = {
+            dates: [],
+            offtimes: [],
+            noloads: [],
+            underloads: [],
+          };
           for (let i = 0; i < result.machine_data.dates.length; i++) {
-            dates.push(
-              result.machine_data.dates[i].slice(
-                result.machine_data.dates[i].indexOf('-') + 1,
-                result.machine_data.dates[i].indexOf(' '),
-              ),
-            );
+            if (shift === result.machine_data.shift[i]) {
+              dataShow.dates.push(result.machine_data.dates[i].slice(0, 5));
+              dataShow.offtimes.push(result.machine_data.offtime[i]);
+              dataShow.noloads.push(result.machine_data.noload[i]);
+              dataShow.underloads.push(result.machine_data.underload[i]);
+            }
           }
-          setDays(dates);
+          setDays(dataShow.dates);
           setSeries([
             {
               name: 'Tắt máy',
-              data: result.machine_data.offtime,
+              // data: result.machine_data.offtime,
+              data: dataShow.offtimes,
             },
             {
               name: 'Không tải',
-              data: result.machine_data.noload,
+              // data: result.machine_data.noload,
+              data: dataShow.noloads,
             },
             {
               name: 'Có tải',
-              data: result.machine_data.underload,
+              // data: result.machine_data.underload,
+              data: dataShow.underloads,
             },
           ]);
         }
       });
     }
-  }, [id]);
+  }, [id, shift, daysNum]);
 
   useEffect(() => {
     setOptions((prevState) => ({
@@ -154,6 +177,8 @@ const OperationTimeChart = ({ id }) => {
 
 OperationTimeChart.propTypes = {
   id: PropTypes.number,
+  shift: PropTypes.string,
+  daysNum: PropTypes.number,
 };
 
 export default OperationTimeChart;

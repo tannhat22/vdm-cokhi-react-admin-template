@@ -1,15 +1,19 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext, Fragment } from 'react';
 import ROSLIB from 'roslib';
-import { Grid } from '@mui/material';
+import { Grid, Box, Stack, Typography } from '@mui/material';
 
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
+import MainCard from 'components/MainCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 function InformArea({ id }) {
   const { translate } = useLocales();
   const [dataMachine, setDataMachine] = useState({
+    shift: 0,
     noloadTime: { hours: '00', minutes: '00' },
     underloadTime: { hours: '00', minutes: '00' },
     offTime: { hours: '00', minutes: '00' },
@@ -34,11 +38,10 @@ function InformArea({ id }) {
 
     function handleDataWebsocket(data) {
       let dataNew = {
+        shift: 0,
         noloadTime: { hours: 0, minutes: 0 },
         underloadTime: { hours: 0, minutes: 0 },
         offTime: { hours: 0, minutes: 0 },
-        // gt: { min: 0, max: 0, current: 0 },
-        // timeReachspeed: 0,
       };
 
       const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
@@ -84,12 +87,30 @@ function InformArea({ id }) {
   return (
     <Fragment>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title={translate('SHIFT')}
-          // desc={`${dataMachine.timeReachspeed} ms`}
-          desc={'No information'}
-          time="         "
-        />
+        <MainCard contentSX={{ p: 2.25 }}>
+          <Stack spacing={0.5} sx={{ position: 'relative' }}>
+            <Typography variant="h6" color="textSecondary">
+              {translate('SHIFT')}
+            </Typography>
+            <Grid container alignItems="center">
+              <Grid item>
+                <Typography variant="h4" color="inherit">
+                  {dataMachine.shift ? translate('Night shift') : translate('Day shift')}
+                </Typography>
+              </Grid>
+            </Grid>
+            <div style={{ position: 'absolute', right: '10px', top: '6px' }}>
+              {dataMachine.shift ? (
+                <FontAwesomeIcon icon={faMoon} size="4x" beat />
+              ) : (
+                <FontAwesomeIcon icon={faSun} size="4x" color="#F5EB42" spin />
+              )}
+            </div>
+          </Stack>
+          <Box sx={{ pt: 2.25 }}>
+            <Typography variant="caption" color="textSecondary" sx={{ textAlign: 'right' }}></Typography>
+          </Box>
+        </MainCard>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
