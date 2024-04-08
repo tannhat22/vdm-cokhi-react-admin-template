@@ -29,6 +29,7 @@ const MainLayout = () => {
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
   const handleDrawerToggle = () => {
+    // console.log('Event trigger');
     setOpen(!open);
     dispatch(openDrawer({ drawerOpen: !open }));
   };

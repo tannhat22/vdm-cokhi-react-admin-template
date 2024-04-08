@@ -47,7 +47,8 @@ const DashboardDefault = () => {
     // console.log(`stt: ${stt}`);
   }
 
-  // const [days, setDays] = useState(365);
+  const [daysInput, setDaysInput] = useState(10);
+  const [daysChart, setDaysChart] = useState(daysInput);
   const [idMachine, setIdMachine] = useState(id);
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
@@ -108,10 +109,12 @@ const DashboardDefault = () => {
           //   let j = days - (i + 1);
           //   dataMachine.push([i + 1, result.machine_data.dates[j], result.machine_data.noload[j], result.machine_data.underload[j], result.machine_data.offtime[j]]);
           // }
-          setSelectedBeginDate(new Date(result.machine_data.dates[0]));
-          setSelectedEndDate(new Date(result.machine_data.dates[datesLength - 1]));
-          setSpecifiedMinDate(result.machine_data.dates[0]);
-          setSpecifiedMaxDate(result.machine_data.dates[datesLength - 1]);
+          const minDateArr = result.machine_data.dates[0].split('/');
+          const maxDateArr = result.machine_data.dates[datesLength - 1].split('/');
+          setSelectedBeginDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
+          setSelectedEndDate(new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0])));
+          setSpecifiedMinDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
+          setSpecifiedMaxDate(new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0])));
           // setDataMachine(dataMachine);
         }
       });
@@ -143,6 +146,17 @@ const DashboardDefault = () => {
 
   const handleShiftChange = (event) => {
     event.target.checked ? setShiftChart('CD') : setShiftChart('CN');
+  };
+
+  const handleDaysChange = (event) => {
+    let value = parseInt(event.target.value, 10);
+    if (value > 30) {
+      value = 30;
+    } else if (value < 1) {
+      value = 1;
+    }
+
+    setDaysInput(value);
   };
 
   return (
@@ -187,8 +201,28 @@ const DashboardDefault = () => {
             <Typography variant="h5">{translate('Timeline chart of activities')}</Typography>
           </Grid>
           <Grid item>
-            <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">{translate('the last 10 days')}</Button>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <TextField
+                id="outlined-daysNum"
+                label={translate('Choose days')}
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                  max: 30,
+                  min: 1,
+                }}
+                value={daysInput}
+                onChange={handleDaysChange}
+              />
+              <Button
+                size="large"
+                variant="outlined"
+                onClick={() => {
+                  setDaysChart(daysInput);
+                }}
+                disabled={isNaN(daysInput) || daysChart === daysInput}
+              >{`${daysInput} ngày gần nhất`}</Button>
+
               <FormGroup>
                 <FormControlLabel control={<MaterialUISwitch defaultChecked={false} onChange={handleShiftChange} />} />
               </FormGroup>
@@ -197,7 +231,7 @@ const DashboardDefault = () => {
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={14} />
+            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} />
           </Box>
         </MainCard>
       </Grid>
@@ -208,7 +242,7 @@ const DashboardDefault = () => {
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="small">
+              <Button size="large">
                 {idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
               </Button>
             </Stack>

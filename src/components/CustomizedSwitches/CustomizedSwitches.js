@@ -6,8 +6,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
 export const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 58,
-  height: 30.75,
+  width: 62,
+  height: 36,
   padding: 7,
   '& .MuiSwitch-switchBase': {
     margin: 1,
@@ -29,8 +29,8 @@ export const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
   '& .MuiSwitch-thumb': {
     backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
-    width: 28,
-    height: 28,
+    width: 32,
+    height: 32,
     '&::before': {
       content: "''",
       position: 'absolute',

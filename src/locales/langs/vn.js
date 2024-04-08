@@ -52,7 +52,15 @@ const vn = {
   'Time to reach speed': 'Thời gian đạt tốc độ',
   'Download STAGE': 'Tải về công đoạn',
   Dates: 'Ngày tháng',
-
+  SHIFT: 'Ca làm việc',
+  Shifts: 'Ca làm việc',
+  Times: 'Thời gian',
+  States: 'Trạng thái',
+  'Day shift': 'Ca ngày',
+  'Night shift': 'Ca đêm',
+  'Download LOGS': 'Tải về nhật ký hoạt động',
+  'View logs': 'Xem nhật ký',
+  'Choose days': 'Chọn số ngày',
   'VDM Machining Tools Manufacturing Section': 'Phòng Cơ Khí Chế Tạo VDM',
 };
 

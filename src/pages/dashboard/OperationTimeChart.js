@@ -41,39 +41,30 @@ const OperationTimeChart = ({ id, shift, daysNum }) => {
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
-  const [days, setDays] = useState([
-    '10/12',
-    '11/12',
-    '12/12',
-    '13/12',
-    '14/12',
-    '15/12',
-    '16/12',
-    '17/12',
-    '18/12',
-    '19/12',
-    '20/12',
-  ]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
+  const [days, setDays] = useState([]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
   const [series, setSeries] = useState([
     {
       name: 'Tắt máy',
-      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+      data: [], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
     },
     {
       name: 'Không tải',
-      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
+      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
     {
       name: 'Có tải',
-      data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
+      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
   ]);
 
   const ros = useContext(RosPropsContext);
 
-  console.log('SHIFT CHART: ', shift);
-
   useEffect(() => {
+    if (isNaN(daysNum)) return;
+
+    // console.log('SHIFT CHART: ', shift);
+    // console.log('Days CHART: ', daysNum);
+
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_machine_data',
