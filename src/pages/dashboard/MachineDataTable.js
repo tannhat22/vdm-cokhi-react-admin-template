@@ -35,25 +35,25 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
   const [openLogs, setOpenLogs] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(false);
   const [logs, setLogs] = React.useState({
-    date: '08/04/2024',
-    shift: 'CN',
-    logs: [
-      {
-        time: '08:00:00',
-        description: 'turn off',
-      },
-    ],
+    // date: ['08/04/2024'],
+    // shift: 'CN',
+    // logs: [
+    //   {
+    //     time: '08:00:00',
+    //     description: 'turn off',
+    //   },
+    // ],
   });
   const [data, setData] = React.useState([
-    {
-      id: 1,
-      date: '',
-      shift: 'CN',
-      noLoad: 15,
-      underLoad: 15,
-      offTime: 15,
-      action: false,
-    },
+    // {
+    //   id: 1,
+    //   date: '',
+    //   shift: 'CN',
+    //   noLoad: 15,
+    //   underLoad: 15,
+    //   offTime: 15,
+    //   action: false,
+    // },
   ]);
   const ros = React.useContext(RosPropsContext);
 
@@ -71,13 +71,14 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
 
     let requestStageData = new ROSLIB.ServiceRequest({
       stage: machineType,
-      days: 365,
+      min_date: moment(beginDate).format('DD/MM/YYYY'),
+      max_date: moment(endDate).format('DD/MM/YYYY'),
+      shift: '',
     });
 
     if (machineType !== 'no info') {
       getStageDataClient.callService(requestStageData, async function (result) {
         if (result.success) {
-          let dataStage = result.machines_data;
           const fields = [
             'ID',
             `${translate('Dates')}`,
@@ -87,25 +88,19 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
             `${translate('Shutdown time (min)')}`,
           ];
 
-          let promises = dataStage.map(async (machine) => {
-            const count = machine.dates.length - 1;
-            let k = 1;
+          let promises = result.stage_data.map(async (machine) => {
             let machineData = [];
+            const count = machine.machine_data.length - 1;
+            let k = 1;
             for (let i = count; i >= 0; i--) {
-              const dateArr = machine.dates[i].split('/');
-              const date = new Date(Number(dateArr[2]), Number(dateArr[1]) - 1, Number(dateArr[0]));
-              // console.log(date);
-              if (beginDate <= date && date <= endDate) {
-                machineData.push([
-                  k,
-                  machine.dates[i],
-                  machine.shift[i],
-                  machine.noload[i],
-                  machine.underload[i],
-                  machine.offtime[i],
-                ]);
-                k++;
-              }
+              machineData.push([
+                k,
+                machine.machine_data[i].date,
+                machine.machine_data[i].shift,
+                machine.machine_data[i].noload,
+                machine.machine_data[i].underload,
+                machine.machine_data[i].offtime,
+              ]);
             }
             // console.log('Machine name: ', machine.machine_name);
             // console.log(machineData);
@@ -180,16 +175,20 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
 
     getLogsDataClient.callService(requestLogsData, function (result) {
       if (result.success) {
-        let logsArr = {};
-        logsArr.date = date;
-        logsArr.shift = shift;
+        let logsArr = {
+          date,
+          shift,
+          logs: [],
+        };
 
         result.machine_logs.forEach((machineLog) => {
           if (machineLog.logs) {
-            logsArr.logs = machineLog.logs.map((log) => ({
-              time: log.time,
-              description: log.description,
-            }));
+            logsArr.logs.push(
+              ...machineLog.logs.map((log) => ({
+                time: `${machineLog.date} ${log.time}`,
+                description: log.description,
+              })),
+            );
           } else {
             logsArr.logs = [];
           }
@@ -235,28 +234,27 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
 
     let requestMachineData = new ROSLIB.ServiceRequest({
       id_machine: id,
-      days: 365,
+      min_date: moment(beginDate).format('DD/MM/YYYY'),
+      max_date: moment(endDate).format('DD/MM/YYYY'),
+      shift: '',
     });
 
     if (id !== 0) {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
           let dataShow = [];
-          const count = result.machine_data.dates.length - 1;
+          const count = result.machine_data.machine_data.length - 1;
           let k = 1;
           for (let i = count; i >= 0; i--) {
-            const date = new Date(result.machine_data.dates[i]);
-            if (beginDate <= date <= endDate) {
-              dataShow.push([
-                k,
-                result.machine_data.dates[i],
-                result.machine_data.shift[i],
-                result.machine_data.noload[i],
-                result.machine_data.underload[i],
-                result.machine_data.offtime[i],
-              ]);
-              k++;
-            }
+            dataShow.push([
+              k,
+              result.machine_data.machine_data[i].date,
+              result.machine_data.machine_data[i].shift,
+              result.machine_data.machine_data[i].noload,
+              result.machine_data.machine_data[i].underload,
+              result.machine_data.machine_data[i].offtime,
+            ]);
+            k++;
           }
           setData(dataShow);
         }

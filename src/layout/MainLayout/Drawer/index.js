@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -13,19 +13,29 @@ import { drawerWidth } from 'config';
 
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
-const MainDrawer = ({ open, handleDrawerToggle, window }) => {
+const MainDrawer = ({ open, handleDrawerToggle, handleDrawerMouseLeave, handleDrawerMouseEnter, window }) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
   // responsive drawer container
   const container = window !== undefined ? () => window().document.body : undefined;
+  const boxNav = useRef();
 
   // header content
   const drawerContent = useMemo(() => <DrawerContent />, []);
   const drawerHeader = useMemo(() => <DrawerHeader open={open} />, [open]);
 
+  useEffect(() => {
+    boxNav.current.addEventListener('mouseleave', handleDrawerMouseLeave);
+    boxNav.current.addEventListener('mouseenter', handleDrawerMouseEnter);
+    return () => {
+      boxNav.current.removeEventListener('mouseleave', handleDrawerMouseLeave);
+      boxNav.current.removeEventListener('mouseleave', handleDrawerMouseEnter);
+    };
+  }, [open]);
+
   return (
-    <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1300 }} aria-label="mailbox folders">
+    <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1300 }} aria-label="mailbox folders" ref={boxNav}>
       {!matchDownMD ? (
         <MiniDrawerStyled variant="permanent" open={open}>
           {drawerHeader}
@@ -60,6 +70,8 @@ const MainDrawer = ({ open, handleDrawerToggle, window }) => {
 MainDrawer.propTypes = {
   open: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
+  handleDrawerMouseLeave: PropTypes.func,
+  handleDrawerMouseEnter: PropTypes.func,
   window: PropTypes.object,
 };
 

@@ -56,7 +56,7 @@ const DashboardDefault = () => {
   const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
-  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2100-01-01'));
+  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2200-01-01'));
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
@@ -92,25 +92,18 @@ const DashboardDefault = () => {
   useEffect(() => {
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
-      name: '/get_machine_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+      name: '/get_min_max_date',
+      serviceType: 'vdm_cokhi_machine_msgs/GetMinMaxDate',
     });
-
+    // console.log(machineNames[sttMachine].type);
     let requestMachineData = new ROSLIB.ServiceRequest({
-      id_machine: idMachine,
-      days: 365,
+      stage: idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : 'no info',
     });
     if (idMachine !== 0) {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
-          // let dataMachine = [];
-          const datesLength = result.machine_data.dates.length;
-          // for (let i = 0; i < datesLength; i++) {
-          //   let j = days - (i + 1);
-          //   dataMachine.push([i + 1, result.machine_data.dates[j], result.machine_data.noload[j], result.machine_data.underload[j], result.machine_data.offtime[j]]);
-          // }
-          const minDateArr = result.machine_data.dates[0].split('/');
-          const maxDateArr = result.machine_data.dates[datesLength - 1].split('/');
+          const minDateArr = result.min_date.split('/');
+          const maxDateArr = result.max_date.split('/');
           setSelectedBeginDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
           setSelectedEndDate(new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0])));
           setSpecifiedMinDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
@@ -119,7 +112,7 @@ const DashboardDefault = () => {
         }
       });
     }
-  }, [idMachine]);
+  }, [idMachine, machineNames]);
 
   function handleValueChange(event, value, reason) {
     if (reason === 'selectOption') {
@@ -231,7 +224,7 @@ const DashboardDefault = () => {
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} />
+            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} maxDate={specifiedMaxDate} />
           </Box>
         </MainCard>
       </Grid>

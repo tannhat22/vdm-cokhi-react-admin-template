@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,15 +24,41 @@ const MainLayout = () => {
 
   const dispatch = useDispatch();
 
+  const mouseEnterRef = useRef(false);
+
   const { drawerOpen } = useSelector((state) => state.menu);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
+  const [mouseEnter, setMouseEnter] = useState(false);
+
   const handleDrawerToggle = () => {
     // console.log('Event trigger');
     setOpen(!open);
     dispatch(openDrawer({ drawerOpen: !open }));
   };
+  let timeoutID;
+  const handleDrawerMouseLeave = () => {
+    setMouseEnter(false);
+    if (open) {
+      timeoutID = setTimeout(() => {
+        if (!mouseEnterRef.current) {
+          setOpen(false);
+          dispatch(openDrawer({ drawerOpen: false }));
+        }
+      }, 3000);
+    }
+  };
+
+  const handleDrawerMouseEnter = () => {
+    setMouseEnter(true);
+    clearTimeout(timeoutID);
+  };
+
+  useEffect(() => {
+    // THIS IS THE MAGIC PART
+    mouseEnterRef.current = mouseEnter;
+  }, [mouseEnter]);
 
   // set media wise responsive drawer
   // useEffect(() => {
@@ -50,7 +76,12 @@ const MainLayout = () => {
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header open={open} handleDrawerToggle={handleDrawerToggle} />
-      <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
+      <Drawer
+        open={open}
+        handleDrawerToggle={handleDrawerToggle}
+        handleDrawerMouseLeave={handleDrawerMouseLeave}
+        handleDrawerMouseEnter={handleDrawerMouseEnter}
+      />
       <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar />
         <Breadcrumbs navigation={navigation} title />

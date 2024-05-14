@@ -53,7 +53,7 @@ const NavGroup = ({ item }) => {
 };
 
 NavGroup.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
 };
 
 export default NavGroup;

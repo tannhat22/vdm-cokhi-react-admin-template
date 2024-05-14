@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext } from 'react';
 import ROSLIB from 'roslib';
+import moment from 'moment';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -34,7 +35,7 @@ const areaChartOptions = {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const OperationTimeChart = ({ id, shift, daysNum }) => {
+const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
@@ -58,12 +59,19 @@ const OperationTimeChart = ({ id, shift, daysNum }) => {
   ]);
 
   const ros = useContext(RosPropsContext);
-
   useEffect(() => {
     if (isNaN(daysNum)) return;
 
+    const dateConf = new Date('2199-01-01');
+    if (dateConf <= maxDate) return;
+
     // console.log('SHIFT CHART: ', shift);
     // console.log('Days CHART: ', daysNum);
+    // console.log('Max date: ', maxDate);
+
+    let dayBack = new Date();
+    dayBack.setDate(maxDate.getDate() - (daysNum - 1));
+    // console.log('dayBack: ', dayBack);
 
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
@@ -73,7 +81,9 @@ const OperationTimeChart = ({ id, shift, daysNum }) => {
 
     let requestMachineData = new ROSLIB.ServiceRequest({
       id_machine: id,
-      days: daysNum,
+      min_date: moment(dayBack).format('DD/MM/YYYY'),
+      max_date: moment(maxDate).format('DD/MM/YYYY'),
+      shift,
     });
     if (id !== 0) {
       getMachineDataClient.callService(requestMachineData, function (result) {
@@ -85,14 +95,13 @@ const OperationTimeChart = ({ id, shift, daysNum }) => {
             noloads: [],
             underloads: [],
           };
-          for (let i = 0; i < result.machine_data.dates.length; i++) {
-            if (shift === result.machine_data.shift[i]) {
-              dataShow.dates.push(result.machine_data.dates[i].slice(0, 5));
-              dataShow.offtimes.push(result.machine_data.offtime[i]);
-              dataShow.noloads.push(result.machine_data.noload[i]);
-              dataShow.underloads.push(result.machine_data.underload[i]);
-            }
-          }
+          result.machine_data.machine_data.forEach((mcData) => {
+            dataShow.dates.push(mcData.date.slice(0, 5));
+            dataShow.offtimes.push(mcData.offtime);
+            dataShow.noloads.push(mcData.noload);
+            dataShow.underloads.push(mcData.underload);
+          });
+
           setDays(dataShow.dates);
           setSeries([
             {
@@ -114,7 +123,7 @@ const OperationTimeChart = ({ id, shift, daysNum }) => {
         }
       });
     }
-  }, [id, shift, daysNum]);
+  }, [id, shift, daysNum, maxDate]);
 
   useEffect(() => {
     setOptions((prevState) => ({
@@ -170,6 +179,7 @@ OperationTimeChart.propTypes = {
   id: PropTypes.number,
   shift: PropTypes.string,
   daysNum: PropTypes.number,
+  maxDate: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default OperationTimeChart;

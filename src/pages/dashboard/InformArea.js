@@ -22,6 +22,7 @@ function InformArea({ id }) {
   });
 
   const ros = useContext(RosPropsContext);
+  // console.log('re-render');
 
   useEffect(() => {
     var listener = new ROSLIB.Topic({
@@ -65,6 +66,7 @@ function InformArea({ id }) {
         mins: data.state_machines[sttMachine].offtime % 60,
       };
 
+      dataNew.shift = data.shift;
       dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
       dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
       dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
