@@ -66,7 +66,7 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
     var getStageDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_stage_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetStageData',
+      serviceType: 'vdm_machine_msgs/GetStageData',
     });
 
     let requestStageData = new ROSLIB.ServiceRequest({
@@ -129,7 +129,7 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
     var getLogsDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_logs_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMachineLogs',
+      serviceType: 'vdm_machine_msgs/GetMachineLogs',
     });
 
     let requestLogsData = new ROSLIB.ServiceRequest({
@@ -163,7 +163,7 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
     var getLogsDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_logs_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMachineLogs',
+      serviceType: 'vdm_machine_msgs/GetMachineLogs',
     });
 
     let requestLogsData = new ROSLIB.ServiceRequest({
@@ -229,7 +229,7 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_machine_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+      serviceType: 'vdm_machine_msgs/GetMachineData',
     });
 
     let requestMachineData = new ROSLIB.ServiceRequest({

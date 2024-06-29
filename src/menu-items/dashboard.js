@@ -1,5 +1,5 @@
 // assets
-import { DashboardOutlined, HomeOutlined, LayoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { DashboardOutlined, HomeOutlined, LayoutOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
@@ -7,6 +7,7 @@ const icons = {
   HomeOutlined,
   LayoutOutlined,
   SettingOutlined,
+  StockOutlined,
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -30,6 +31,14 @@ const dashboard = {
       type: 'item',
       url: '/overview/default',
       icon: icons.HomeOutlined,
+      breadcrumbs: true,
+    },
+    {
+      id: 'analysis',
+      title: 'Analysis',
+      type: 'item',
+      url: '/analysis',
+      icon: icons.StockOutlined,
       breadcrumbs: true,
     },
     {

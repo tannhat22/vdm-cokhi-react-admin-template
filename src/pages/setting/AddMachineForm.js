@@ -61,7 +61,7 @@ const AddMachineForm = ({ update }) => {
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
     name: '/create_machine',
-    serviceType: 'vdm_cokhi_machine_msgs/CreateMachine',
+    serviceType: 'vdm_machine_msgs/CreateMachine',
   });
 
   function CreateServiceCall(password, name, type, plc, address) {

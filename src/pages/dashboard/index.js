@@ -63,7 +63,7 @@ const DashboardDefault = () => {
     var getMachinesNameClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_all_machine_name',
-      serviceType: 'vdm_cokhi_machine_msgs/GetAllMachineName',
+      serviceType: 'vdm_machine_msgs/GetAllMachineName',
     });
 
     let requestMachinesName = new ROSLIB.ServiceRequest({
@@ -93,7 +93,7 @@ const DashboardDefault = () => {
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_min_max_date',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMinMaxDate',
+      serviceType: 'vdm_machine_msgs/GetMinMaxDate',
     });
     // console.log(machineNames[sttMachine].type);
     let requestMachineData = new ROSLIB.ServiceRequest({

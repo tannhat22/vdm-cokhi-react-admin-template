@@ -45,7 +45,7 @@ function SettingPage() {
     var getAllMachineNameClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_all_machine_name',
-      serviceType: 'vdm_cokhi_machine_msgs/GetAllMachineName',
+      serviceType: 'vdm_machine_msgs/GetAllMachineName',
     });
 
     let requestAllMachineName = new ROSLIB.ServiceRequest({

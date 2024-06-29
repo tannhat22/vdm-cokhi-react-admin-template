@@ -57,7 +57,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
     var listener = new ROSLIB.Topic({
       ros: ros,
       name: '/state_machines',
-      messageType: 'vdm_cokhi_machine_msgs/MachinesStateStamped',
+      messageType: 'vdm_machine_msgs/MachinesStateStamped',
     });
 
     let subscription_callback = function (message) {

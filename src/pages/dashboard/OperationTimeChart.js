@@ -76,7 +76,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_machine_data',
-      serviceType: 'vdm_cokhi_machine_msgs/GetMachineData',
+      serviceType: 'vdm_machine_msgs/GetMachineData',
     });
 
     let requestMachineData = new ROSLIB.ServiceRequest({

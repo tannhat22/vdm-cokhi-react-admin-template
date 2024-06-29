@@ -61,7 +61,7 @@ const EditMachineForm = ({ id, machineName, machineType, plc, address, update })
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
     name: '/update_machine',
-    serviceType: 'vdm_cokhi_machine_msgs/UpdateMachine',
+    serviceType: 'vdm_machine_msgs/UpdateMachine',
   });
 
   function UpdateServiceCall(password, new_name, new_type, newPLC, newAddress) {

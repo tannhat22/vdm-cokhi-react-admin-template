@@ -52,7 +52,7 @@ const DeleteMachineForm = ({ id, machineName, update }) => {
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
     name: '/delete_machine',
-    serviceType: 'vdm_cokhi_machine_msgs/DeleteMachine',
+    serviceType: 'vdm_machine_msgs/DeleteMachine',
   });
 
   function UpdateServiceCall(password) {

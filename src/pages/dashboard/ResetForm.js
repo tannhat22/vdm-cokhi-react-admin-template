@@ -43,7 +43,7 @@ const ResetForm = ({ id, machineName, plcModel, plcAddress }) => {
   var resetMachineClient = new ROSLIB.Service({
     ros: ros,
     name: `/reset_machine_${plcModel}`,
-    serviceType: 'vdm_cokhi_machine_msgs/ResetMachinePLC',
+    serviceType: 'vdm_machine_msgs/ResetMachinePLC',
   });
 
   function ResetServiceCall(password) {
