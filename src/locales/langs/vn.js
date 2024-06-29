@@ -20,6 +20,8 @@ const vn = {
   Action: 'Lựa chọn',
   'Overall Machine Status Table': 'Bảng Trạng Thái Máy Tổng Thể',
 
+  Analysis: 'Bảng tỉ lệ hoạt động',
+
   Setting: 'Thiết lập',
   'Machine type': 'Loại máy',
   'PLC Address': 'Địa chỉ PLC',

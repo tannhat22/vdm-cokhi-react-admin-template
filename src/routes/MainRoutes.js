@@ -7,6 +7,9 @@ import MainLayout from 'layout/MainLayout';
 // render - overview
 const OverviewPageDefault = Loadable(lazy(() => import('pages/overview')));
 
+// render - overview
+const Analysis = Loadable(lazy(() => import('pages/analysis')));
+
 // render - dashboard
 const Dashboard = Loadable(lazy(() => import('pages/dashboard')));
 
@@ -39,6 +42,10 @@ const MainRoutes = {
           element: <OverviewPageDefault />,
         },
       ],
+    },
+    {
+      path: 'analysis',
+      element: <Analysis />,
     },
     {
       path: 'dashboard',

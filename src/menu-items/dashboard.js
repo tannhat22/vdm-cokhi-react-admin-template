@@ -1,11 +1,11 @@
 // assets
-import { DashboardOutlined, HomeOutlined, LayoutOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
+import { DashboardOutlined, HomeOutlined, EyeOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
   DashboardOutlined,
   HomeOutlined,
-  LayoutOutlined,
+  EyeOutlined,
   SettingOutlined,
   StockOutlined,
 };
@@ -22,7 +22,7 @@ const dashboard = {
       title: 'Layout',
       type: 'item',
       url: '/layout',
-      icon: icons.LayoutOutlined,
+      icon: icons.HomeOutlined,
       breadcrumbs: false,
     },
     {
@@ -30,7 +30,7 @@ const dashboard = {
       title: 'Overview',
       type: 'item',
       url: '/overview/default',
-      icon: icons.HomeOutlined,
+      icon: icons.EyeOutlined,
       breadcrumbs: true,
     },
     {

@@ -40,8 +40,8 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dashboardUrl = menuItems.items[0].children[2].url;
-  const dashboardId = menuItems.items[0].children[2].id;
+  const dashboardUrl = menuItems.items[0].children[3].url;
+  const dashboardId = menuItems.items[0].children[3].id;
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,6 +67,11 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
+      console.log(data);
+      if (!data) {
+        console.log(data);
+        return;
+      }
       // Lấy dữ liệu theo STT máy
       let dataMachine = [
         data.id_machines[stt],
@@ -278,19 +283,25 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               {translate('No-load operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[3] || machineData[3] === 0 ? `${machineData[3]} ${translate('min')}` : 'no info'}
+                {machineData[3] || machineData[3] === 0
+                  ? `${machineData[3]} ${translate('min')} (${((machineData[3] * 100) / 720).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               {translate('Underload operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[4] || machineData[4] === 0 ? `${machineData[4]} ${translate('min')}` : 'no info'}
+                {machineData[4] || machineData[4] === 0
+                  ? `${machineData[4]} ${translate('min')} (${((machineData[4] * 100) / 720).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
               {translate('Shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {machineData[5] || machineData[5] === 0 ? `${machineData[5]} ${translate('min')}` : 'no info'}
+                {machineData[5] || machineData[5] === 0
+                  ? `${machineData[5]} ${translate('min')} (${((machineData[5] * 100) / 720).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
 

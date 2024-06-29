@@ -19,9 +19,9 @@ import { useLocales } from 'locales';
 function OverviewTable() {
   const { translate } = useLocales();
   const [data, setData] = React.useState([
-    // [0, 1, 'Machine 1', 239, 239, 1, false],
-    // [1, 2, 'Machine 2', 191, 191, 1, false],
-    // [2, 3, 'Machine 3', 211, 211, 1, false],
+    [0, 1, 'Machine 1', 70, 239, 239, 100, 3, false],
+    [1, 2, 'Machine 2', 60, 191, 191, 120, 1, false],
+    [2, 3, 'Machine 3', 70, 211, 211, 115, 1, false],
   ]);
   const ros = React.useContext(RosPropsContext);
 
@@ -116,47 +116,73 @@ function OverviewTable() {
       },
     },
     {
-      name: 'noLoad',
-      label: translate('No-load operating time'),
+      name: 'target',
+      label: translate('Mục tiêu hoạt động có tải (%)'),
       options: {
         filter: false,
-        sort: true,
+        sort: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
         customBodyRender: (value) => {
-          let hours = Math.floor(value / 60);
-          let mins = value % 60;
-          if (hours < 10) hours = `0${hours}`;
-          if (mins < 10) mins = `0${mins}`;
-          return `${hours} h : ${mins} m  `;
+          return `${value}%`;
+        },
+      },
+    },
+    {
+      name: 'noLoad',
+      label: translate('Tỉ lệ hoạt động không tải (%)'),
+      options: {
+        filter: false,
+        sort: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        customBodyRender: (value) => {
+          const rateOperate = (value * 100) / 720;
+          return `${rateOperate.toFixed(2)}%  `;
         },
       },
     },
     {
       name: 'underLoad',
-      label: translate('Underload operating time'),
+      label: translate('Tỉ lệ hoạt động có tải (%)'),
       options: {
         filter: false,
-        sort: true,
+        sort: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
         customBodyRender: (value) => {
-          let hours = Math.floor(value / 60);
-          let mins = value % 60;
-          if (hours < 10) hours = `0${hours}`;
-          if (mins < 10) mins = `0${mins}`;
-          return `${hours} h : ${mins} m  `;
+          const rateOperate = (value * 100) / 720;
+          return `${rateOperate.toFixed(2)}%  `;
         },
       },
     },
     {
       name: 'offTime',
-      label: translate('Shutdown time'),
+      label: translate('Tỉ lệ tắt máy (%)'),
       options: {
         filter: false,
-        sort: true,
+        sort: false,
+        setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
         customBodyRender: (value) => {
-          let hours = Math.floor(value / 60);
-          let mins = value % 60;
-          if (hours < 10) hours = `0${hours}`;
-          if (mins < 10) mins = `0${mins}`;
-          return `${hours} h : ${mins} m  `;
+          const rateOperate = (value * 100) / 720;
+          return `${rateOperate.toFixed(2)}%  `;
         },
       },
     },
@@ -168,6 +194,9 @@ function OverviewTable() {
         sort: false,
         download: false,
         setCellHeaderProps: () => ({
+          style: { textAlign: 'center', justifyContent: 'center' },
+        }),
+        setCellProps: () => ({
           style: { textAlign: 'center', justifyContent: 'center' },
         }),
         customBodyRender: (value) =>
@@ -232,13 +261,13 @@ function OverviewTable() {
     tableBodyHeight: '760px',
     selectableRows: 'none',
     downloadOptions: {
-      filename: 'datamachine.csv',
+      filename: 'tilehoatdong.csv',
     },
   };
 
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable title={translate('Overall Machine Status Table')} data={data} columns={columns} options={options} />
+      <MUIDataTable title={translate('Bảng Tỉ Lệ Hoạt Động Máy')} data={data} columns={columns} options={options} />
     </ThemeProvider>
   );
 }
