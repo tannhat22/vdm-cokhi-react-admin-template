@@ -42,6 +42,20 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
   const navigate = useNavigate();
   const dashboardUrl = menuItems.items[0].children[3].url;
   const dashboardId = menuItems.items[0].children[3].id;
+  const targetStatic = {
+    LA: 25,
+    MA: 30,
+    BJ: 30,
+    GC: 30,
+    GS: 40,
+    GR: 40,
+    EN: 50,
+    GJ: 50,
+    EW: 70,
+    GP: 70,
+    MC: 70,
+    LN: 70,
+  };
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -296,11 +310,21 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
                   : 'no info'}
               </span>
             </Typography>
-            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               {translate('Shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[5] || machineData[5] === 0
                   ? `${machineData[5]} ${translate('min')} (${((machineData[5] * 100) / 720).toFixed(2)}%)`
+                  : 'no info'}
+              </span>
+            </Typography>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
+              {translate('Mục tiêu hoạt động có tải')}:{' '}
+              <span style={{ color: '#212121' }}>
+                {machineData[2]
+                  ? targetStatic[machineData[2]]
+                    ? `${targetStatic[machineData[2]]}%)`
+                    : 'not found stage!'
                   : 'no info'}
               </span>
             </Typography>
