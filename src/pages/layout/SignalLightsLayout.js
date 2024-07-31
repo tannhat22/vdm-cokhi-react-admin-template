@@ -22,10 +22,11 @@ import ma2Img from 'assets/images/machines/MA02.jpg';
 import ma3Img from 'assets/images/machines/MA03.jpg';
 import ma4Img from 'assets/images/machines/MA04.jpg';
 import bj1Img from 'assets/images/machines/BJ01.jpg';
-import bj3Img from 'assets/images/machines/BJ03.jpg';
+// import bj3Img from 'assets/images/machines/BJ03.jpg';
 import bj4Img from 'assets/images/machines/BJ04.jpg';
 import bj6Img from 'assets/images/machines/BJ06.jpg';
 import bj7Img from 'assets/images/machines/BJ07.jpg';
+import bj8Img from 'assets/images/machines/BJ08.jpg';
 import la3Img from 'assets/images/machines/LA03.jpg';
 import la4Img from 'assets/images/machines/LA04.jpg';
 import la5Img from 'assets/images/machines/LA05.jpg';
@@ -277,14 +278,14 @@ function SignalLightsLayout({ width, height }) {
         img={bj1Img}
       />
 
-      {/* BJ03 */}
+      {/* BJ08 */}
       <CardMachine
         stt={21}
         machineId={machinesId[21] ? machinesId[21] : 21}
-        posLeft={width * 68.18}
+        posLeft={width * 49.4}
         posTop={height * 74.25}
         size={width * 2.5}
-        img={bj3Img}
+        img={bj8Img}
       />
 
       {/* BJ04 */}
@@ -301,7 +302,7 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={23}
         machineId={machinesId[23] ? machinesId[23] : 23}
-        posLeft={width * 52.8}
+        posLeft={width * 54}
         posTop={height * 74.25}
         size={width * 2.5}
         img={bj6Img}
@@ -311,7 +312,7 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={24}
         machineId={machinesId[24] ? machinesId[24] : 24}
-        posLeft={width * 57.18}
+        posLeft={width * 58.4}
         posTop={height * 74.25}
         size={width * 2.5}
         img={bj7Img}

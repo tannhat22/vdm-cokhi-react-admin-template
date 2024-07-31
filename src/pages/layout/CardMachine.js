@@ -81,7 +81,6 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      console.log(data);
       if (!data) {
         console.log(data);
         return;
@@ -136,101 +135,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
   };
 
   return (
-    // <HtmlTooltip
-    //   // sx={{ maxWidth: 900 }}
-    //   title={
-    //     <Card sx={{ minWidth: 960, display: 'flex', border: '1px solid #dadde9', position: 'relative' }}>
-    //       <CardMedia
-    //         component="img"
-    //         sx={{ maxHeight: 580, maxWidth: 580, objectFit: 'cover' }}
-    //         image={img}
-    //         title={machineData[1] || 'no info'}
-    //       />
-    //       <CardContent sx={{ minWidth: 360 }}>
-    //         <Typography gutterBottom variant="h3" component="div" color="primary">
-    //           {translate('Machine name')}: <span style={{ color: '#1C2025' }}>{machineData[1] || 'no info'}</span>
-    //         </Typography>
-    //         <div style={{ position: 'absolute', top: '6px', right: '18px' }}>
-    //           <SignalLight color={machineData[6] || 'off'} />
-    //         </div>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('Operating status')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {machineData[6] === 'green'
-    //               ? translate('Underload')
-    //               : machineData[6] === 'yellow'
-    //               ? translate('No-load')
-    //               : machineData[6] === 'red'
-    //               ? translate('Overloading')
-    //               : translate('Shutdown')}
-    //           </span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('No-load operating time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {machineData[3] || machineData[3] === 0 ? `${machineData[3]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('Underload operating time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {machineData[4] || machineData[4] === 0 ? `${machineData[4]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
-    //           {translate('Shutdown time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {machineData[5] || machineData[5] === 0 ? `${machineData[5]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-
-    //         <Typography gutterBottom variant="h3" component="div" color="primary">
-    //           {translate('Process')}: <span style={{ color: '#1C2025' }}>{typeData[0] || 'no info'}</span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('Number of machines')}: <span style={{ color: '#212121' }}>{typeData[1] || 'no info'}</span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('Total no-load operating time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {typeData[2] || typeData[2] === 0 ? `${typeData[2]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
-    //           {translate('Total underload operating time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {typeData[3] || typeData[3] === 0 ? `${typeData[3]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-    //         <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
-    //           {translate('Total shutdown time')}:{' '}
-    //           <span style={{ color: '#212121' }}>
-    //             {typeData[4] || typeData[4] === 0 ? `${typeData[4]} ${translate('min')}` : 'no info'}
-    //           </span>
-    //         </Typography>
-    //       </CardContent>
-    //     </Card>
-    //   }
-    // >
-    //   <ButtonBase
-    //     machineid={machineId || null}
-    //     stt={stt}
-    //     onClick={(event) => {
-    //       redirectToDashboard(
-    //         Number(event.currentTarget.getAttribute('machineid')),
-    //         Number(event.currentTarget.getAttribute('stt')),
-    //       );
-    //     }}
-    //     style={{
-    //       position: 'absolute',
-    //       left: `${posLeft / 100}px`,
-    //       top: `${posTop / 100}px`,
-    //     }}
-    //   >
-    //     <SignalLight color={machineData[6] || 'off'} size={`${size / 100}`} custom="layout" />
-    //   </ButtonBase>
-    // </HtmlTooltip>
-    <p>
+    <div>
       <ButtonBase
         machineid={machineId || null}
         stt={stt}
@@ -268,10 +173,10 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Card sx={{ minWidth: 960, display: 'flex', border: '1px solid #dadde9', position: 'relative' }}>
+        <Card sx={{ maxWidth: 960, display: 'flex', border: '1px solid #dadde9', position: 'relative' }}>
           <CardMedia
             component="img"
-            sx={{ maxHeight: 580, maxWidth: 580, objectFit: 'cover' }}
+            sx={{ maxWidth: 560, objectFit: 'contain' }}
             image={img}
             title={machineData[1] || 'no info'}
           />
@@ -318,7 +223,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
                   : 'no info'}
               </span>
             </Typography>
-            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
+            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '40px' }}>
               {translate('Mục tiêu hoạt động có tải')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[2]
@@ -347,7 +252,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
                 {typeData[3] || typeData[3] === 0 ? `${typeData[3]} ${translate('min')}` : 'no info'}
               </span>
             </Typography>
-            <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '50px' }}>
+            <Typography variant="subtitle1" color="#616161">
               {translate('Total shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
                 {typeData[4] || typeData[4] === 0 ? `${typeData[4]} ${translate('min')}` : 'no info'}
@@ -356,7 +261,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
           </CardContent>
         </Card>
       </Popover>
-    </p>
+    </div>
   );
 }
 
