@@ -57,7 +57,6 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
       data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
   ]);
-
   const ros = useContext(RosPropsContext);
   useEffect(() => {
     if (isNaN(daysNum)) return;
@@ -69,9 +68,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
     // console.log('Days CHART: ', daysNum);
     // console.log('Max date: ', maxDate);
 
-    let dayBack = new Date();
-    dayBack.setDate(maxDate.getDate() - (daysNum - 1));
-    // console.log('dayBack: ', dayBack);
+    let dayBack = new Date(maxDate.getTime() - (daysNum - 1) * 24 * 60 * 60 * 1000);
 
     var getMachineDataClient = new ROSLIB.Service({
       ros: ros,
