@@ -37,6 +37,7 @@ import ew4Img from 'assets/images/machines/EW04.jpg';
 import en1Img from 'assets/images/machines/EN01.jpg';
 import en2Img from 'assets/images/machines/EN02.jpg';
 import en3Img from 'assets/images/machines/EN03.jpg';
+import en4Img from 'assets/images/machines/EN04.jpg';
 import ed2Img from 'assets/images/machines/ED02.jpg';
 import gp2Img from 'assets/images/machines/GP02-03.jpg';
 import gj2Img from 'assets/images/machines/GJ02-03.jpg';
@@ -292,7 +293,7 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={22}
         machineId={machinesId[22] ? machinesId[22] : 22}
-        posLeft={width * 74.7}
+        posLeft={width * 67.8}
         posTop={height * 74}
         size={width * 2.5}
         img={bj4Img}
@@ -416,6 +417,16 @@ function SignalLightsLayout({ width, height }) {
         posTop={height * 38.4}
         size={width * 2.5}
         img={en3Img}
+      />
+
+      {/* EN04 */}
+      <CardMachine
+        stt={40}
+        machineId={machinesId[40] ? machinesId[40] : 40}
+        posLeft={width * 16.33}
+        posTop={height * 36}
+        size={width * 2.5}
+        img={en4Img}
       />
 
       {/* ED02 */}
