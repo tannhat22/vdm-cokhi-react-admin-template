@@ -19,9 +19,9 @@ import { useLocales } from 'locales';
 function OverviewTable() {
   const { translate } = useLocales();
   const [data, setData] = React.useState([
-    [0, 1, 'Machine 1', 70, 239, 239, 100, 3, false],
-    [1, 2, 'Machine 2', 60, 191, 191, 120, 1, false],
-    [2, 3, 'Machine 3', 70, 211, 211, 115, 1, false],
+    // [0, 1, 'Machine 1', 70, 239, 239, 100, 3, false],
+    // [1, 2, 'Machine 2', 60, 191, 191, 120, 1, false],
+    // [2, 3, 'Machine 3', 70, 211, 211, 115, 1, false],
   ]);
   const ros = React.useContext(RosPropsContext);
 
