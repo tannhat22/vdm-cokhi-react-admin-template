@@ -35,7 +35,7 @@ const StageInformation = () => {
   const [daysInput, setDaysInput] = useState(10);
   const [daysChart, setDaysChart] = useState(daysInput);
   const [stageSelected, setStageSelected] = useState('');
-  const [stages, setStages] = useState([]);
+  const [stageMachines, setStageMachines] = useState({});
   const [shiftChart, setShiftChart] = useState('CN');
   // const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
   // const [selectedEndDate, setSelectedEndDate] = useState(new Date());
@@ -55,9 +55,15 @@ const StageInformation = () => {
     });
 
     getMachinesNameClient.callService(requestMachinesName, function (result) {
+      let allStageMachine = {};
       if (result.success) {
-        let dataStages = [...new Set(result.machines_type)];
-        setStages(dataStages);
+        for (let i = 0; i < result.machines_quantity; i++) {
+          allStageMachine = {
+            ...allStageMachine,
+            [result.machines_type[i]]: [...(allStageMachine[result.machines_type[i]] || []), result.machines_name[i]],
+          };
+        }
+        setStageMachines(allStageMachine);
       }
       // console.log(result.success);
       // console.log('da phan hoi');
@@ -127,11 +133,11 @@ const StageInformation = () => {
         <Autocomplete
           disablePortal
           id="combo-box-stage"
-          options={stages}
+          options={Object.keys(stageMachines)}
           isOptionEqualToValue={(option, value) => {
             return option.label === value;
           }}
-          value={stages.length > 0 ? stageSelected : null}
+          value={Object.keys(stageMachines).length > 0 ? stageSelected : null}
           sx={{ width: '100%' }}
           onChange={handleValueChange}
           renderInput={(params) => <TextField {...params} label={translate('Select stage')} />}
@@ -147,7 +153,7 @@ const StageInformation = () => {
           />
         ) : null}
       </Grid> */}
-      {/* <InformArea id={idMachine} /> */}
+      {/* <InformArea stage={idMachine} /> */}
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
       {/* row 2 */}

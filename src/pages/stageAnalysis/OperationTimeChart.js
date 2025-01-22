@@ -35,7 +35,7 @@ const areaChartOptions = {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
+const OperationTimeChart = ({ stage, shift, daysNum, maxDate }) => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
@@ -70,20 +70,20 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
 
     let dayBack = new Date(maxDate.getTime() - (daysNum - 1) * 24 * 60 * 60 * 1000);
 
-    var getMachineDataClient = new ROSLIB.Service({
+    var getStageDataClient = new ROSLIB.Service({
       ros: ros,
-      name: '/get_machine_data',
-      serviceType: 'vdm_machine_msgs/GetMachineData',
+      name: '/get_stage_data',
+      serviceType: 'vdm_machine_msgs/GetStageData',
     });
 
-    let requestMachineData = new ROSLIB.ServiceRequest({
-      id_machine: id,
+    let requestStageData = new ROSLIB.ServiceRequest({
+      stage: stage,
       min_date: moment(dayBack).format('DD/MM/YYYY'),
       max_date: moment(maxDate).format('DD/MM/YYYY'),
       shift,
     });
-    if (id !== 0) {
-      getMachineDataClient.callService(requestMachineData, function (result) {
+    if (stage !== '') {
+      getStageDataClient.callService(requestStageData, function (result) {
         if (result.success) {
           // let dates = [];
           let dataShow = {
@@ -92,6 +92,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
             noloads: [],
             underloads: [],
           };
+          result.stage_data.forEach();
           result.machine_data.machine_data.forEach((mcData) => {
             dataShow.dates.push(mcData.date.slice(0, 5));
             dataShow.offtimes.push(mcData.offtime);
@@ -120,7 +121,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
         }
       });
     }
-  }, [id, shift, daysNum, maxDate]);
+  }, [stage, shift, daysNum, maxDate]);
 
   useEffect(() => {
     setOptions((prevState) => ({
@@ -173,7 +174,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
 };
 
 OperationTimeChart.propTypes = {
-  id: PropTypes.number,
+  stage: PropTypes.string,
   shift: PropTypes.string,
   daysNum: PropTypes.number,
   maxDate: PropTypes.instanceOf(Date).isRequired,

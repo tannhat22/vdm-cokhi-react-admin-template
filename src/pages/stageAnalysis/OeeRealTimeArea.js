@@ -3,14 +3,14 @@ import { useState, useEffect, useContext, Fragment } from 'react';
 import ROSLIB from 'roslib';
 import { Grid, Box, Stack, Typography } from '@mui/material';
 
-import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+import ReactApexChart from 'react-apexcharts';
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
 import MainCard from 'components/MainCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-function InformArea({ stage }) {
+function OeeRealTimeArea({ stage, machines }) {
   const { translate } = useLocales();
   const [dataMachine, setDataMachine] = useState({
     shift: 0,
@@ -114,28 +114,9 @@ function InformArea({ stage }) {
           </Box>
         </MainCard>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title={translate('No-load operating time')}
-          desc={`${dataMachine.noloadTime.hours} h : ${dataMachine.noloadTime.minutes} m`}
-          time="         "
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title={translate('Underload operating time')}
-          desc={`${dataMachine.underloadTime.hours} h : ${dataMachine.underloadTime.minutes} m`}
-          time="         "
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title={translate('Shutdown time')}
-          // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
-          desc={`${dataMachine.offTime.hours} h : ${dataMachine.offTime.minutes} m`}
-          time="         "
-        />
-      </Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
+      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
       {/* <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
           title="Giá trị cài đặt"
@@ -148,8 +129,9 @@ function InformArea({ stage }) {
   );
 }
 
-InformArea.propTypes = {
-  id: PropTypes.number,
+OeeRealTimeArea.propTypes = {
+  stage: PropTypes.string.isRequired,
+  machines: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default InformArea;
+export default OeeRealTimeArea;
