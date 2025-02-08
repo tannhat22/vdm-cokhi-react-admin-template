@@ -1,24 +1,22 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useContext, Fragment } from 'react';
 import ROSLIB from 'roslib';
-import { Grid, Box, Stack, Typography } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 
-import ReactApexChart from 'react-apexcharts';
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
 import MainCard from 'components/MainCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import ColumnChart from './ColumnChart';
 
 function OeeRealTimeArea({ stage, machines }) {
   const { translate } = useLocales();
-  const [dataMachine, setDataMachine] = useState({
-    shift: 0,
-    noloadTime: { hours: '00', minutes: '00' },
-    underloadTime: { hours: '00', minutes: '00' },
-    offTime: { hours: '00', minutes: '00' },
-    // gt: { min: 0, max: 0, current: 0 },
-    // timeReachspeed: 0,
+  const [machinesData, setMachinesData] = useState({});
+  const [seriesData, setSeriesData] = useState({
+    availability: [],
+    performance: [],
+    quality: [],
   });
 
   const ros = useContext(RosPropsContext);
@@ -38,92 +36,47 @@ function OeeRealTimeArea({ stage, machines }) {
     listener.subscribe(subscription_callback);
 
     function handleDataWebsocket(data) {
-      let dataNew = {
-        shift: 0,
-        noloadTime: { hours: 0, minutes: 0 },
-        underloadTime: { hours: 0, minutes: 0 },
-        offTime: { hours: 0, minutes: 0 },
-      };
+      const stageMachineObj = {};
 
-      const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
-      if (sttMachine === -1) {
-        console.log('ID not found!');
-        return;
-      }
+      data.state_machines.forEach((machine) => {
+        if (machine.type === stage) {
+          stageMachineObj[machine.name] = machine;
+        }
+      });
 
-      const noload = {
-        hours: Math.floor(data.state_machines[sttMachine].noload / 60),
-        mins: data.state_machines[sttMachine].noload % 60,
-      };
-
-      const underload = {
-        hours: Math.floor(data.state_machines[sttMachine].underload / 60),
-        mins: data.state_machines[sttMachine].underload % 60,
-      };
-
-      const offtime = {
-        hours: Math.floor(data.state_machines[sttMachine].offtime / 60),
-        mins: data.state_machines[sttMachine].offtime % 60,
-      };
-
-      dataNew.shift = data.shift;
-      dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
-      dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
-      dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
-      dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
-      dataNew.offTime.hours = offtime.hours < 10 ? `0${offtime.hours}` : `${offtime.hours}`;
-      dataNew.offTime.minutes = offtime.mins < 10 ? `0${offtime.mins}` : `${offtime.mins}`;
-      // dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
-      // dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
-      // dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
-      // dataNew.timeReachSpeed = data.state_machines[sttMachine].time_reachspeed;
-
-      setDataMachine(dataNew);
+      setMachinesData(stageMachineObj);
     }
 
     return () => {
       listener.unsubscribe();
     };
-  }, [id]);
+  }, [stage]);
 
   return (
     <Fragment>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <MainCard contentSX={{ p: 2.25 }}>
-          <Stack spacing={0.5} sx={{ position: 'relative' }}>
-            <Typography variant="h6" color="textSecondary">
-              {translate('SHIFT')}
-            </Typography>
-            <Grid container alignItems="center">
-              <Grid item>
-                <Typography variant="h4" color="inherit">
-                  {dataMachine.shift ? translate('Night shift') : translate('Day shift')}
-                </Typography>
-              </Grid>
-            </Grid>
-            <div style={{ position: 'absolute', right: '10px', top: '6px' }}>
-              {dataMachine.shift ? (
-                <FontAwesomeIcon icon={faMoon} size="4x" beat />
-              ) : (
-                <FontAwesomeIcon icon={faSun} size="4x" color="#F5EB42" spin />
-              )}
-            </div>
-          </Stack>
-          <Box sx={{ pt: 2.25 }}>
-            <Typography variant="caption" color="textSecondary" sx={{ textAlign: 'right' }}></Typography>
+      <Grid item xs={12} sm={6} md={6} lg={6}>
+        <MainCard content={false}>
+          <Box sx={{ pt: 1, pr: 2 }}>
+            <ColumnChart />
           </Box>
         </MainCard>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}></Grid>
-      {/* <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce
-          title="Giá trị cài đặt"
-          // desc={`Min: ${dataMachine.gt.min} - Max: ${dataMachine.gt.max} - Hiện tại: ${dataMachine.gt.current}`}
-          desc={'No information'}
-          time="         "
-        />
+      <Grid item xs={12} sm={6} md={6} lg={6}>
+        <MainCard content={false}>
+          <Box sx={{ pt: 1, pr: 2 }}>
+            <ColumnChart />
+          </Box>
+        </MainCard>
+      </Grid>
+      {/* <Grid item xs={12} sm={6} md={6} lg={6}>
+        <MainCard content={false}>
+          <Box sx={{ pt: 1, pr: 2 }}></Box>
+        </MainCard>
+      </Grid>
+      <Grid item xs={12} sm={6} md={6} lg={6}>
+        <MainCard content={false}>
+          <Box sx={{ pt: 1, pr: 2 }}></Box>
+        </MainCard>
       </Grid> */}
     </Fragment>
   );

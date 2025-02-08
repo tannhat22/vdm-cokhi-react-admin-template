@@ -21,7 +21,7 @@ import {
 
 // project import
 // import InformArea from './InformArea';
-import OperationTimeChart from './OperationTimeChart';
+// import OperationTimeChart from './OperationTimeChart';
 import MainCard from 'components/MainCard';
 import { MaterialUISwitch } from 'components/CustomizedSwitches';
 
@@ -36,11 +36,11 @@ const StageInformation = () => {
   const [daysChart, setDaysChart] = useState(daysInput);
   const [stageSelected, setStageSelected] = useState('');
   const [stageMachines, setStageMachines] = useState({});
-  const [shiftChart, setShiftChart] = useState('CN');
+  // const [shiftChart, setShiftChart] = useState('CN');
   // const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
   // const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   // const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
-  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2200-01-01'));
+  // const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2200-01-01'));
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
@@ -106,9 +106,9 @@ const StageInformation = () => {
   //   console.log(date);
   // }
 
-  const handleShiftChange = (event) => {
-    event.target.checked ? setShiftChart('CD') : setShiftChart('CN');
-  };
+  // const handleShiftChange = (event) => {
+  //   event.target.checked ? setShiftChart('CD') : setShiftChart('CN');
+  // };
 
   const handleDaysChange = (event) => {
     let value = parseInt(event.target.value, 10);
@@ -193,7 +193,7 @@ const StageInformation = () => {
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} maxDate={specifiedMaxDate} />
+            {/* <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} maxDate={specifiedMaxDate} /> */}
           </Box>
         </MainCard>
       </Grid>
