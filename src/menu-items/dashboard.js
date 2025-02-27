@@ -1,8 +1,15 @@
 // assets
-import { DashboardOutlined, HomeOutlined, EyeOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
-
+import {
+  BarChartOutlined,
+  DashboardOutlined,
+  HomeOutlined,
+  EyeOutlined,
+  SettingOutlined,
+  StockOutlined,
+} from '@ant-design/icons';
 // icons
 const icons = {
+  BarChartOutlined,
   DashboardOutlined,
   HomeOutlined,
   EyeOutlined,
@@ -47,6 +54,14 @@ const dashboard = {
       type: 'item',
       url: '/dashboard',
       icon: icons.DashboardOutlined,
+      breadcrumbs: true,
+    },
+    {
+      id: 'stageAnalysis',
+      title: 'Stage Analysis',
+      type: 'item',
+      url: '/stageanalysis',
+      icon: icons.BarChartOutlined,
       breadcrumbs: true,
     },
     {

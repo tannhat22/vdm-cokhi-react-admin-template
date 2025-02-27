@@ -243,19 +243,34 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               {translate('Total no-load operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[2] || typeData[2] === 0 ? `${typeData[2]} ${translate('min')}` : 'no info'}
+                {typeData[2] || typeData[2] === 0
+                  ? `${typeData[2]} ${translate('min')} (${(
+                      (typeData[2] * 100) /
+                      (typeData[2] + typeData[3] + typeData[4])
+                    ).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161" sx={{ marginBottom: '10px' }}>
               {translate('Total underload operating time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[3] || typeData[3] === 0 ? `${typeData[3]} ${translate('min')}` : 'no info'}
+                {typeData[3] || typeData[3] === 0
+                  ? `${typeData[3]} ${translate('min')} (${(
+                      (typeData[3] * 100) /
+                      (typeData[2] + typeData[3] + typeData[4])
+                    ).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
             <Typography variant="subtitle1" color="#616161">
               {translate('Total shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
-                {typeData[4] || typeData[4] === 0 ? `${typeData[4]} ${translate('min')}` : 'no info'}
+                {typeData[4] || typeData[4] === 0
+                  ? `${typeData[4]} ${translate('min')} (${(
+                      (typeData[4] * 100) /
+                      (typeData[2] + typeData[3] + typeData[4])
+                    ).toFixed(2)}%)`
+                  : 'no info'}
               </span>
             </Typography>
           </CardContent>

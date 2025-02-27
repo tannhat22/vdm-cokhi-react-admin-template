@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -19,72 +19,152 @@ const areaChartOptions = {
   dataLabels: {
     enabled: true,
   },
+  legend: {
+    show: false, // 👈 Tắt chú thích cột màu
+  },
 };
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const ColumnChart = ({ categories, series, colors }) => {
+const ColumnChart = ({ chartName, target, categories, series, colors }) => {
   const theme = useTheme();
 
-  const { primary, secondary } = theme.palette.text;
+  const { secondary } = theme.palette.text;
   const line = theme.palette.divider;
-
-  const [options, setOptions] = useState(areaChartOptions);
-
-  useEffect(() => {
-    setOptions((prevState) => ({
-      ...prevState,
-      // colors: [theme.palette.primary.main, 'rgb(0, 227, 150)', 'rgba(252,185,0,1)'],
-      // colors: ['rgb(199, 199, 200)', 'rgba(252,185,0,1)', 'rgb(0, 227, 150)'],
-      fill: {
-        colors: colors,
+  // const [options, setOptions] = useState(areaChartOptions);
+  const chartOption = {
+    ...areaChartOptions,
+    title: {
+      text: chartName,
+      align: 'center',
+      style: {
+        fontSize: '20px',
+        fontWeight: 'bold',
+        color: '#333',
       },
-      xaxis: {
-        categories: categories,
-        labels: {
-          style: {
-            colors: [
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-            ],
+    },
+    colors: colors,
+    plotOptions: {
+      bar: {
+        distributed: true, // Cho phép từng cột có màu riêng
+      },
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: target,
+          borderColor: 'red',
+          label: {
+            borderColor: 'red',
+            style: {
+              color: '#fff',
+              background: 'red',
+            },
+            text: '',
           },
         },
-        axisBorder: {
-          show: true,
-          color: line,
-        },
-        tickAmount: 7,
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: [secondary],
-          },
+      ],
+    },
+    xaxis: {
+      categories: categories,
+      labels: {
+        style: {
+          colors: ['black'],
         },
       },
-      grid: {
-        borderColor: line,
+      axisBorder: {
+        show: true,
+        color: line,
       },
-      tooltip: {
-        theme: 'light',
+      tickAmount: 7,
+    },
+    yaxis: {
+      min: 0,
+      max: 100,
+      labels: {
+        style: {
+          colors: [secondary],
+        },
       },
-    }));
-  }, [primary, secondary, line, theme, categories, colors]);
+    },
+    grid: {
+      borderColor: line,
+    },
+    tooltip: {
+      theme: 'light',
+    },
+  };
+  // useEffect(() => {
+  //   setOptions((prevState) => ({
+  //     ...prevState,
+  //     title: {
+  //       text: chartName,
+  //       align: 'center',
+  //       style: {
+  //         fontSize: '20px',
+  //         fontWeight: 'bold',
+  //         color: '#333',
+  //       },
+  //     },
+  //     colors: colors,
+  //     plotOptions: {
+  //       bar: {
+  //         distributed: true, // Cho phép từng cột có màu riêng
+  //       },
+  //     },
+  //     annotations: {
+  //       yaxis: [
+  //         {
+  //           y: target,
+  //           borderColor: 'red',
+  //           label: {
+  //             borderColor: 'red',
+  //             style: {
+  //               color: '#fff',
+  //               background: 'red',
+  //             },
+  //             text: '',
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     xaxis: {
+  //       categories: categories,
+  //       labels: {
+  //         style: {
+  //           colors: ['black'],
+  //         },
+  //       },
+  //       axisBorder: {
+  //         show: true,
+  //         color: line,
+  //       },
+  //       tickAmount: 7,
+  //     },
+  //     yaxis: {
+  //       min: 0,
+  //       max: 100,
+  //       labels: {
+  //         style: {
+  //           colors: [secondary],
+  //         },
+  //       },
+  //     },
+  //     grid: {
+  //       borderColor: line,
+  //     },
+  //     tooltip: {
+  //       theme: 'light',
+  //     },
+  //   }));
+  // }, [primary, secondary, line, theme, chartName, target, categories, colors]);
 
-  return <ReactApexChart options={options} series={series} type="bar" height={450} />;
+  return <ReactApexChart options={chartOption} series={series} type="bar" height={366} />;
 };
 
 ColumnChart.propTypes = {
+  chartName: PropTypes.string,
+  target: PropTypes.number,
   categories: PropTypes.array,
   series: PropTypes.array,
   colors: PropTypes.array,

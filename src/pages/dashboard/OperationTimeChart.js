@@ -45,16 +45,16 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
   const [days, setDays] = useState([]); //'10/12','11/12','12/12','13/12','14/12','15/12','16/12','17/12','18/12','19/12','20/12'
   const [series, setSeries] = useState([
     {
-      name: 'Tắt máy',
-      data: [], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+      name: 'Có tải',
+      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
     {
       name: 'Không tải',
       data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
     },
     {
-      name: 'Có tải',
-      data: [], //50, 40, 20, 10, 20, 30, 40, 15, 40, 90
+      name: 'Tắt máy',
+      data: [], //10, 20, 30, 40, 50, 60, 70, 80, 90, 100
     },
   ]);
   const ros = useContext(RosPropsContext);
@@ -102,19 +102,16 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
           setDays(dataShow.dates);
           setSeries([
             {
-              name: 'Tắt máy',
-              // data: result.machine_data.offtime,
-              data: dataShow.offtimes,
+              name: 'Có tải',
+              data: dataShow.underloads,
             },
             {
               name: 'Không tải',
-              // data: result.machine_data.noload,
               data: dataShow.noloads,
             },
             {
-              name: 'Có tải',
-              // data: result.machine_data.underload,
-              data: dataShow.underloads,
+              name: 'Tắt máy',
+              data: dataShow.offtimes,
             },
           ]);
         }
@@ -125,8 +122,7 @@ const OperationTimeChart = ({ id, shift, daysNum, maxDate }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      // colors: [theme.palette.primary.main, 'rgb(0, 227, 150)', 'rgba(252,185,0,1)'],
-      colors: ['rgb(199, 199, 200)', 'rgba(252,185,0,1)', 'rgb(0, 227, 150)'],
+      colors: ['rgb(0, 227, 150)', 'rgba(252,185,0,1)', 'rgb(199, 199, 200)'],
       xaxis: {
         categories: days,
         labels: {
