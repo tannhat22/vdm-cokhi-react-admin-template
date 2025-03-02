@@ -29,6 +29,13 @@ import { useLocales } from 'locales';
 //   },
 // }));
 
+// Hàm để lấy giá trị mục tiêu từ biến môi trường dựa trên tên công đoạn
+const getTargetValue = (stage) => {
+  return Number(process.env[`REACT_APP_TARGET_${stage}`]);
+};
+
+const minutesInShift = Number(process.env.REACT_APP_MINUTES_IN_SHIFT);
+
 function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
   const { translate } = useLocales();
 
@@ -42,20 +49,6 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
   const navigate = useNavigate();
   const dashboardUrl = menuItems.items[0].children[3].url;
   const dashboardId = menuItems.items[0].children[3].id;
-  const targetStatic = {
-    LA: 25,
-    MA: 30,
-    BJ: 30,
-    GC: 30,
-    GS: 40,
-    GR: 40,
-    EN: 50,
-    GJ: 50,
-    EW: 70,
-    GP: 70,
-    MC: 70,
-    LN: 70,
-  };
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -203,7 +196,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
               {translate('No-load operating time')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[3] || machineData[3] === 0
-                  ? `${machineData[3]} ${translate('min')} (${((machineData[3] * 100) / 720).toFixed(2)}%)`
+                  ? `${machineData[3]} ${translate('min')} (${((machineData[3] * 100) / minutesInShift).toFixed(2)}%)`
                   : 'no info'}
               </span>
             </Typography>
@@ -211,7 +204,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
               {translate('Underload operating time')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[4] || machineData[4] === 0
-                  ? `${machineData[4]} ${translate('min')} (${((machineData[4] * 100) / 720).toFixed(2)}%)`
+                  ? `${machineData[4]} ${translate('min')} (${((machineData[4] * 100) / minutesInShift).toFixed(2)}%)`
                   : 'no info'}
               </span>
             </Typography>
@@ -219,7 +212,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
               {translate('Shutdown time')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[5] || machineData[5] === 0
-                  ? `${machineData[5]} ${translate('min')} (${((machineData[5] * 100) / 720).toFixed(2)}%)`
+                  ? `${machineData[5]} ${translate('min')} (${((machineData[5] * 100) / minutesInShift).toFixed(2)}%)`
                   : 'no info'}
               </span>
             </Typography>
@@ -227,8 +220,8 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
               {translate('Mục tiêu hoạt động có tải')}:{' '}
               <span style={{ color: '#212121' }}>
                 {machineData[2]
-                  ? targetStatic[machineData[2]]
-                    ? `${targetStatic[machineData[2]]}%)`
+                  ? getTargetValue(machineData[2])
+                    ? `${getTargetValue(machineData[2])}%)`
                     : 'not found stage!'
                   : 'no info'}
               </span>

@@ -16,6 +16,13 @@ import { activeItem } from 'store/reducers/menu';
 import menuItems from 'menu-items';
 import { useLocales } from 'locales';
 
+// Hàm để lấy giá trị mục tiêu từ biến môi trường dựa trên tên công đoạn
+const getTargetValue = (stage) => {
+  return Number(process.env[`REACT_APP_TARGET_${stage}`]);
+};
+
+const minutesInShift = Number(process.env.REACT_APP_MINUTES_IN_SHIFT);
+
 function OverviewTable() {
   const { translate } = useLocales();
   const [data, setData] = React.useState([
@@ -29,21 +36,6 @@ function OverviewTable() {
   const navigate = useNavigate();
   const dashboardUrl = menuItems.items[0].children[3].url;
   const dashboardId = menuItems.items[0].children[3].id;
-
-  const targetStatic = {
-    LA: 25,
-    MA: 30,
-    BJ: 30,
-    GC: 30,
-    GS: 40,
-    GR: 40,
-    EN: 50,
-    GJ: 50,
-    EW: 70,
-    GP: 70,
-    MC: 70,
-    LN: 70,
-  };
 
   React.useEffect(() => {
     var listener = new ROSLIB.Topic({
@@ -65,7 +57,7 @@ function OverviewTable() {
           i,
           data.id_machines[i],
           data.state_machines[i].name,
-          targetStatic[data.state_machines[i].type] ? targetStatic[data.state_machines[i].type] : 0,
+          getTargetValue(data.state_machines[i].type) ? getTargetValue(data.state_machines[i].type) : 0,
           data.state_machines[i].noload,
           data.state_machines[i].underload,
           data.state_machines[i].offtime,
@@ -161,7 +153,7 @@ function OverviewTable() {
           style: { textAlign: 'center', justifyContent: 'center' },
         }),
         customBodyRender: (value) => {
-          const rateOperate = (value * 100) / 720;
+          const rateOperate = (value * 100) / minutesInShift;
           return `${rateOperate.toFixed(2)}%  `;
         },
       },
@@ -179,7 +171,7 @@ function OverviewTable() {
           style: { textAlign: 'center', justifyContent: 'center' },
         }),
         customBodyRender: (value) => {
-          const rateOperate = (value * 100) / 720;
+          const rateOperate = (value * 100) / minutesInShift;
           return `${rateOperate.toFixed(2)}%  `;
         },
       },
@@ -197,7 +189,7 @@ function OverviewTable() {
           style: { textAlign: 'center', justifyContent: 'center' },
         }),
         customBodyRender: (value) => {
-          const rateOperate = (value * 100) / 720;
+          const rateOperate = (value * 100) / minutesInShift;
           return `${rateOperate.toFixed(2)}%  `;
         },
       },

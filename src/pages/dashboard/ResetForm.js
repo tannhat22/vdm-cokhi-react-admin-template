@@ -99,13 +99,13 @@ const ResetForm = ({ id, machineName, plcModel, plcAddress }) => {
   // const email = useSelector((state) => state.login.email);
 
   return (
-    <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+    <>
       <Button
         onClick={handleOpen}
         // color={slot === '7 days' ? 'primary' : 'secondary'}
         size="large"
-        variant="outlined"
-        sx={{ width: '100px' }}
+        variant="contained"
+        sx={{ width: '100%', height: '100%' }}
       >
         Reset
       </Button>
@@ -169,7 +169,7 @@ const ResetForm = ({ id, machineName, plcModel, plcAddress }) => {
           </Paper>
         </Box>
       </Modal>
-    </Box>
+    </>
   );
 };
 

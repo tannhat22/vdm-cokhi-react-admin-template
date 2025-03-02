@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import ROSLIB from 'roslib';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+// import JSZip from 'jszip';
+// import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import moment from 'moment';
 
@@ -17,6 +17,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 import RosPropsContext from 'context/RosPropsContext';
 import { useLocales } from 'locales';
 import { Fragment } from 'react';
+import * as XLSX from 'xlsx';
 
 const style = {
   position: 'absolute',
@@ -30,7 +31,7 @@ const style = {
   p: 4,
 };
 
-function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) {
+function MachineDataTable({ id, stage, dataType, machineName, beginDate, endDate }) {
   const { translate } = useLocales();
   const [openLogs, setOpenLogs] = React.useState(false);
   const [isLoad, setIsLoad] = React.useState(false);
@@ -57,26 +58,152 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
   ]);
   const ros = React.useContext(RosPropsContext);
 
-  const handleDownloadStageCSV = async () => {
+  const fetchData = (client, request, processData) => {
+    client.callService(request, (result) => {
+      if (result.success) {
+        processData(result);
+      }
+    });
+  };
+
+  const processMachineData = (result) => {
+    let dataShow = [];
+    let k = 1;
+    const machineData = result.machine_data.machine_data;
+    for (let i = machineData.length - 1; i >= 0; i--) {
+      dataShow.push([
+        k,
+        machineData[i].date,
+        machineData[i].shift,
+        machineData[i].noload,
+        machineData[i].underload,
+        machineData[i].offtime,
+      ]);
+      k++;
+    }
+    setData(dataShow);
+  };
+
+  const processStageData = (result) => {
+    let dataShow = [];
+    let k = 1;
+    const stageData = result.stage_data[result.stage_data.length - 1].machine_data;
+    for (let i = stageData.length - 1; i >= 0; i--) {
+      dataShow.push([
+        k,
+        stageData[i].date,
+        stageData[i].shift,
+        stageData[i].noload,
+        stageData[i].underload,
+        stageData[i].offtime,
+      ]);
+      k++;
+    }
+    setData(dataShow);
+  };
+
+  // const handleDownloadStageCSV = async () => {
+  //   setIsLoad(true);
+  //   const zip = new JSZip();
+  //   const folder = zip.folder(dataType === 'machine' ? `Stage ${stage} CSV Files` : `All Stage CSV Files`);
+
+  //   // Lấy dữ liệu từ server
+  //   const getStageDataClient = new ROSLIB.Service({
+  //     ros: ros,
+  //     name: dataType === 'machine' ? '/get_stage_data' : '/get_all_stage_data',
+  //     serviceType: dataType === 'machine' ? 'vdm_machine_msgs/GetStageData' : 'vdm_machine_msgs/GetAllStageData',
+  //   });
+
+  //   const msgRequest =
+  //     dataType === 'machine'
+  //       ? {
+  //           stage: stage,
+  //           min_date: moment(beginDate).format('DD/MM/YYYY'),
+  //           max_date: moment(endDate).format('DD/MM/YYYY'),
+  //           shift: '',
+  //         }
+  //       : {
+  //           min_date: moment(beginDate).format('DD/MM/YYYY'),
+  //           max_date: moment(endDate).format('DD/MM/YYYY'),
+  //           shift: '',
+  //         };
+  //   const requestStageData = new ROSLIB.ServiceRequest(msgRequest);
+
+  //   if (stage !== 'no info') {
+  //     getStageDataClient.callService(requestStageData, async function (result) {
+  //       if (result.success) {
+  //         const fields = [
+  //           'ID',
+  //           `${translate('Dates')}`,
+  //           `${translate('Shifts')}`,
+  //           `${translate('No-load operating time (min)')}`,
+  //           `${translate('Underload operating time (min)')}`,
+  //           `${translate('Shutdown time (min)')}`,
+  //         ];
+
+  //         const resultData = dataType === 'machine' ? result.stage_data : result.all_stage_data;
+  //         let promises = resultData.map(async (machine) => {
+  //           let machineData = [];
+  //           const count = machine.machine_data.length - 1;
+  //           let k = 1;
+  //           for (let i = count; i >= 0; i--) {
+  //             machineData.push([
+  //               k,
+  //               machine.machine_data[i].date,
+  //               machine.machine_data[i].shift,
+  //               machine.machine_data[i].noload,
+  //               machine.machine_data[i].underload,
+  //               machine.machine_data[i].offtime,
+  //             ]);
+  //           }
+  //           // console.log('Machine name: ', machine.machine_name);
+  //           // console.log(machineData);
+
+  //           // chuyển đổi ngược data thành CSV vào lưu tạm vào folder
+  //           const csvContent = Papa.unparse({ fields, data: machineData });
+  //           folder.file(`${machine.machine_name}.csv`, csvContent);
+  //         });
+
+  //         // Chờ tất cả các tệp CSV được thêm vào thư mục
+  //         await Promise.all(promises);
+
+  //         // Tạo file zip và tải xuống
+  //         zip.generateAsync({ type: 'blob' }).then((content) => {
+  //           saveAs(content, dataType === 'machine' ? `stage_${stage}.zip` : 'all_stages_data.zip');
+  //         });
+  //         setIsLoad(false);
+  //       }
+  //     });
+  //   }
+  // };
+
+  const handleDownloadStageExcel = async () => {
     setIsLoad(true);
-    const zip = new JSZip();
-    const folder = zip.folder('Machine CSV Files');
+    const workbook = XLSX.utils.book_new();
 
     // Lấy dữ liệu từ server
-    var getStageDataClient = new ROSLIB.Service({
+    const getStageDataClient = new ROSLIB.Service({
       ros: ros,
-      name: '/get_stage_data',
-      serviceType: 'vdm_machine_msgs/GetStageData',
+      name: dataType === 'machine' ? '/get_stage_data' : '/get_all_stage_data',
+      serviceType: dataType === 'machine' ? 'vdm_machine_msgs/GetStageData' : 'vdm_machine_msgs/GetAllStageData',
     });
 
-    let requestStageData = new ROSLIB.ServiceRequest({
-      stage: machineType,
-      min_date: moment(beginDate).format('DD/MM/YYYY'),
-      max_date: moment(endDate).format('DD/MM/YYYY'),
-      shift: '',
-    });
+    const msgRequest =
+      dataType === 'machine'
+        ? {
+            stage: stage,
+            min_date: moment(beginDate).format('DD/MM/YYYY'),
+            max_date: moment(endDate).format('DD/MM/YYYY'),
+            shift: '',
+          }
+        : {
+            min_date: moment(beginDate).format('DD/MM/YYYY'),
+            max_date: moment(endDate).format('DD/MM/YYYY'),
+            shift: '',
+          };
+    const requestStageData = new ROSLIB.ServiceRequest(msgRequest);
 
-    if (machineType !== 'no info') {
+    if (stage !== '') {
       getStageDataClient.callService(requestStageData, async function (result) {
         if (result.success) {
           const fields = [
@@ -88,35 +215,23 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
             `${translate('Shutdown time (min)')}`,
           ];
 
-          let promises = result.stage_data.map(async (machine) => {
+          const resultData = dataType === 'machine' ? result.stage_data : result.all_stage_data;
+          let promises = resultData.map(async (machine) => {
             let machineData = [];
-            const count = machine.machine_data.length - 1;
-            let k = 1;
-            for (let i = count; i >= 0; i--) {
-              machineData.push([
-                k,
-                machine.machine_data[i].date,
-                machine.machine_data[i].shift,
-                machine.machine_data[i].noload,
-                machine.machine_data[i].underload,
-                machine.machine_data[i].offtime,
-              ]);
-            }
-            // console.log('Machine name: ', machine.machine_name);
-            // console.log(machineData);
+            machine.machine_data.forEach((data, index) => {
+              machineData.push([index + 1, data.date, data.shift, data.noload, data.underload, data.offtime]);
+            });
 
-            // chuyển đổi ngược data thành CSV vào lưu tạm vào folder
-            const csvContent = Papa.unparse({ fields, data: machineData });
-            folder.file(`${machine.machine_name}.csv`, csvContent);
+            // Chuyển đổi dữ liệu thành sheet Excel
+            const worksheet = XLSX.utils.aoa_to_sheet([fields, ...machineData]);
+            XLSX.utils.book_append_sheet(workbook, worksheet, machine.machine_name);
           });
 
-          // Chờ tất cả các tệp CSV được thêm vào thư mục
+          // Chờ tất cả các sheet được thêm vào workbook
           await Promise.all(promises);
 
-          // Tạo file zip và tải xuống
-          zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, 'machines_data.zip');
-          });
+          // Tạo file Excel và tải xuống
+          XLSX.writeFile(workbook, dataType === 'machine' ? `stage_${stage}.xlsx` : 'all_stages_data.xlsx');
           setIsLoad(false);
         }
       });
@@ -126,13 +241,13 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
   const handleDownloadLogs = () => {
     setIsLoad(true);
     // Lấy dữ liệu từ server
-    var getLogsDataClient = new ROSLIB.Service({
+    const getLogsDataClient = new ROSLIB.Service({
       ros: ros,
       name: '/get_logs_data',
       serviceType: 'vdm_machine_msgs/GetMachineLogs',
     });
 
-    let requestLogsData = new ROSLIB.ServiceRequest({
+    const requestLogsData = new ROSLIB.ServiceRequest({
       id_machine: id,
       min_date: moment(beginDate).format('DD/MM/YYYY'),
       max_date: moment(endDate).format('DD/MM/YYYY'),
@@ -226,41 +341,38 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
   }
 
   React.useEffect(() => {
-    var getMachineDataClient = new ROSLIB.Service({
-      ros: ros,
-      name: '/get_machine_data',
-      serviceType: 'vdm_machine_msgs/GetMachineData',
-    });
-
-    let requestMachineData = new ROSLIB.ServiceRequest({
-      id_machine: id,
-      min_date: moment(beginDate).format('DD/MM/YYYY'),
-      max_date: moment(endDate).format('DD/MM/YYYY'),
-      shift: '',
-    });
-
-    if (id !== 0) {
-      getMachineDataClient.callService(requestMachineData, function (result) {
-        if (result.success) {
-          let dataShow = [];
-          const count = result.machine_data.machine_data.length - 1;
-          let k = 1;
-          for (let i = count; i >= 0; i--) {
-            dataShow.push([
-              k,
-              result.machine_data.machine_data[i].date,
-              result.machine_data.machine_data[i].shift,
-              result.machine_data.machine_data[i].noload,
-              result.machine_data.machine_data[i].underload,
-              result.machine_data.machine_data[i].offtime,
-            ]);
-            k++;
-          }
-          setData(dataShow);
-        }
+    if (dataType === 'machine') {
+      const getMachineDataClient = new ROSLIB.Service({
+        ros: ros,
+        name: '/get_machine_data',
+        serviceType: 'vdm_machine_msgs/GetMachineData',
       });
+      const requestMachineData = new ROSLIB.ServiceRequest({
+        id_machine: id,
+        min_date: moment(beginDate).format('DD/MM/YYYY'),
+        max_date: moment(endDate).format('DD/MM/YYYY'),
+        shift: '',
+      });
+      if (id !== 0) {
+        fetchData(getMachineDataClient, requestMachineData, processMachineData);
+      }
+    } else {
+      const getStageDataClient = new ROSLIB.Service({
+        ros: ros,
+        name: '/get_stage_data',
+        serviceType: 'vdm_machine_msgs/GetStageData',
+      });
+      const requestStageData = new ROSLIB.ServiceRequest({
+        stage: stage,
+        min_date: moment(beginDate).format('DD/MM/YYYY'),
+        max_date: moment(endDate).format('DD/MM/YYYY'),
+        shift: '',
+      });
+      if (stage !== '') {
+        fetchData(getStageDataClient, requestStageData, processStageData);
+      }
     }
-  }, [id, beginDate, endDate]);
+  }, [id, stage, dataType, beginDate, endDate]);
 
   const getMuiTheme = () =>
     createTheme({
@@ -326,7 +438,10 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
         sort: true,
       },
     },
-    {
+  ];
+
+  if (dataType === 'machine') {
+    columns.push({
       name: 'action',
       label: translate('Action'),
       options: {
@@ -360,8 +475,8 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
           );
         },
       },
-    },
-  ];
+    });
+  }
 
   const options = {
     filter: true,
@@ -373,14 +488,18 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
     tableBodyHeight: '860px',
     selectableRows: 'none',
     downloadOptions: {
-      filename: `datamachine-${machineName}.csv`,
+      filename: dataType === 'machine' ? `datamachine-${machineName}.csv` : `datastage-${stage}.csv`,
     },
   };
   return (
     <Box>
       <ThemeProvider theme={getMuiTheme()}>
         <MUIDataTable
-          title={`${translate('Machine data table')} (${machineName})`}
+          title={
+            dataType === 'machine'
+              ? `${translate('Machine data table')} ${machineName}`
+              : `${translate('Bảng dữ liệu công đoạn')} ${stage}`
+          }
           data={data}
           columns={columns}
           options={{
@@ -393,22 +512,26 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
                   loadingPosition="start"
                   startIcon={<DownloadIcon />}
                   variant="contained"
-                  onClick={handleDownloadStageCSV}
+                  onClick={handleDownloadStageExcel}
                   sx={{ marginLeft: '20px' }}
                 >
-                  {translate('Download STAGE')}: {machineType}
+                  {dataType === 'machine'
+                    ? `${translate('Download Stage')}: ${stage}`
+                    : translate('Download All Stages')}
                 </LoadingButton>
-                <LoadingButton
-                  // disabled={isLoad}
-                  loading={isLoad}
-                  loadingPosition="start"
-                  startIcon={<DownloadIcon />}
-                  variant="contained"
-                  onClick={handleDownloadLogs}
-                  sx={{ marginLeft: '20px' }}
-                >
-                  {translate('Download LOGS')}
-                </LoadingButton>
+                {dataType === 'machine' ? (
+                  <LoadingButton
+                    // disabled={isLoad}
+                    loading={isLoad}
+                    loadingPosition="start"
+                    startIcon={<DownloadIcon />}
+                    variant="contained"
+                    onClick={handleDownloadLogs}
+                    sx={{ marginLeft: '20px' }}
+                  >
+                    {translate('Download LOGS')}
+                  </LoadingButton>
+                ) : null}
               </Fragment>
             ),
           }}
@@ -445,9 +568,9 @@ function MachineDataTable({ id, machineName, machineType, beginDate, endDate }) 
 
 MachineDataTable.propTypes = {
   id: PropTypes.number,
-  // days: PropTypes.number,
+  stage: PropTypes.string,
+  dataType: PropTypes.string,
   machineName: PropTypes.string,
-  machineType: PropTypes.string,
   beginDate: PropTypes.instanceOf(Date).isRequired,
   endDate: PropTypes.instanceOf(Date).isRequired,
 };

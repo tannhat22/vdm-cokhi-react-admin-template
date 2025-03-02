@@ -57,6 +57,8 @@ const DashboardDefault = () => {
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
   const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2200-01-01'));
+  const [dataType, setDataType] = useState('machine'); // Thêm state mới
+
   const ros = useContext(RosPropsContext);
 
   useEffect(() => {
@@ -152,6 +154,10 @@ const DashboardDefault = () => {
     setDaysInput(value);
   };
 
+  const handleDataTypeChange = () => {
+    setDataType((prevType) => (prevType === 'machine' ? 'stage' : 'machine'));
+  };
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -174,7 +180,12 @@ const DashboardDefault = () => {
           renderInput={(params) => <TextField {...params} label={translate('Select machine name')} />}
         />
       </Grid>
-      <Grid item xs={12} md={6} lg={6}>
+      <Grid item xs={12} md={3} lg={3}>
+        <Button size="large" variant="contained" sx={{ width: '100%', height: '100%' }} onClick={handleDataTypeChange}>
+          {dataType === 'machine' ? 'Chuyển sang dữ liệu công đoạn' : 'Chuyển sang dữ liệu máy'}
+        </Button>
+      </Grid>
+      <Grid item xs={12} md={3} lg={3}>
         {idMachine !== 0 && machineNames.length > 0 ? (
           <ResetForm
             id={idMachine}
@@ -183,15 +194,31 @@ const DashboardDefault = () => {
             plcAddress={machineNames[sttMachine].address}
           />
         ) : null}
+        {/* <ResetForm id={1} machineName="machine1" plcModel="kv7500" plcAddress={1} /> */}
       </Grid>
-      <InformArea id={idMachine} />
+      <InformArea
+        id={idMachine}
+        stage={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : ''}
+        dataType={dataType}
+      />
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
-
       {/* row 2 */}
-      <Grid item xs={12} md={8} lg={9}>
+      <Grid item xs={12} md={dataType === 'machine' ? 8 : 12} lg={dataType === 'machine' ? 9 : 12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">{translate('Timeline chart of activities')}</Typography>
+            <Typography variant="h5">
+              {dataType === 'machine'
+                ? translate(
+                    `Biểu đồ  thời gian hoạt động của máy ${
+                      idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : ''
+                    }`,
+                  )
+                : translate(
+                    `Biểu đồ  thời gian hoạt động của công đoạn ${
+                      idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : ''
+                    }`,
+                  )}
+            </Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={2}>
@@ -217,40 +244,53 @@ const DashboardDefault = () => {
               >{`${daysInput} ngày gần nhất`}</Button>
 
               <FormGroup>
-                <FormControlLabel control={<MaterialUISwitch defaultChecked={false} onChange={handleShiftChange} />} />
+                <FormControlLabel
+                  control={<MaterialUISwitch defaultChecked={false} onChange={handleShiftChange} shift={shiftChart} />}
+                />
               </FormGroup>
             </Stack>
           </Grid>
         </Grid>
         <MainCard content={false} sx={{ mt: 1.5 }}>
           <Box sx={{ pt: 1, pr: 2 }}>
-            <OperationTimeChart id={idMachine} shift={shiftChart} daysNum={daysChart} maxDate={specifiedMaxDate} />
+            <OperationTimeChart
+              id={idMachine}
+              stage={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : ''}
+              dataType={dataType}
+              shift={shiftChart}
+              daysNum={daysChart}
+              maxDate={specifiedMaxDate}
+            />
           </Box>
         </MainCard>
       </Grid>
-      <Grid item xs={12} md={4} lg={3}>
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item>
-            <Typography variant="h5">{translate('Signal light')}</Typography>
+      {dataType === 'machine' ? (
+        <Grid item xs={12} md={4} lg={3}>
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+              <Typography variant="h5">{translate('Signal light')}</Typography>
+            </Grid>
+            <Grid item>
+              <Stack direction="row" alignItems="center" spacing={0}>
+                <Button size="large">
+                  {idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Stack direction="row" alignItems="center" spacing={0}>
-              <Button size="large">
-                {idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
-              </Button>
-            </Stack>
-          </Grid>
+          <MainCard sx={{ mt: 1.5 }} content={false}>
+            <SignalLightArea id={idMachine} />
+          </MainCard>
         </Grid>
-        <MainCard sx={{ mt: 1.5 }} content={false}>
-          <SignalLightArea id={idMachine} />
-        </MainCard>
-      </Grid>
+      ) : null}
 
       {/* row 3 */}
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">{translate('Machine data')}</Typography>
+            <Typography variant="h5">
+              {dataType === 'machine' ? translate('Machine data') : translate('Dữ liệu công đoạn')}
+            </Typography>
           </Grid>
           <Grid item display="flex">
             <Box sx={{ marginRight: '16px' }}>
@@ -273,32 +313,14 @@ const DashboardDefault = () => {
               minDate={specifiedMinDate}
               maxDate={specifiedMaxDate}
             />
-            {/* <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="days-select-label">Ngày</InputLabel>
-                <Select
-                  labelId="days-select-label"
-                  id="days-simple-select"
-                  value={days}
-                  label="Days"
-                  onChange={handleChangeSelectDays}
-                >
-                  <MenuItem value={7}>7 ngày</MenuItem>
-                  <MenuItem value={14}>14 ngày</MenuItem>
-                  <MenuItem value={30}>30 ngày</MenuItem>
-                  <MenuItem value={90}>90 ngày</MenuItem>
-                  <MenuItem value={365}>Tất cả dữ liệu</MenuItem>
-                </Select>
-              </FormControl>
-            </Box> */}
           </Grid>
         </Grid>
         <MainCard sx={{ mt: 2 }} content={false}>
           <MachineDataTable
             id={idMachine}
+            stage={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : ''}
+            dataType={dataType}
             machineName={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].label : 'no info'}
-            // days={days}
-            machineType={idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : 'no info'}
             beginDate={selectedBeginDate}
             endDate={selectedEndDate}
           />

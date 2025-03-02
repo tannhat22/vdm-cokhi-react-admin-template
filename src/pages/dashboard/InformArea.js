@@ -10,7 +10,7 @@ import MainCard from 'components/MainCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-function InformArea({ id }) {
+function InformArea({ id, stage, dataType }) {
   const { translate } = useLocales();
   const [dataMachine, setDataMachine] = useState({
     shift: 0,
@@ -24,14 +24,23 @@ function InformArea({ id }) {
   const ros = useContext(RosPropsContext);
   // console.log('re-render');
 
+  const formatAndPadTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return {
+      hours: hours < 10 ? `0${hours}` : `${hours}`,
+      minutes: mins < 10 ? `0${mins}` : `${mins}`,
+    };
+  };
+
   useEffect(() => {
-    var listener = new ROSLIB.Topic({
+    const listener = new ROSLIB.Topic({
       ros: ros,
       name: '/state_machines',
       messageType: 'vdm_machine_msgs/MachinesStateStamped',
     });
 
-    let subscription_callback = function (message) {
+    const subscription_callback = function (message) {
       handleDataWebsocket(message);
     };
 
@@ -44,39 +53,26 @@ function InformArea({ id }) {
         underloadTime: { hours: 0, minutes: 0 },
         offTime: { hours: 0, minutes: 0 },
       };
+      const sttData =
+        dataType === 'machine'
+          ? data.id_machines.findIndex((id_machine) => id_machine === id)
+          : data.overral_machines.findIndex((overral_machine) => overral_machine.type === stage);
 
-      const sttMachine = data.id_machines.findIndex((id_machine) => id_machine === id);
-      if (sttMachine === -1) {
-        console.log('ID not found!');
+      if (sttData === -1) {
+        console.log(dataType === 'machine' ? 'ID not found!' : 'Stage not found!');
         return;
       }
 
-      const noload = {
-        hours: Math.floor(data.state_machines[sttMachine].noload / 60),
-        mins: data.state_machines[sttMachine].noload % 60,
-      };
-
-      const underload = {
-        hours: Math.floor(data.state_machines[sttMachine].underload / 60),
-        mins: data.state_machines[sttMachine].underload % 60,
-      };
-
-      const offtime = {
-        hours: Math.floor(data.state_machines[sttMachine].offtime / 60),
-        mins: data.state_machines[sttMachine].offtime % 60,
-      };
-
       dataNew.shift = data.shift;
-      dataNew.noloadTime.hours = noload.hours < 10 ? `0${noload.hours}` : `${noload.hours}`;
-      dataNew.noloadTime.minutes = noload.mins < 10 ? `0${noload.mins}` : `${noload.mins}`;
-      dataNew.underloadTime.hours = underload.hours < 10 ? `0${underload.hours}` : `${underload.hours}`;
-      dataNew.underloadTime.minutes = underload.mins < 10 ? `0${underload.mins}` : `${underload.mins}`;
-      dataNew.offTime.hours = offtime.hours < 10 ? `0${offtime.hours}` : `${offtime.hours}`;
-      dataNew.offTime.minutes = offtime.mins < 10 ? `0${offtime.mins}` : `${offtime.mins}`;
-      // dataNew.gt.min = data.state_machines[sttMachine].value_setting.min;
-      // dataNew.gt.max = data.state_machines[sttMachine].value_setting.max;
-      // dataNew.gt.current = data.state_machines[sttMachine].value_setting.current;
-      // dataNew.timeReachSpeed = data.state_machines[sttMachine].time_reachspeed;
+      if (dataType === 'machine') {
+        dataNew.noloadTime = formatAndPadTime(data.state_machines[sttData].noload);
+        dataNew.underloadTime = formatAndPadTime(data.state_machines[sttData].underload);
+        dataNew.offTime = formatAndPadTime(data.state_machines[sttData].offtime);
+      } else {
+        dataNew.noloadTime = formatAndPadTime(data.overral_machines[sttData].noload);
+        dataNew.underloadTime = formatAndPadTime(data.overral_machines[sttData].underload);
+        dataNew.offTime = formatAndPadTime(data.overral_machines[sttData].offtime);
+      }
 
       setDataMachine(dataNew);
     }
@@ -84,7 +80,7 @@ function InformArea({ id }) {
     return () => {
       listener.unsubscribe();
     };
-  }, [id]);
+  }, [id, stage, dataType]);
 
   return (
     <Fragment>
@@ -150,6 +146,8 @@ function InformArea({ id }) {
 
 InformArea.propTypes = {
   id: PropTypes.number,
+  stage: PropTypes.string,
+  dataType: PropTypes.string,
 };
 
 export default InformArea;
