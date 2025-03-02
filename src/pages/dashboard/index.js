@@ -104,12 +104,15 @@ const DashboardDefault = () => {
     if (idMachine !== 0) {
       getMachineDataClient.callService(requestMachineData, function (result) {
         if (result.success) {
-          const minDateArr = result.min_date.split('/');
+          // const minDateArr = result.min_date.split('/');
           const maxDateArr = result.max_date.split('/');
-          setSelectedBeginDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
-          setSelectedEndDate(new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0])));
-          setSpecifiedMinDate(new Date(Number(minDateArr[2]), Number(minDateArr[1]) - 1, Number(minDateArr[0])));
-          setSpecifiedMaxDate(new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0])));
+          const maxDate = new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0]));
+          const minDate = new Date(maxDate);
+          minDate.setMonth(minDate.getMonth() - 12);
+          setSelectedBeginDate(minDate);
+          setSelectedEndDate(maxDate);
+          setSpecifiedMinDate(minDate);
+          setSpecifiedMaxDate(maxDate);
           // setDataMachine(dataMachine);
         }
       });
