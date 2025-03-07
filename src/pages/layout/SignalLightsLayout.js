@@ -66,7 +66,7 @@ function SignalLightsLayout({ width, height }) {
   }, []);
 
   return (
-    <div>
+    <>
       {/* GS01 */}
       <CardMachine
         stt={0}
@@ -478,7 +478,7 @@ function SignalLightsLayout({ width, height }) {
         size={width * 2.5}
         img={gj2Img}
       />
-    </div>
+    </>
   );
 }
 

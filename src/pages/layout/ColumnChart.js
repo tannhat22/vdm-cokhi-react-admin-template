@@ -11,7 +11,9 @@ import ReactApexChart from 'react-apexcharts';
 const areaChartOptions = {
   chart: {
     type: 'bar',
-    height: 450,
+    height: 350,
+    stacked: true,
+    stackType: '100%',
     toolbar: {
       show: false,
     },
@@ -19,54 +21,65 @@ const areaChartOptions = {
   dataLabels: {
     enabled: true,
   },
-  legend: {
-    show: false, // 👈 Tắt chú thích cột màu
-  },
+  // legend: {
+  //   show: false, // 👈 Tắt chú thích cột màu
+  // },
 };
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const ColumnChart = ({ chartName, target, categories, series, colors }) => {
+const ColumnChart = ({ stage, shift }) => {
   const theme = useTheme();
-
   const { secondary } = theme.palette.text;
   const line = theme.palette.divider;
-  // const [options, setOptions] = useState(areaChartOptions);
+
+  let dataShow = { dates: [], offtimes: [], noloads: [], underloads: [] };
+  stage.data.forEach((stData) => {
+    if (stData.shift === shift) {
+      dataShow.dates.push(stData.date.slice(0, 5));
+      dataShow.offtimes.push(stData.offtime);
+      dataShow.noloads.push(stData.noload);
+      dataShow.underloads.push(stData.underload);
+    }
+  });
+
+  const days = dataShow.dates;
+  const series = [
+    { name: 'Có tải', data: dataShow.underloads },
+    { name: 'Không tải', data: dataShow.noloads },
+    { name: 'Tắt máy', data: dataShow.offtimes },
+  ];
+
   const chartOption = {
     ...areaChartOptions,
     title: {
-      text: chartName,
+      text: `Biểu đồ lịch sử của công đoạn ${stage.stageName}`,
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: '16px',
         fontWeight: 'bold',
         color: '#333',
       },
     },
-    colors: colors,
-    plotOptions: {
-      bar: {
-        distributed: true, // Cho phép từng cột có màu riêng
-      },
-    },
+    colors: ['rgb(0, 227, 150)', 'rgba(252,185,0,1)', 'rgb(199, 199, 200)'],
     annotations: {
       yaxis: [
         {
-          y: target,
-          borderColor: 'red',
+          y: stage.target,
+          borderColor: 'rgb(255, 0, 0)',
           label: {
-            borderColor: 'red',
+            borderColor: 'rgb(255, 0, 0)',
             style: {
               color: '#fff',
-              background: 'red',
+              background: 'rgb(255, 0, 0)',
             },
-            text: '',
+            text: `Mục tiêu ${stage.target}%`,
           },
         },
       ],
     },
     xaxis: {
-      categories: categories,
+      categories: days,
       labels: {
         style: {
           colors: ['black'],
@@ -79,8 +92,6 @@ const ColumnChart = ({ chartName, target, categories, series, colors }) => {
       tickAmount: 7,
     },
     yaxis: {
-      min: 0,
-      max: 100,
       labels: {
         style: {
           colors: [secondary],
@@ -94,80 +105,13 @@ const ColumnChart = ({ chartName, target, categories, series, colors }) => {
       theme: 'light',
     },
   };
-  // useEffect(() => {
-  //   setOptions((prevState) => ({
-  //     ...prevState,
-  //     title: {
-  //       text: chartName,
-  //       align: 'center',
-  //       style: {
-  //         fontSize: '20px',
-  //         fontWeight: 'bold',
-  //         color: '#333',
-  //       },
-  //     },
-  //     colors: colors,
-  //     plotOptions: {
-  //       bar: {
-  //         distributed: true, // Cho phép từng cột có màu riêng
-  //       },
-  //     },
-  //     annotations: {
-  //       yaxis: [
-  //         {
-  //           y: target,
-  //           borderColor: 'red',
-  //           label: {
-  //             borderColor: 'red',
-  //             style: {
-  //               color: '#fff',
-  //               background: 'red',
-  //             },
-  //             text: '',
-  //           },
-  //         },
-  //       ],
-  //     },
-  //     xaxis: {
-  //       categories: categories,
-  //       labels: {
-  //         style: {
-  //           colors: ['black'],
-  //         },
-  //       },
-  //       axisBorder: {
-  //         show: true,
-  //         color: line,
-  //       },
-  //       tickAmount: 7,
-  //     },
-  //     yaxis: {
-  //       min: 0,
-  //       max: 100,
-  //       labels: {
-  //         style: {
-  //           colors: [secondary],
-  //         },
-  //       },
-  //     },
-  //     grid: {
-  //       borderColor: line,
-  //     },
-  //     tooltip: {
-  //       theme: 'light',
-  //     },
-  //   }));
-  // }, [primary, secondary, line, theme, chartName, target, categories, colors]);
 
-  return <ReactApexChart options={chartOption} series={series} type="bar" height={366} />;
+  return <ReactApexChart options={chartOption} series={series} type="bar" height={350} />;
 };
 
 ColumnChart.propTypes = {
-  chartName: PropTypes.string,
-  target: PropTypes.number,
-  categories: PropTypes.array,
-  series: PropTypes.array,
-  colors: PropTypes.array,
+  stage: PropTypes.object,
+  shift: PropTypes.string,
 };
 
 export default ColumnChart;

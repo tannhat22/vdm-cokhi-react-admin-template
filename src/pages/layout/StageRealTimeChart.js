@@ -14,21 +14,22 @@ const getTargetValue = (stage) => {
 };
 
 const minutesInShift = Number(process.env.REACT_APP_MINUTES_IN_SHIFT);
+const stagesOrdinal = process.env.REACT_APP_STAGES_ORDINAL;
 
 // chart options
 const areaChartOptions = {
   title: {
-    text: 'Biểu đồ phân tích công đoạn theo thời gian thực',
+    text: 'Biểu đồ phân tích toàn bộ công đoạn theo thời gian thực',
     align: 'center',
     style: {
-      fontSize: '20px',
+      fontSize: '16px',
       fontWeight: 'bold',
       color: '#333',
     },
   },
   chart: {
     type: 'line', // Sử dụng 'line' để tạo biểu đồ kết hợp
-    height: 450,
+    height: 350,
     stacked: true,
     stackOnlyBar: true,
     toolbar: {
@@ -52,6 +53,7 @@ const areaChartOptions = {
     size: 0,
   },
   tooltip: {
+    enabled: true,
     shared: true,
     intersect: false,
   },
@@ -110,19 +112,30 @@ const StageRealTimeChart = () => {
     listener.subscribe(subscription_callback);
 
     const processStageData = (realTimeData) => {
+      realTimeData.overral_machines.sort((a, b) => stagesOrdinal.indexOf(a.type) - stagesOrdinal.indexOf(b.type));
+
       let dataShow = { stages: [], offtimes: [], noloads: [], underloads: [], targets: [] };
       realTimeData.overral_machines.forEach((stage) => {
         const sumMinute = minutesInShift * stage.quantity;
         dataShow.stages.push(stage.type);
-        dataShow.offtimes.push(Math.round(stage.offtime / sumMinute));
-        dataShow.noloads.push(Math.round(stage.noload / sumMinute));
-        dataShow.underloads.push(Math.round(stage.underload / sumMinute));
+        dataShow.offtimes.push(Math.round((stage.offtime * 100) / sumMinute));
+        dataShow.noloads.push(Math.round((stage.noload * 100) / sumMinute));
+        dataShow.underloads.push(Math.round((stage.underload * 100) / sumMinute));
       });
       updateChart(dataShow);
     };
 
     const updateChart = (dataShow) => {
-      setStages(dataShow.stages);
+      // if (JSON.stringify(stages) !== JSON.stringify(dataShow.stages)) {
+      //   setStages(dataShow.stages);
+      // }
+      setStages((prevStages) => {
+        if (JSON.stringify(prevStages) !== JSON.stringify(dataShow.stages)) {
+          return dataShow.stages;
+        }
+        return prevStages; // Giữ nguyên nếu không đổi
+      });
+
       setSeries([
         { name: 'Có tải', type: 'column', data: dataShow.underloads },
         { name: 'Không tải', type: 'column', data: dataShow.noloads },

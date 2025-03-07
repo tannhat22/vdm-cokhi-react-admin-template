@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import ROSLIB from 'roslib';
 
@@ -47,16 +47,26 @@ const DashboardDefault = () => {
     // console.log(`stt: ${stt}`);
   }
 
+  const today = useMemo(() => new Date(), []);
+  const threeMonthsAgo = useMemo(() => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 3);
+    return date;
+  }, []);
+  const specifiedMinDate = useMemo(() => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 12);
+    return date;
+  }, []);
+
   const [daysInput, setDaysInput] = useState(10);
   const [daysChart, setDaysChart] = useState(daysInput);
   const [idMachine, setIdMachine] = useState(id);
   const [sttMachine, setSttMachine] = useState(stt);
   const [machineNames, setMachineNames] = useState([]);
   const [shiftChart, setShiftChart] = useState('CN');
-  const [selectedBeginDate, setSelectedBeginDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-  const [specifiedMinDate, setSpecifiedMinDate] = useState(new Date('2023-9-01'));
-  const [specifiedMaxDate, setSpecifiedMaxDate] = useState(new Date('2200-01-01'));
+  const [selectedBeginDate, setSelectedBeginDate] = useState(threeMonthsAgo);
+  const [selectedEndDate, setSelectedEndDate] = useState(today);
   const [dataType, setDataType] = useState('machine'); // Thêm state mới
 
   const ros = useContext(RosPropsContext);
@@ -90,34 +100,6 @@ const DashboardDefault = () => {
       // console.log('da phan hoi');
     });
   }, []);
-
-  useEffect(() => {
-    var getMachineDataClient = new ROSLIB.Service({
-      ros: ros,
-      name: '/get_min_max_date',
-      serviceType: 'vdm_machine_msgs/GetMinMaxDate',
-    });
-    // console.log(machineNames[sttMachine].type);
-    let requestMachineData = new ROSLIB.ServiceRequest({
-      stage: idMachine !== 0 && machineNames.length > 0 ? machineNames[sttMachine].type : 'no info',
-    });
-    if (idMachine !== 0) {
-      getMachineDataClient.callService(requestMachineData, function (result) {
-        if (result.success) {
-          // const minDateArr = result.min_date.split('/');
-          const maxDateArr = result.max_date.split('/');
-          const maxDate = new Date(Number(maxDateArr[2]), Number(maxDateArr[1]) - 1, Number(maxDateArr[0]));
-          const minDate = new Date(maxDate);
-          minDate.setMonth(minDate.getMonth() - 12);
-          setSelectedBeginDate(minDate);
-          setSelectedEndDate(maxDate);
-          setSpecifiedMinDate(minDate);
-          setSpecifiedMaxDate(maxDate);
-          // setDataMachine(dataMachine);
-        }
-      });
-    }
-  }, [idMachine, machineNames]);
 
   function handleValueChange(event, value, reason) {
     if (reason === 'selectOption') {
@@ -262,7 +244,7 @@ const DashboardDefault = () => {
               dataType={dataType}
               shift={shiftChart}
               daysNum={daysChart}
-              maxDate={specifiedMaxDate}
+              maxDate={today}
             />
           </Box>
         </MainCard>
@@ -304,7 +286,7 @@ const DashboardDefault = () => {
                   setSelectedBeginDate(date);
                 }}
                 minDate={specifiedMinDate}
-                maxDate={specifiedMaxDate}
+                maxDate={today}
               />
             </Box>
             <DatePicker
@@ -314,7 +296,7 @@ const DashboardDefault = () => {
                 setSelectedEndDate(date);
               }}
               minDate={specifiedMinDate}
-              maxDate={specifiedMaxDate}
+              maxDate={today}
             />
           </Grid>
         </Grid>
