@@ -38,10 +38,10 @@ const areaChartOptions = {
   },
   dataLabels: {
     enabled: true,
-    enabledOnSeries: [3],
+    enabledOnSeries: [3, 4],
   },
   stroke: {
-    width: [0, 0, 0, 2], // Đặt độ rộng của đường cho chuỗi dữ liệu đường
+    width: [0, 0, 0, 2, 2], // Đặt độ rộng của đường cho chuỗi dữ liệu đường
     // curve: 'smooth',
   },
   plotOptions: {
@@ -60,7 +60,7 @@ const areaChartOptions = {
   grid: {
     borderColor: '#f1f1f1',
   },
-  colors: ['rgb(0, 227, 150)', 'rgba(252,185,0,1)', 'rgb(199, 199, 200)', 'rgb(255, 0, 0)'],
+  colors: ['rgb(0, 227, 150)', 'rgba(252,185,0,1)', 'rgb(199, 199, 200)', '#1890ff', 'rgb(255, 0, 0)'],
 };
 
 // ==============================|| INCOME AREA CHART ||============================== //
@@ -88,6 +88,11 @@ const StageRealTimeChart = () => {
       name: 'Tắt máy',
       type: 'column',
       data: [30, 10, 30, 20, 30, 20, 15, 15, 20, 20, 15, 20, 20],
+    },
+    {
+      name: 'Thực tích',
+      type: 'line',
+      data: [10, 40, 50, 60, 35, 54, 75, 70, 40, 50, 70, 40, 50],
     },
     {
       name: 'Mục tiêu',
@@ -140,6 +145,7 @@ const StageRealTimeChart = () => {
         { name: 'Có tải', type: 'column', data: dataShow.underloads },
         { name: 'Không tải', type: 'column', data: dataShow.noloads },
         { name: 'Tắt máy', type: 'column', data: dataShow.offtimes },
+        { name: 'Thực tích', type: 'line', data: dataShow.underloads },
         { name: 'Mục tiêu', type: 'line', data: dataShow.stages.map((stage) => getTargetValue(stage)) },
       ]);
     };
