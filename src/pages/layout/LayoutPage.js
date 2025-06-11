@@ -130,7 +130,7 @@ function LayoutPage() {
             <div style={{ marginRight: '10px' }}>
               <SignalLight color="red" />
             </div>
-            : {translate('Overload')}
+            : {translate('Error')}
           </Typography>
           <Typography
             variant="body1"
@@ -140,7 +140,7 @@ function LayoutPage() {
             <div style={{ marginRight: '10px' }}>
               <SignalLight custom="standing" color="purple" size="28" />
             </div>
-            : {translate('Stand position')}
+            : {translate('You are here')}
           </Typography>
         </Box>
       </Grid>

@@ -188,7 +188,7 @@ function CardMachine({ stt, machineId, posLeft, posTop, size, img }) {
                   : machineData[6] === 'yellow'
                   ? translate('Running without load')
                   : machineData[6] === 'red'
-                  ? translate('Overloading')
+                  ? translate('Erroring')
                   : translate('Turn off machine')}
               </span>
             </Typography>
