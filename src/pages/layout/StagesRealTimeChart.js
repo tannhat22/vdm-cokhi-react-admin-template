@@ -65,7 +65,7 @@ const areaChartOptions = {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-const StageRealTimeChart = () => {
+const StagesRealTimeChart = () => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
@@ -194,4 +194,4 @@ const StageRealTimeChart = () => {
   return <ReactApexChart options={options} series={series} type="line" height={350} />;
 };
 
-export default StageRealTimeChart;
+export default StagesRealTimeChart;

@@ -72,7 +72,7 @@ function SignalLightsLayout({ width, height }) {
         stt={0}
         machineId={machinesId[0] ? machinesId[0] : 0}
         posLeft={width * 34.75}
-        posTop={height * 4.3}
+        posTop={height * 5.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -82,7 +82,7 @@ function SignalLightsLayout({ width, height }) {
         stt={1}
         machineId={machinesId[1] ? machinesId[1] : 1}
         posLeft={width * 23.82}
-        posTop={height * 4.3}
+        posTop={height * 5.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -92,7 +92,7 @@ function SignalLightsLayout({ width, height }) {
         stt={2}
         machineId={machinesId[2] ? machinesId[2] : 2}
         posLeft={width * 45.67}
-        posTop={height * 4.3}
+        posTop={height * 5.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -102,7 +102,7 @@ function SignalLightsLayout({ width, height }) {
         stt={3}
         machineId={machinesId[3] ? machinesId[3] : 3}
         posLeft={width * 29.3}
-        posTop={height * 4.3}
+        posTop={height * 5.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -112,7 +112,7 @@ function SignalLightsLayout({ width, height }) {
         stt={4}
         machineId={machinesId[4] ? machinesId[4] : 4}
         posLeft={width * 29.9}
-        posTop={height * 23.3}
+        posTop={height * 24.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -124,7 +124,7 @@ function SignalLightsLayout({ width, height }) {
         stt={5}
         machineId={machinesId[5] ? machinesId[5] : 5}
         posLeft={width * 24}
-        posTop={height * 22.4}
+        posTop={height * 23.4}
         size={width * 2.5}
         img={gs7Img}
       />
@@ -134,7 +134,7 @@ function SignalLightsLayout({ width, height }) {
         stt={6}
         machineId={machinesId[6] ? machinesId[6] : 6}
         posLeft={width * 40.23}
-        posTop={height * 4.3}
+        posTop={height * 5.3}
         size={width * 2.5}
         img={gs1Img}
       />
@@ -143,8 +143,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={7}
         machineId={machinesId[7] ? machinesId[7] : 7}
-        posLeft={width * 35.86}
-        posTop={height * 31.8}
+        posLeft={width * 44.7}
+        posTop={height * 42.5}
         size={width * 2.5}
         img={gr2Img}
       />
@@ -153,8 +153,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={8}
         machineId={machinesId[8] ? machinesId[8] : 8}
-        posLeft={width * 41.23}
-        posTop={height * 31.8}
+        posLeft={width * 44.7}
+        posTop={height * 31.5}
         size={width * 2.5}
         img={gr4Img}
       />
@@ -163,8 +163,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={9}
         machineId={machinesId[9] ? machinesId[9] : 9}
-        posLeft={width * 25.57}
-        posTop={height * 32.6}
+        posLeft={width * 24.3}
+        posTop={height * 33}
         size={width * 2.5}
         img={gc1Img}
       />
@@ -173,8 +173,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={10}
         machineId={machinesId[10] ? machinesId[10] : 10}
-        posLeft={width * 30.29}
-        posTop={height * 32.6}
+        posLeft={width * 28.9}
+        posTop={height * 33}
         size={width * 2.5}
         img={gc1Img}
       />
@@ -183,8 +183,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={11}
         machineId={machinesId[11] ? machinesId[11] : 11}
-        posLeft={width * 59.38}
-        posTop={height * 32.58}
+        posLeft={width * 59.55}
+        posTop={height * 33.2}
         size={width * 2.5}
         img={ln1Img}
       />
@@ -193,8 +193,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={12}
         machineId={machinesId[12] ? machinesId[12] : 12}
-        posLeft={width * 51.68}
-        posTop={height * 32.58}
+        posLeft={width * 52.3}
+        posTop={height * 33.2}
         size={width * 2.5}
         img={ln2Img}
       />
@@ -203,8 +203,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={13}
         machineId={machinesId[13] ? machinesId[13] : 13}
-        posLeft={width * 60.12}
-        posTop={height * 6.5}
+        posLeft={width * 60.5}
+        posTop={height * 7.5}
         size={width * 2.5}
         img={mc1Img}
       />
@@ -213,8 +213,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={14}
         machineId={machinesId[14] ? machinesId[14] : 14}
-        posLeft={width * 53.53}
-        posTop={height * 6.5}
+        posLeft={width * 54}
+        posTop={height * 7.5}
         size={width * 2.5}
         img={mc2Img}
       />
@@ -223,8 +223,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={15}
         machineId={machinesId[15] ? machinesId[15] : 15}
-        posLeft={width * 69.65}
-        posTop={height * 7.9}
+        posLeft={width * 69.7}
+        posTop={height * 8.5}
         size={width * 2.5}
         img={mc3Img}
       />
@@ -234,7 +234,7 @@ function SignalLightsLayout({ width, height }) {
         stt={16}
         machineId={machinesId[16] ? machinesId[16] : 16}
         posLeft={width * 69.28}
-        posTop={height * 43.1}
+        posTop={height * 43.3}
         size={width * 2.5}
         img={ma1Img}
       />
@@ -243,8 +243,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={17}
         machineId={machinesId[17] ? machinesId[17] : 17}
-        posLeft={width * 58.5}
-        posTop={height * 43.1}
+        posLeft={width * 58.9}
+        posTop={height * 43.3}
         size={width * 2.5}
         img={ma2Img}
       />
@@ -253,8 +253,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={18}
         machineId={machinesId[18] ? machinesId[18] : 18}
-        posLeft={width * 52.95}
-        posTop={height * 43.1}
+        posLeft={width * 53.3}
+        posTop={height * 43.3}
         size={width * 2.5}
         img={ma3Img}
       />
@@ -263,8 +263,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={19}
         machineId={machinesId[19] ? machinesId[19] : 19}
-        posLeft={width * 64.14}
-        posTop={height * 43.1}
+        posLeft={width * 64.4}
+        posTop={height * 43.3}
         size={width * 2.5}
         img={ma4Img}
       />
@@ -273,8 +273,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={20}
         machineId={machinesId[20] ? machinesId[20] : 20}
-        posLeft={width * 63.3}
-        posTop={height * 74.25}
+        posLeft={width * 64.5}
+        posTop={height * 73.7}
         size={width * 2.5}
         img={bj1Img}
       />
@@ -283,8 +283,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={21}
         machineId={machinesId[21] ? machinesId[21] : 21}
-        posLeft={width * 49.4}
-        posTop={height * 74.25}
+        posLeft={width * 51.3}
+        posTop={height * 73.35}
         size={width * 2.5}
         img={bj8Img}
       />
@@ -293,7 +293,7 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={22}
         machineId={machinesId[22] ? machinesId[22] : 22}
-        posLeft={width * 67.8}
+        posLeft={width * 68.9}
         posTop={height * 74}
         size={width * 2.5}
         img={bj4Img}
@@ -303,8 +303,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={23}
         machineId={machinesId[23] ? machinesId[23] : 23}
-        posLeft={width * 54}
-        posTop={height * 74.25}
+        posLeft={width * 55.5}
+        posTop={height * 73.7}
         size={width * 2.5}
         img={bj6Img}
       />
@@ -313,8 +313,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={24}
         machineId={machinesId[24] ? machinesId[24] : 24}
-        posLeft={width * 58.4}
-        posTop={height * 74.25}
+        posLeft={width * 59.8}
+        posTop={height * 73.7}
         size={width * 2.5}
         img={bj7Img}
       />
@@ -373,8 +373,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={30}
         machineId={machinesId[30] ? machinesId[30] : 30}
-        posLeft={width * 16.25}
-        posTop={height * 74.4}
+        posLeft={width * 16.65}
+        posTop={height * 75.5}
         size={width * 2.5}
         img={ew3Img}
       />
@@ -383,8 +383,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={31}
         machineId={machinesId[31] ? machinesId[31] : 31}
-        posLeft={width * 16.28}
-        posTop={height * 50.1}
+        posLeft={width * 16.55}
+        posTop={height * 51.2}
         size={width * 2.5}
         img={ew4Img}
       />
@@ -423,8 +423,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={40}
         machineId={machinesId[40] ? machinesId[40] : 40}
-        posLeft={width * 16.33}
-        posTop={height * 36}
+        posLeft={width * 16.55}
+        posTop={height * 33}
         size={width * 2.5}
         img={en4Img}
       />
@@ -433,8 +433,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={35}
         machineId={machinesId[35] ? machinesId[35] : 35}
-        posLeft={width * 15.78}
-        posTop={height * 87.2}
+        posLeft={width * 16.5}
+        posTop={height * 86.3}
         size={width * 2.5}
         img={ed2Img}
       />
@@ -443,8 +443,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={36}
         machineId={machinesId[36] ? machinesId[36] : 36}
-        posLeft={width * 16.72}
-        posTop={height * 19.1}
+        posLeft={width * 16.8}
+        posTop={height * 20.3}
         size={width * 2.5}
         img={gp2Img}
       />
@@ -453,8 +453,8 @@ function SignalLightsLayout({ width, height }) {
       <CardMachine
         stt={37}
         machineId={machinesId[37] ? machinesId[37] : 37}
-        posLeft={width * 16.72}
-        posTop={height * 4.9}
+        posLeft={width * 16.8}
+        posTop={height * 5.5}
         size={width * 2.5}
         img={gp2Img}
       />
@@ -464,7 +464,7 @@ function SignalLightsLayout({ width, height }) {
         stt={38}
         machineId={machinesId[38] ? machinesId[38] : 38}
         posLeft={width * 2.5}
-        posTop={height * 10.9}
+        posTop={height * 11.7}
         size={width * 2.5}
         img={gj2Img}
       />
@@ -474,7 +474,7 @@ function SignalLightsLayout({ width, height }) {
         stt={39}
         machineId={machinesId[39] ? machinesId[39] : 39}
         posLeft={width * 2.5}
-        posTop={height * 22.9}
+        posTop={height * 23.7}
         size={width * 2.5}
         img={gj2Img}
       />

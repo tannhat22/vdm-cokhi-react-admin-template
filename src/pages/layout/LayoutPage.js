@@ -9,8 +9,9 @@ import SignalLight from 'components/SignalLight';
 import { useLocales } from 'locales';
 
 import MainCard from 'components/MainCard';
-import StageRealTimeChart from './StageRealTimeChart';
+import StagesRealTimeChart from './StagesRealTimeChart';
 import StageHistoryArea from './StageHistoryArea';
+import StageRealTimeArea from './StageRealTimeArea';
 
 function LayoutPage() {
   const { translate } = useLocales();
@@ -147,8 +148,10 @@ function LayoutPage() {
       {splitScreen && (
         <Grid item xs={12} md={4} lg={4} sx={{ maxHeight: 900, overflow: 'auto' }}>
           <MainCard content={true} sx={{ mt: 1.5 }}>
-            <StageRealTimeChart />
+            <StagesRealTimeChart />
           </MainCard>
+          <Divider sx={{ my: 2 }} />
+          <StageRealTimeArea />
           <Divider sx={{ my: 2 }} />
           <StageHistoryArea />
         </Grid>
